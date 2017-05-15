@@ -63,6 +63,10 @@ void initDrive(void){
 
 void driveTo(int obj){
 	
+	char str[20];
+	sprintf(str,"\nDrive: %d",obj);
+	printf (str);
+	
 	int newcount = 0;
 	int r_count = 0;
 	int l_count = 0;

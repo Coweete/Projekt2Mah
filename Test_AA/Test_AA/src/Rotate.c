@@ -66,13 +66,25 @@ void initRotateMotor(void){
 void rotate(int d){					//Minimum d is 4
     //double ticks = d * 0.25;
 	
-	int direct_angle = d - ((direction + 180) % 360);
+	int reverse_angle = (direction + 180) % 360;
+	
+	int direct_angle = ((abs(reverse_angle - 360) + d) % 360) - 180;
+	
+	char str[20];
+	
+	sprintf(str,"\nNew angle: %d", d);
+	printf(str);
+	
+	sprintf(str,"\ndirect_angle = %d", direct_angle);
+	printf(str);
 	
 	ioport_set_pin_level(L_RESET,LOW);
 	ioport_set_pin_level(R_RESET,LOW);
 	
-	if(direct_angle < 0){
-		while(r_count < ((abs(direct_angle) + direction) * 0.25)){
+	//Turn left
+	
+	if(direct_angle > 0){								
+		while(r_count < (abs(direct_angle) * 0.25)){
 			r_count = ioport_get_pin_level(R0)+ioport_get_pin_level(R1)*2+ioport_get_pin_level(R2)*4+ioport_get_pin_level(R3)*8
 			+ioport_get_pin_level(R4)*16+ioport_get_pin_level(R5)*32;
 			//ioport_set_pin_level(R_RESET,HIGH);
@@ -80,13 +92,21 @@ void rotate(int d){					//Minimum d is 4
 			moveForward(1400,1600);
 			
 		}
+		
+		int count_right = r_count * 4;
+		sprintf(str,"\nr_count = %d", r_count);
+		printf(str);
+		sprintf(str,"\ncount_right = %d", count_right);
+		printf(str);
 		updateDirection(d);
 		//direction = (d + 360 - direction) % 360;
 		moveForward(1500,1500);	
 	}
 	
-	else if(direct_angle > 0){
-		while(l_count < ((abs(direct_angle) + direction) * 0.25)){			
+	//Turn right
+	
+	else if(direct_angle < 0){
+		while(l_count < (abs(direct_angle) * 0.25)){			
 			l_count = ioport_get_pin_level(L0)+ioport_get_pin_level(L1)*2+ioport_get_pin_level(L2)*4+ioport_get_pin_level(L3)*8
 			+ioport_get_pin_level(L4)*16+ioport_get_pin_level(L5)*32;
 			//ioport_set_pin_level(L_RESET,HIGH);
@@ -94,6 +114,12 @@ void rotate(int d){					//Minimum d is 4
 			moveForward(1600,1400);
 
 		}
+		
+		int count_left = l_count * 4;
+		sprintf(str,"\nl_count = %d", l_count);
+		printf(str);
+		sprintf(str,"\ncount_left = %d", count_left);
+		printf(str);
 		updateDirection(d);
 		//direction = (d + 360 - direction) % 360;
 		moveForward(1500,1500);	
@@ -135,8 +161,15 @@ void startupMeasure2(uint16_t x1,uint16_t x2){
 	int ydiff = getY_diff(secondy,firsty);
 	
 	direction = calculateAngle(ydiff,xdiff);
+	char str[20];
+	sprintf(str,"\nDirection: %d",direction);
+	printf (str);
 }
 
 void updateDirection(int d){
-	direction = (d + 360 - direction) % 360;
+	direction = d;	
+	//direction = (d + 360 - direction) % 360;
+	char str[20];
+	sprintf(str,"\nNew direction: %d",direction);
+	printf (str);
 }

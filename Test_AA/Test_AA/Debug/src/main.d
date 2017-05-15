@@ -132,12 +132,7 @@ src/main.d src/main.o: ../src/main.c ../src/asf.h \
  ../src/Rotate.h ../src/Drive.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu-toolchain\arm-none-eabi\include\setjmp.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu-toolchain\arm-none-eabi\include\machine\setjmp.h \
- ../src/config/conf_board.h ../src/consoleFunctions.h \
- ../src/config/../unity/unity.h ../src/config/../unity/unity_internals.h \
- c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu-toolchain\lib\gcc\arm-none-eabi\4.8.4\include-fixed\limits.h \
- c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu-toolchain\lib\gcc\arm-none-eabi\4.8.4\include-fixed\syslimits.h \
- c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu-toolchain\arm-none-eabi\include\limits.h \
- ../src/config/../Test/test_CalculateAngle.h
+ ../src/config/conf_board.h ../src/consoleFunctions.h
 
 ../src/asf.h:
 
@@ -430,15 +425,3 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu
 ../src/config/conf_board.h:
 
 ../src/consoleFunctions.h:
-
-../src/config/../unity/unity.h:
-
-../src/config/../unity/unity_internals.h:
-
-c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu-toolchain\lib\gcc\arm-none-eabi\4.8.4\include-fixed\limits.h:
-
-c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu-toolchain\lib\gcc\arm-none-eabi\4.8.4\include-fixed\syslimits.h:
-
-c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu-toolchain\arm-none-eabi\include\limits.h:
-
-../src/config/../Test/test_CalculateAngle.h:

@@ -14,8 +14,8 @@
 #include <stdio_serial.h>
 #include "conf_board.h"
 #include "consoleFunctions.h"
-#include "../unity/unity.h"					/* Contains declarations of all functions that Unity provides */
-#include "../Test/test_CalculateAngle.h"
+// #include "../unity/unity.h"					/* Contains declarations of all functions that Unity provides */
+// #include "../Test/test_CalculateAngle.h"
 
 
 int OB1x= 20;
@@ -27,6 +27,7 @@ int OB3y = 50;
 
 uint8_t c_counter = 0;
 char rx[16];
+int casen=0;
 
 /*Tillåter feedback till terminafönstret */
 static void configure_console(void)
@@ -97,6 +98,15 @@ int main (void)
 	configure_console();
 	initDrive();
 	
+	startupMeasure1(0,0);
+	moveForward(1650,1650);
+	delayMicroseconds(1000000);
+	moveForward(1500,1500);
+	startupMeasure2(20,20);
+	delayMicroseconds(500000);
+	
+	
+	
 // 	char str1[4];
 // 	char str2[4];
 // 	char str3[4];
@@ -107,12 +117,12 @@ int main (void)
 // 	uint16_t x3 = 0; //irrelevant
 // 	uint16_t x4 = 0; //irrelevant
 	
-	UnityBegin("../Test/test_CalculateAngle.c");
-	RUN_TEST(test_getX_diff,10);
-	RUN_TEST(test_getY_diff,20);
-	RUN_TEST(test_CalculateAngle,30);
-	RUN_TEST(test_CalculatesetPoint,40);
-	RUN_TEST(test_CalculateDistance,50);
+// 	UnityBegin("../Test/test_CalculateAngle.c");
+// 	RUN_TEST(test_getX_diff,10);
+// 	RUN_TEST(test_getY_diff,20);
+// 	RUN_TEST(test_CalculateAngle,30);
+// 	RUN_TEST(test_CalculatesetPoint,40);
+// 	RUN_TEST(test_CalculateDistance,50);
 	while(1){
 		
 // 		str1[0] = rx[0];
@@ -141,32 +151,64 @@ int main (void)
 // 		stringToInt(&x4, str4);
 // 			
 
-startupMeasure1(0,0);
-moveForward(1650,1650);
-delayMicroseconds(1000000);
-moveForward(1500,1500);
-startupMeasure2(20,20);
+// 	rotate(135);
+// 	delayMicroseconds(500000);
+// 	rotate(270);
+// 	delayMicroseconds(500000);
 
-		int casen=0;
+ 	char str[20];
+//  	sprintf(str,"\nVinkel: %d",d);
+//  	printf (str);
+
+		
+
+		
 		switch (casen)
 		{
 		case 0:
-			rotate(calculateAngle(getY_diff(OB1x,x1),getX_diff(OB1y,y1)));
+			
+			rotate(90);
+		
+// 			sprintf(str,"\nCase: %d",casen);
+// 			printf (str);
+// 			rotate(calculateAngle(getY_diff(OB1x,x1),getX_diff(OB1y,y1)));
+ 			delayMicroseconds(500000);
+			break;
 		case 1:
-			driveTo(calculateDistance(getY_diff(OB1x,x1),getX_diff(OB1y,y1)));
+		
+			rotate(225);
+// 			sprintf(str,"\nCase: %d",casen);
+// 			printf (str);
+// 			driveTo(calculateDistance(getY_diff(OB1x,x1),getX_diff(OB1y,y1)));
+ 			delayMicroseconds(500000);
 			break;
-		case 2:
-			rotate(calculateAngle(getY_diff(OB2x,OB1x),getX_diff(OB2y,OB1y)));
-		case 3:
-			driveTo(calculateDistance(getY_diff(OB2x,OB1x),getX_diff(OB2y,OB1y)));
-			break;
-		case 4:
-			rotate(calculateAngle(getY_diff(OB3x,OB2x),getX_diff(OB3y,OB2y)));
-		case 5:
-			driveTo(calculateDistance(getY_diff(OB3x,OB2x),getX_diff(OB3y,OB2y)));		
-			break;
+// 		case 2:
+// 			sprintf(str,"\nCase: %d",casen);
+// 			printf (str);
+// 			rotate(calculateAngle(getY_diff(OB2x,OB1x),getX_diff(OB2y,OB1y)));
+// 			delayMicroseconds(500000);
+// 			break;
+// 		case 3:
+// 			sprintf(str,"\nCase: %d",casen);
+// 			printf (str);
+// 			driveTo(calculateDistance(getY_diff(OB2x,OB1x),getX_diff(OB2y,OB1y)));
+// 			delayMicroseconds(500000);
+// 			break;
+// 		case 4:
+// 			sprintf(str,"\nCase: %d",casen);
+// 			printf (str);
+// 			rotate(calculateAngle(getY_diff(OB3x,OB2x),getX_diff(OB3y,OB2y)));
+// 			delayMicroseconds(500000);
+// 			break;
+// 		case 5:
+// 			sprintf(str,"\nCase: %d",casen);
+// 			printf (str);
+// 			driveTo(calculateDistance(getY_diff(OB3x,OB2x),getX_diff(OB3y,OB2y)));	
+// 			delayMicroseconds(500000);	
+// 			break;
 		default:
 			moveForward(1500,1500);	
+			delayMicroseconds(500000);
 			break;
 		}
 		casen++;
