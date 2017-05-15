@@ -28,7 +28,7 @@ void task_twi(void *pvParameters){
 		//GOOGLA UPP FREERTOS macro för att byta från ticks till ms
 		//xSemaphoreTake(signal_semafor,1000);
 		ioport_set_pin_level(Pinne,HIGH);
-		//send_test_package(Maxhastighet,TWI_SLAVE_PABYGGNAD);
+		send_package(TWI_CMD_PICKUP_START,TWI_SLAVE_PABYGGNAD);
 		receive_package(TWI_SLAVE_PABYGGNAD);
 		ioport_set_pin_level(Pinne,LOW);
 		printf("END OF TASK\n");

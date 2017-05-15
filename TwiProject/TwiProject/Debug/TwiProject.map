@@ -925,7 +925,7 @@ Discarded input sections
  .data          0x00000000        0x0 src/Task/TaskTwiEgen.o
  .bss           0x00000000        0x0 src/Task/TaskTwiEgen.o
  .text.task_twi
-                0x00000000       0x84 src/Task/TaskTwiEgen.o
+                0x00000000       0x90 src/Task/TaskTwiEgen.o
  .bss.cpu_irq_critical_section_counter
                 0x00000000        0x4 src/Task/TaskTwiEgen.o
  .bss.signal_semafor
@@ -934,7 +934,7 @@ Discarded input sections
                 0x00000000       0x20 src/Task/TaskTwiEgen.o
  .bss.cpu_irq_prev_interrupt_state
                 0x00000000        0x1 src/Task/TaskTwiEgen.o
- .debug_info    0x00000000     0x11a4 src/Task/TaskTwiEgen.o
+ .debug_info    0x00000000     0x11ea src/Task/TaskTwiEgen.o
  .debug_abbrev  0x00000000      0x2ff src/Task/TaskTwiEgen.o
  .debug_loc     0x00000000       0x4d src/Task/TaskTwiEgen.o
  .debug_aranges
@@ -1080,8 +1080,8 @@ Discarded input sections
  .debug_macro   0x00000000       0x16 src/Task/TaskTwiEgen.o
  .debug_macro   0x00000000       0x2e src/Task/TaskTwiEgen.o
  .debug_macro   0x00000000       0x10 src/Task/TaskTwiEgen.o
- .debug_line    0x00000000     0x10fe src/Task/TaskTwiEgen.o
- .debug_str     0x00000000    0x6166f src/Task/TaskTwiEgen.o
+ .debug_line    0x00000000     0x1103 src/Task/TaskTwiEgen.o
+ .debug_str     0x00000000    0x616f1 src/Task/TaskTwiEgen.o
  .comment       0x00000000       0x5c src/Task/TaskTwiEgen.o
  .ARM.attributes
                 0x00000000       0x33 src/Task/TaskTwiEgen.o
@@ -11395,6 +11395,7 @@ receive_package                                   src/TwiFunctions/TwiFunctions.
 resetTest                                         src/Test/test_runner.o
 send_package                                      src/TwiFunctions/TwiFunctions.o
                                                   src/main.o
+                                                  src/Task/TaskTwiEgen.o
 setUp                                             src/Test/test_runner.o
 setbuf                                            c:/program files (x86)/atmel/atmel toolchain/arm gcc/native/4.8.1443/arm-gnu-toolchain/bin/../lib/gcc/arm-none-eabi/4.8.4/../../../../arm-none-eabi/lib/armv7-m\libc.a(lib_a-setbuf.o)
                                                   src/ConsoleFunctions.o
