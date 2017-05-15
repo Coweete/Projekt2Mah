@@ -43,7 +43,7 @@
 #define TASK_TWI_PRIO	2
 #define TASK_BLINK		1
 
-extern uint8_t data_received_nav[];
+extern uint8_t data_received_pab[];
 
 int main (void)
 {
@@ -52,18 +52,27 @@ int main (void)
 	sysclk_init();
 	configureConsole();
 	ioport_init();
-	//delay_init();
+	delay_init();
+	printf("Start of inint\n");
 	init_twi_functions();
 	
-
-	printf("start sending to navigation");
-	send_package(TWI_CMD_ERROR,TWI_SLAVE_NAVIGERING);
-	receive_package(TWI_SLAVE_NAVIGERING);
 	char str[20];
-	sprintf(str,"Data receive %d",data_received_nav[1]);
-	printf(str);
-	sprintf(str,"Data receive %d",data_received_nav[2]);
-	printf(str);
+	
+	printf("Start pickup\n");
+	pa_sendstatus(TWI_CMD_PICKUP_START,SOCK);
+	
+	pa_sendstatus(TWI_CMD_PICKUP_STATUS,1);
+	int conter = 1;
+	while(conter){
+		pa_sendstatus(TWI_CMD_PICKUP_STATUS,1);
+		sprintf(str,"data recive %d",data_received_pab[1]);
+		printf(str);	
+		if (data_received_pab[1] == 2){
+			pa_sendstatus(TWI_CMD_DROPOFF_START,1);
+		}else{
+		}
+		delay_ms(1000);
+	}
 	
 	
 	/*

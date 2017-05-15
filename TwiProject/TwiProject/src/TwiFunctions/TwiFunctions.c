@@ -20,10 +20,10 @@
 
 struct ArmInfo arminformation;
 
-static uint8_t data_received_pab[TWI_DATA_RECIEVE_LENGTH] = {};
+uint8_t data_received_pab[TWI_DATA_RECIEVE_LENGTH] = {};
 uint16_t data_received_nav[TWI_DATA_RECIEVE_LENGTH] = {};
-static uint8_t send_data_pab[TWI_DATA_SEND_LENGTH] = {};
-static uint8_t send_data_nav[TWI_DATA_SEND_LENGTH] = {};
+uint8_t send_data_pab[TWI_DATA_SEND_LENGTH] = {};
+uint8_t send_data_nav[TWI_DATA_SEND_LENGTH] = {};
 
 twi_package_t packet_pab = {
 	.addr[0]		= TWI_SLAVE_MEM_ADDR >> 8,	//TWI slave memory address data MSB
@@ -92,9 +92,11 @@ void pa_sendstatus(TwiCmd twi_state, uint8_t underState){
 			arminformation.collectAll		= data_received_pab[1];
 			arminformation.hasData			= data_received_pab[2];
 		break;
+		
 		case TWI_CMD_DROPOFF_START:
 			send_package(TWI_CMD_DROPOFF_START,TWI_SLAVE_PABYGGNAD);
 		break;
+		
 		case TWI_CMD_PICKUP_START:
 			if(underState == SOCK){
 				send_data_pab[1] = SOCK;
@@ -107,15 +109,17 @@ void pa_sendstatus(TwiCmd twi_state, uint8_t underState){
 				send_package(TWI_CMD_PICKUP_START,TWI_SLAVE_PABYGGNAD);
 			}
 		break;
+		
 		case TWI_CMD_PICKUP_STATUS:
-			send_package(TWI_CMD_PICKUP_START,TWI_SLAVE_PABYGGNAD);
+			send_package(TWI_CMD_PICKUP_STATUS,TWI_SLAVE_PABYGGNAD);
 			delay_ms(10);
 			receive_package(TWI_SLAVE_PABYGGNAD);
 		break;
+		
 		case TWI_CMD_DROPOFF_STATUS:
 			send_package(TWI_CMD_DROPOFF_STATUS,TWI_SLAVE_PABYGGNAD);
-			
 		break;
+		
 		case TWI_CMD_ERROR:
 			send_package(TWI_CMD_ERROR,TWI_SLAVE_PABYGGNAD);
 		break;
