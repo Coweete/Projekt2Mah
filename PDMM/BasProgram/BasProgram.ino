@@ -1,28 +1,6 @@
 #include <Wire.h>
-/*
-Identifiering             = 0x10,
-Placering_relativt_objekt = 0x11,
-Placering_relativt_lada   = 0x12,
-Maxhastighet              = 0x13,
-Lyckat_lyft               = 0x14,
-Misslyckat_lyft           = 0x15,
-Lyckad_avlamning          = 0x16,
-Misslyckad_avlamning      = 0x17,
-Justera_position          = 0x18,
-Avbryt_justering          = 0x19,
-Uppstart_pabyggnad        = 0x20,
-Lyft_kloss                = 0x21,
-Lyft_glas                 = 0x22,
-Lyft_strumpa              = 0x23,
-Avbryt_lyft               = 0x24,
-Lamna_av_objekt           = 0x25,
-Position_av_lada          = 0x30,
-Aktuell_position_robot    = 0x31,
-Start_position_strumpa    = 0x32,
-Start_position_kloss      = 0x33,
-Start_position_glas       = 0x34,
-Uppstart_Position         = 0x40
-*/
+
+uint8_t rx_buf[3];
 
 //Pabyggnads nummert för att identifiering 
 uint8_t id_nummer =  37;
@@ -35,24 +13,26 @@ uint8_t max_hastighet = 15;
 //Justering av position, om roboten behöver åka fram eller bakåt för att kunna ta upp objektet.
 int position_justering = 0;
 //Status på om lyftet är klart eller inte
-uint8_t lyft_status = 0;
+uint8_t lyft_status = 13;
 
-uint8_t data_packet[2];
+uint8_t data_packet[3];
 uint8_t twi_state = 0,request_state = 0;
 
 /**
  * Setup
  */
 void setup() {
-  Wire.begin(2);                  //Startar upp TWI bibliotektet och sätter adressen till 2.
+  Wire.begin(3);                  //Startar upp TWI bibliotektet och sätter adressen till 2.
   Wire.onRequest(requestEvent);   //Sätter ihop ett avbrott för när mastern vill att slaven skall skicka information.
   Wire.onReceive(receiveEvent);   //Sätter ihop ett avbrott för när slaven skall ta imot information.
   Serial.begin(9600);             
+  Serial.println("Arduino start");
 }
 /**
  *  Main loop
  */
 void loop() {
+  //Serial.println("in loop");
   delay(100);
 }
 
@@ -61,6 +41,7 @@ void loop() {
  * till sig, detta sker över I2C.
  */
 void requestEvent(){
+  twi_state = rx_buf[0];
   switch(twi_state){
     case 0x10:                              //Identifiering skickar information om roboten vilket id pabyggnaden har
         data_packet[0] = twi_state;   
@@ -87,7 +68,7 @@ void requestEvent(){
     case 0x14:                              //Lyckat lyft om roboten har lyckats lyfta objekte
         data_packet[0] = twi_state;
         data_packet[1] = lyft_status;       //3 = lyckat lyft, 4 = misslyckat lyft
-        Wire.write(data_packet,2); 
+        Wire.write(data_packet,2);
       break;
     case 0x15:                              //Misslyckat lyft, om roboten har misslyckat med att lyfta objektet
         data_packet[0] = twi_state;         
@@ -115,8 +96,13 @@ void requestEvent(){
  *  @param howMany Hur många bitar som packetet är på
  */
 void receiveEvent(int howMany){
+  Serial.println("TA EMOT");
+  int i = 0;
   while(Wire.available()){
+    //fixa så att ta emot medelandet är 3 bytes istället för 1
      twi_state = Wire.read(); // Läser in medelandet.
+     rx_buf[i] = twi_state;
+     i++;
   }
   switch(twi_state){
     case 0x10:
@@ -168,7 +154,6 @@ void receiveEvent(int howMany){
     
       break;
   }
-  Serial.println();
 }
 
 

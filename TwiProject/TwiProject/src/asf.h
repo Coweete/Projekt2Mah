@@ -59,13 +59,6 @@
 // From module: Delay routines
 #include <delay.h>
 
-// From module: FreeRTOS - PDC Interface Layer
-#include <freertos_peripheral_control.h>
-#include <freertos_peripheral_control_private.h>
-
-// From module: FreeRTOS - TWI Interface Layer
-#include <freertos_twi_master.h>
-
 // From module: FreeRTOS mini Real-Time Kernel
 #include <FreeRTOS.h>
 #include <FreeRTOS_CLI.h>
@@ -91,9 +84,6 @@
 
 // From module: Interrupt management - SAM implementation
 #include <interrupt.h>
-
-// From module: PDC - Peripheral DMA Controller Example
-#include <pdc.h>
 
 // From module: PIO - Parallel Input/Output Controller
 #include <pio.h>

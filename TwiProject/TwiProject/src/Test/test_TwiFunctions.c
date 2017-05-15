@@ -7,37 +7,44 @@
 #include <asf.h>
 
 #include "test_TwiFunctions.h"
+#include "Task/TaskNavigationCom.h"
 #include "../TwiFunctions/TwiFunctions.h"
 #include "../unity/unity.h"
-/*
-#define plat_id			37
-#define plat_di_ob		10
-#define plat_an_ob		5
-#define plat_di_box		11
-#define plat_an_box		6
-#define plat_speed		15
 
-extern struct platform_info pl_info;
+#define distance_obj 10
+#define distance_box 11
+#define angle_obj 5
+#define angle_box 6
+#define collect 1
+#define data 244
+
+extern struct ArmInfo arminformation;
+
 
 void init_test_com(void){
 	init_twi_functions();
 }
 
-void test_plat_speed(void){
-	TEST_ASSERT_EQUAL(plat_speed,pl_info.max_speed);
+void test_box_distance(void){
+	TEST_ASSERT_EQUAL(distance_box,arminformation.boxDistance);
 }
 
-void test_platid(void){
-	TEST_ASSERT_EQUAL(plat_id,pl_info.id);
+void test_box_angle(void){
+	TEST_ASSERT_EQUAL(angle_box,arminformation.boxAngle);
 }
 
-void test_plat_box_info(void){
-	TEST_ASSERT_EQUAL(plat_di_box,pl_info.distance_box);
-	TEST_ASSERT_EQUAL(plat_an_box,pl_info.angle_box);
+void test_object_angle(void){
+	TEST_ASSERT_EQUAL(angle_obj,arminformation.objectAngle);
 }
 
-void test_plat_ob_info(void){
-	TEST_ASSERT_EQUAL(plat_an_ob,pl_info.angle_object);
-	TEST_ASSERT_EQUAL(plat_di_ob,pl_info.distance_object);
+void test_object_distance(void){
+	TEST_ASSERT_EQUAL(distance_obj,arminformation.objectDistance);
 }
-*/
+
+void test_collect(void){
+	TEST_ASSERT_EQUAL(collect,arminformation.collectAll);
+}
+
+void test_hasData(void){
+	TEST_ASSERT_EQUAL(data,arminformation.hasData);
+}

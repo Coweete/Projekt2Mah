@@ -10,7 +10,7 @@
 #define TASKTWIEGEN_H_
 
 
-
+void task_twi(void *pvParameters);
 
 
 #endif /* TASKTWIEGEN_H_ */

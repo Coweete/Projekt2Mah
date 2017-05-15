@@ -2,6 +2,10 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+src\PiCom\piCom.c
+
+src\Task\TaskNavigationCom.c
+
 src\Task\TaskTwiEgen.c
 
 src\Test\test_runner.c
@@ -10,13 +14,7 @@ src\unity\unity.c
 
 src\ASF\common\services\delay\sam\cycle_counter.c
 
-src\ASF\common\services\freertos\sam\freertos_peripheral_control.c
-
-src\ASF\common\services\freertos\sam\freertos_twi_master.c
-
 src\ASF\common\utils\stdio\read.c
-
-src\ASF\sam\drivers\pdc\pdc.c
 
 src\ASF\sam\drivers\twi\twi.c
 
@@ -43,8 +41,6 @@ src\ConsoleFunctions.c
 src\DelayFunctions.c
 
 src\Task\task_blink.c
-
-src\Task\TwiTask.c
 
 src\Test\test_TwiFunctions.c
 

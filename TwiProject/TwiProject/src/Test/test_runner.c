@@ -20,11 +20,14 @@ int main(void){
 	configureConsole();
 	init_test_com();
 	
+	printf("\n");
 	UnityBegin("../test/test_TwiFunctions");
-	RUN_TEST(test_platid,10);
-	RUN_TEST(test_plat_ob_info,20);
-	RUN_TEST(test_plat_speed,30);
-	RUN_TEST(test_plat_box_info,40);
+	RUN_TEST(test_collect,10);
+	RUN_TEST(test_hasData,20);
+	RUN_TEST(test_box_angle,30);
+	RUN_TEST(test_object_angle,40);
+	RUN_TEST(test_box_distance,50);
+	RUN_TEST(test_object_distance,60);
 
 	UnityEnd();
 	return 0;

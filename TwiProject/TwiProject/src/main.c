@@ -29,8 +29,21 @@
  * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
  */
 #include <asf.h>
+#include "FreeRTOS.h"
 #include "consoleFunctions.h"
 #include "TwiFunctions/TwiFunctions.h"
+#include "Task/TaskTwiEgen.h"
+#include "Task/task_blink.h"
+#include "TwiFunctions/TwiComHandler.h"
+#include "Task/TaskNavigationCom.h"
+#include "PiCom/piCom.h"
+
+#define TASK_TWI_SIZE	(1024/sizeof(portSTACK_TYPE))
+#define TASK_TWI_NAV    3
+#define TASK_TWI_PRIO	2
+#define TASK_BLINK		1
+
+extern uint8_t data_received_nav[];
 
 int main (void)
 {
@@ -38,9 +51,27 @@ int main (void)
 	board_init();
 	sysclk_init();
 	configureConsole();
+	ioport_init();
+	//delay_init();
 	init_twi_functions();
-
 	
+
+	printf("start sending to navigation");
+	send_package(TWI_CMD_ERROR,TWI_SLAVE_NAVIGERING);
+	receive_package(TWI_SLAVE_NAVIGERING);
+	char str[20];
+	sprintf(str,"Data receive %d",data_received_nav[1]);
+	printf(str);
+	sprintf(str,"Data receive %d",data_received_nav[2]);
+	printf(str);
+	
+	
+	/*
+	xTaskCreate(task_nav_com,(const signed char* const) "navigation",TASK_TWI_SIZE,NULL,TASK_TWI_NAV,NULL);
+	xTaskCreate(task_blink,(const signed char* const) "blink",TASK_TWI_SIZE,NULL,TASK_BLINK,NULL);
+	xTaskCreate(task_twi,(const signed char* const) "com",TASK_TWI_SIZE,NULL,TASK_TWI_PRIO,NULL);
+	vTaskStartScheduler();
+	*/
 	while (1){
 		
 	}

@@ -31,13 +31,13 @@
         <options>
           <option id="common.boards" value="Add" config="" content-id="Atmel.ASF" />
           <option id="common.services.delay" value="Add" config="" content-id="Atmel.ASF" />
-          <option id="common.services.layer.freertos.twi" value="Add" config="" content-id="Atmel.ASF" />
           <option id="common.services.basic.gpio" value="Add" config="" content-id="Atmel.ASF" />
           <option id="common.services.ioport" value="Add" config="" content-id="Atmel.ASF" />
           <option id="common.services.basic.twi" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam.drivers.pio" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam.drivers.twi" value="Add" config="" content-id="Atmel.ASF" />
           <option id="thirdparty.wireless.addons.sio2host" value="Add" config="uart" content-id="Atmel.ASF" />
+          <option id="thirdparty.os.freertos.version" value="Add" config="7.3.0" content-id="Atmel.ASF" />
           <option id="common.applications.user_application" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam.utils.cmsis.sam3x.source.template" value="Add" config="" content-id="Atmel.ASF" />
         </options>
@@ -210,14 +210,6 @@
           <file path="src/ASF/common/services/delay/sam/cycle_counter.c" framework="" version="3.21.0" source="common\services\delay\sam\cycle_counter.c" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/common/services/delay/sam/cycle_counter.h" framework="" version="3.21.0" source="common\services\delay\sam\cycle_counter.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/common/services/delay/delay.h" framework="" version="3.21.0" source="common\services\delay\delay.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam/drivers/pdc/pdc.c" framework="" version="3.21.0" source="sam\drivers\pdc\pdc.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam/drivers/pdc/pdc.h" framework="" version="3.21.0" source="sam\drivers\pdc\pdc.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam/drivers/pdc/pdc_uart_example/pdc_uart_example.h" framework="" version="3.21.0" source="sam\drivers\pdc\pdc_uart_example\pdc_uart_example.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/services/freertos/sam/freertos_peripheral_control.c" framework="" version="3.21.0" source="common\services\freertos\sam\freertos_peripheral_control.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/services/freertos/sam/freertos_peripheral_control_private.h" framework="" version="3.21.0" source="common\services\freertos\sam\freertos_peripheral_control_private.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/services/freertos/sam/freertos_peripheral_control.h" framework="" version="3.21.0" source="common\services\freertos\sam\freertos_peripheral_control.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/services/freertos/sam/freertos_twi_master.c" framework="" version="3.21.0" source="common\services\freertos\sam\freertos_twi_master.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/services/freertos/sam/freertos_twi_master.h" framework="" version="3.21.0" source="common\services\freertos\sam\freertos_twi_master.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/thirdparty/freertos/freertos-7.3.0/source/tasks.c" framework="" version="3.21.0" source="thirdparty\freertos\freertos-7.3.0\source\tasks.c" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/thirdparty/freertos/freertos-7.3.0/source/queue.c" framework="" version="3.21.0" source="thirdparty\freertos\freertos-7.3.0\source\queue.c" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/thirdparty/freertos/freertos-7.3.0/source/list.c" framework="" version="3.21.0" source="thirdparty\freertos\freertos-7.3.0\source\list.c" changed="False" content-id="Atmel.ASF" />
@@ -501,8 +493,6 @@
     <Folder Include="src\ASF\common\services\clock\sam3x\" />
     <Folder Include="src\ASF\common\services\delay\" />
     <Folder Include="src\ASF\common\services\delay\sam\" />
-    <Folder Include="src\ASF\common\services\freertos\" />
-    <Folder Include="src\ASF\common\services\freertos\sam\" />
     <Folder Include="src\ASF\common\services\gpio\" />
     <Folder Include="src\ASF\common\services\gpio\sam_gpio\" />
     <Folder Include="src\ASF\common\services\ioport\" />
@@ -519,8 +509,6 @@
     <Folder Include="src\ASF\sam\boards\" />
     <Folder Include="src\ASF\sam\boards\arduino_due_x\" />
     <Folder Include="src\ASF\sam\drivers\" />
-    <Folder Include="src\ASF\sam\drivers\pdc\" />
-    <Folder Include="src\ASF\sam\drivers\pdc\pdc_uart_example\" />
     <Folder Include="src\ASF\sam\drivers\pio\" />
     <Folder Include="src\ASF\sam\drivers\pmc\" />
     <Folder Include="src\ASF\sam\drivers\twi\" />
@@ -563,12 +551,25 @@
     <Folder Include="src\ASF\thirdparty\wireless\addons\sio2host\" />
     <Folder Include="src\ASF\thirdparty\wireless\addons\sio2host\uart\" />
     <Folder Include="src\config\" />
+    <Folder Include="src\PiCom" />
     <Folder Include="src\unity" />
     <Folder Include="src\Test" />
     <Folder Include="src\Task" />
     <Folder Include="src\TwiFunctions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\PiCom\piCom.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\PiCom\piCom.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Task\TaskNavigationCom.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Task\TaskNavigationCom.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\Task\TaskTwiEgen.c">
       <SubType>compile</SubType>
     </Compile>
@@ -576,6 +577,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\Test\test_runner.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\TwiFunctions\TwiComHandler.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\unity\unity.c">
@@ -596,33 +600,9 @@
     <None Include="src\ASF\common\services\delay\sam\cycle_counter.h">
       <SubType>compile</SubType>
     </None>
-    <Compile Include="src\ASF\common\services\freertos\sam\freertos_peripheral_control.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <None Include="src\ASF\common\services\freertos\sam\freertos_peripheral_control_private.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\common\services\freertos\sam\freertos_peripheral_control.h">
-      <SubType>compile</SubType>
-    </None>
-    <Compile Include="src\ASF\common\services\freertos\sam\freertos_twi_master.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <None Include="src\ASF\common\services\freertos\sam\freertos_twi_master.h">
-      <SubType>compile</SubType>
-    </None>
     <Compile Include="src\ASF\common\utils\stdio\read.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\ASF\sam\drivers\pdc\pdc.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <None Include="src\ASF\sam\drivers\pdc\pdc.h">
-      <SubType>compile</SubType>
-    </None>
-    <None Include="src\ASF\sam\drivers\pdc\pdc_uart_example\pdc_uart_example.h">
-      <SubType>compile</SubType>
-    </None>
     <Compile Include="src\ASF\sam\drivers\twi\twi.c">
       <SubType>compile</SubType>
     </Compile>
@@ -711,12 +691,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\Task\task_blink.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\Task\TwiTask.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\Task\TwiTask.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\Test\test_TwiFunctions.c">

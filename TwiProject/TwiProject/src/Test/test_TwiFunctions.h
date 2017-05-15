@@ -10,9 +10,11 @@
 #define TEST_TWIFUNCTIONS_H_
 
 void init_test_com(void);
-void test_plat_box_info(void);
-void test_platid(void);
-void test_plat_speed(void);
-void test_plat_ob_info(void);
+void test_box_distance(void);
+void test_box_angle(void);
+void test_object_angle(void);
+void test_object_distance(void);
+void test_collect(void);
+void test_hasData(void);
 
 #endif /* TEST_TWIFUNCTIONS_H_ */
