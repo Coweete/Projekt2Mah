@@ -9,9 +9,9 @@
 #ifndef SOUNDSENSOR_H_
 #define SOUNDSENSOR_H_
 
-void init_sensor();
-int readSensorValue();
-int pulsein();
+void init_sensor(void);
+int readSensorValue(void);
+int pulsein(void);
 
 
 #endif /* SOUNDSENSOR_H_ */

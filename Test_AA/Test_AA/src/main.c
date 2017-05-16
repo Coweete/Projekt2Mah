@@ -23,6 +23,7 @@
 #define SIGNAL_IN PIO_PC14_IDX
 #define PICKUP PIO_PC13_IDX
 #define DELIVER PIO_PC12_IDX
+#define INTERRUPT PIO_PC16_IDX
 
 
 int OB1x= 20;
@@ -35,10 +36,15 @@ int OB3y = 50;
 int objDist = 40;
 int sensor = 0;
 int drive_dist = 0;
+int angle = 0;
 
 uint8_t c_counter = 0;
+extern uint8_t data_received_pab[];
 char rx[16];
 int casen=0;
+int count_test = 0;
+
+void addOne(const uint32_t id, const uint32_t index);
 
 /*Tillåter feedback till terminafönstret */
 static void configure_console(void)
@@ -96,7 +102,37 @@ static void configure_console(void)
 // 			*p_variable = *p_variable + (*p_string - '0');
 // }
 
-extern uint8_t data_received_pab[];
+void addOne(const uint32_t id, const uint32_t index){
+	char str[20];
+	printf("\nInterrupt");
+	if ((id == ID_PIOC) && (index == INTERRUPT)){
+		count_test++;
+		sprintf(str,"\nCount_test: %d",count_test);
+		printf (str);
+	}else{
+		printf("\nError");
+	}
+}
+
+void init_interrupt(void){
+	printf("\nInit_interrupt");
+	
+	pmc_enable_periph_clk(ID_PIOC);
+	
+	pio_set_input(PIOC,INTERRUPT,PIO_PULLUP);
+	
+	pio_handler_set(PIOC,ID_PIOC,INTERRUPT,PIO_IT_EDGE,addOne);
+	
+	NVIC_EnableIRQ(PIOC_IRQn);
+	
+	pio_enable_interrupt(PIOC,INTERRUPT);
+	
+	cpu_irq_enable();
+}
+
+
+
+
 int main (void)
 {
 	sysclk_init();
@@ -110,6 +146,7 @@ int main (void)
 	initDrive();
 	init_sensor();
 	init_twi_functions();
+	init_interrupt();
 	
 	ioport_set_pin_dir(SIGNAL_IN,IOPORT_DIR_INPUT);
 	ioport_set_pin_dir(PICKUP,IOPORT_DIR_OUTPUT);
@@ -180,62 +217,71 @@ int main (void)
  		char str[20];
 //  	sprintf(str,"\nVinkel: %d",d);
 //  	printf (str);
-
+		
 // 		
 // 		sprintf(str,"\nSensor: %d",sensor);
 //  		printf (str);
-		 
+		
+		angle = (angle + 90) % 360;
+		
+		rotate(angle);
+		
+		delayMicroseconds(500000);
 		
 		
-		switch (casen)
-		{
-		case 0:
-			//drive_dist = (sensor - objDist) / 1.36;
-			//driveTo(objDist);
-// 			sprintf(str,"\ndrive_dist: %d",drive_dist);
-// 			printf (str);
-// 			sprintf(str,"\nSensor: %d",sensor);
-// 			printf (str);
-		 	//break;
-// 			 printf("case 0");
-// 			 pa_sendstatus(TWI_CMD_PICKUP_START,SOCK);
-			 ioport_set_pin_level(PICKUP,HIGH);
-			 casen = 1;
-			 break;
-		case 1:
-			
-			if(ioport_get_pin_level(SIGNAL_IN)){
-				casen = 2;
-			}
-			
-// 			printf("case 1");
-// 			printf ("\nPåbyggnad hämta");
-// 			int conter = 1;
-// 			while(conter){
-// 				pa_sendstatus(TWI_CMD_PICKUP_STATUS,1);
-// 				sprintf(str,"data recive %d",data_received_pab[1]);
-// 				printf(str);
-// 				if (data_received_pab[1] == 2){
-// 					//pa_sendstatus(TWI_CMD_DROPOFF_START,1);
-// 					casen = 2;
-// 					}else{
-// 						casen = 1;
-// 				}
+		
+		
+		
+		
+// 		switch (casen)
+// 		{
+// 		case 0:
+// 			//drive_dist = (sensor - objDist) / 1.36;
+// 			//driveTo(objDist);
+// // 			sprintf(str,"\ndrive_dist: %d",drive_dist);
+// // 			printf (str);
+// // 			sprintf(str,"\nSensor: %d",sensor);
+// // 			printf (str);
+// 		 	//break;
+// // 			 printf("case 0");
+// // 			 pa_sendstatus(TWI_CMD_PICKUP_START,SOCK);
+// 			 ioport_set_pin_level(PICKUP,HIGH);
+// 			 casen = 1;
+// 			 break;
+// 		case 1:
+// 			
+// 			if(ioport_get_pin_level(SIGNAL_IN)){
+// 				casen = 2;
 // 			}
-			break;
-		case 2:
-			
-			printf("case 2");
-			rotate(90);
-			casen = 3;
-			break;
-		case 3:	
-			ioport_set_pin_level(DELIVER,HIGH);
-// 			printf("\nPåbyggnad lämna");
-// 			pa_sendstatus(TWI_CMD_DROPOFF_START,0);
-			casen = 4;
-			break;
-		}
+// 			
+// // 			printf("case 1");
+// // 			printf ("\nPåbyggnad hämta");
+// // 			int conter = 1;
+// // 			while(conter){
+// // 				pa_sendstatus(TWI_CMD_PICKUP_STATUS,1);
+// // 				sprintf(str,"data recive %d",data_received_pab[1]);
+// // 				printf(str);
+// // 				if (data_received_pab[1] == 2){
+// // 					//pa_sendstatus(TWI_CMD_DROPOFF_START,1);
+// // 					casen = 2;
+// // 					}else{
+// // 						casen = 1;
+// // 				}
+// // 			}
+// 			break;
+// 		case 2:
+// 			
+// 			printf("case 2");
+// 			rotate(90);
+// 			casen = 3;
+// 			break;
+// 		case 3:	
+// 			ioport_set_pin_level(DELIVER,HIGH);
+// // 			printf("\nPåbyggnad lämna");
+// // 			pa_sendstatus(TWI_CMD_DROPOFF_START,0);
+// 			casen = 4;
+// 			break;
+		//}
  		//casen++;
 
 		

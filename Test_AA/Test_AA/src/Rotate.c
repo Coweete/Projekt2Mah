@@ -38,6 +38,7 @@ int direction = 0;
 int r_count = 0;
 int l_count = 0;
 
+
 uint16_t firstx = 0;
 uint16_t firsty = 0;
 uint16_t secondx = 0;
@@ -59,7 +60,7 @@ void initRotateMotor(void){
     ioport_set_pin_dir(L4,IOPORT_DIR_INPUT);
     ioport_set_pin_dir(L5,IOPORT_DIR_INPUT);
 
-	  
+	
     
 }
 
