@@ -13,6 +13,7 @@
 #include "Motorfunctions.h"
 #include "DelayFunctions.h"
 #include "Drive.h"
+//#include "soundSensor.h"
 
 //Höger
 #define R0 PIO_PA15_IDX
@@ -61,7 +62,7 @@ void initDrive(void){
 // 		
 // }
 
-void driveTo(int obj, int dist){
+void driveTo(int obj){
 	
 	char str[20];
 	sprintf(str,"\nDrive: %d",obj);
@@ -74,12 +75,12 @@ void driveTo(int obj, int dist){
 	ioport_set_pin_level(R_RESET,LOW);
 	ioport_set_pin_level(L_RESET,LOW);
 	
-	while(newcount < obj && obj > dist){
+	while(newcount < obj){    // && obj > readSensorValue()
 				
 		ioport_set_pin_level(R_RESET,LOW);
 		ioport_set_pin_level(L_RESET,LOW);
 		
-		delayMicroseconds(300000);
+		delayMicroseconds(500000);
 		
 		r_count = ioport_get_pin_level(R0)+ioport_get_pin_level(R1)*2+ioport_get_pin_level(R2)*4+ioport_get_pin_level(R3)*8
 		+ioport_get_pin_level(R4)*16+ioport_get_pin_level(R5)*32;

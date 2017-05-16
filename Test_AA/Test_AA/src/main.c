@@ -162,7 +162,7 @@ int main (void)
 // 	rotate(270);
 // 	delayMicroseconds(500000);
 		
-		sensor = readSensorValue();
+		//sensor = readSensorValue();
 		
 		
  		char str[20];
@@ -179,12 +179,12 @@ int main (void)
 		{
 		case 0:
 			//drive_dist = (sensor - objDist) / 1.36;
-			driveTo(sensor, objDist);
+			//driveTo(objDist);
 // 			sprintf(str,"\ndrive_dist: %d",drive_dist);
 // 			printf (str);
 // 			sprintf(str,"\nSensor: %d",sensor);
 // 			printf (str);
-		 	break;
+		 	//break;
 		case 1:
 			printf ("\nPåbyggnad hämta");
 			break;
