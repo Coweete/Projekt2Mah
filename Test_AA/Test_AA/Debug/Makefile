@@ -159,6 +159,7 @@ SUBDIRS :=  \
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
 ../src/consoleFunctions.c \
+../src/soundSensor.c \
 ../src/Test/test_CalculateAngle.c \
 ../src/Test/test_Runner.c \
 ../src/Unity/unity.c \
@@ -200,6 +201,7 @@ ASM_SRCS +=
 
 OBJS +=  \
 src/consoleFunctions.o \
+src/soundSensor.o \
 src/Test/test_CalculateAngle.o \
 src/Test/test_Runner.o \
 src/Unity/unity.o \
@@ -234,6 +236,7 @@ src/main.o
 
 OBJS_AS_ARGS +=  \
 src/consoleFunctions.o \
+src/soundSensor.o \
 src/Test/test_CalculateAngle.o \
 src/Test/test_Runner.o \
 src/Unity/unity.o \
@@ -268,6 +271,7 @@ src/main.o
 
 C_DEPS +=  \
 src/consoleFunctions.d \
+src/soundSensor.d \
 src/Test/test_CalculateAngle.d \
 src/Test/test_Runner.d \
 src/Unity/unity.d \
@@ -302,6 +306,7 @@ src/main.d
 
 C_DEPS_AS_ARGS +=  \
 src/consoleFunctions.d \
+src/soundSensor.d \
 src/Test/test_CalculateAngle.d \
 src/Test/test_Runner.d \
 src/Unity/unity.d \
@@ -349,6 +354,8 @@ LINKER_SCRIPT_DEP+=  \
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

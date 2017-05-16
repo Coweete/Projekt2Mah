@@ -580,6 +580,12 @@
     <Compile Include="src\consoleFunctions.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\soundSensor.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\soundSensor.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\Test\test_CalculateAngle.c">
       <SubType>compile</SubType>
     </Compile>

@@ -10,7 +10,7 @@
 #define DRIVE_H_
 
 void initDrive(void);
-void driveTo(int obj);
+void driveTo(int obj, int dist);
 
 
 

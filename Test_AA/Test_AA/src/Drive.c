@@ -61,7 +61,7 @@ void initDrive(void){
 // 		
 // }
 
-void driveTo(int obj){
+void driveTo(int obj, int dist){
 	
 	char str[20];
 	sprintf(str,"\nDrive: %d",obj);
@@ -74,12 +74,12 @@ void driveTo(int obj){
 	ioport_set_pin_level(R_RESET,LOW);
 	ioport_set_pin_level(L_RESET,LOW);
 	
-	while(newcount < obj){
+	while(newcount < obj && obj > dist){
 				
 		ioport_set_pin_level(R_RESET,LOW);
 		ioport_set_pin_level(L_RESET,LOW);
 		
-		delayMicroseconds(500000);
+		delayMicroseconds(300000);
 		
 		r_count = ioport_get_pin_level(R0)+ioport_get_pin_level(R1)*2+ioport_get_pin_level(R2)*4+ioport_get_pin_level(R3)*8
 		+ioport_get_pin_level(R4)*16+ioport_get_pin_level(R5)*32;

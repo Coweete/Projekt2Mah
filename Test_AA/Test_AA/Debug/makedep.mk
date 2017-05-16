@@ -4,6 +4,8 @@
 
 src\consoleFunctions.c
 
+src\soundSensor.c
+
 src\Test\test_CalculateAngle.c
 
 src\Test\test_Runner.c

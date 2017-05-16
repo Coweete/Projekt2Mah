@@ -9,6 +9,7 @@
 #include "Motorfunctions.h"
 #include "Rotate.h"
 #include "Drive.h"
+#include "soundSensor.h"
 
 #include <setjmp.h>
 #include <stdio_serial.h>
@@ -24,6 +25,10 @@ int OB2x = 30;
 int OB2y = 30;
 int OB3x = 40;
 int OB3y = 50;
+
+int objDist = 40;
+int sensor = 0;
+int drive_dist = 0;
 
 uint8_t c_counter = 0;
 char rx[16];
@@ -97,13 +102,14 @@ int main (void)
 	initRotateMotor();
 	configure_console();
 	initDrive();
+	init_sensor();
 	
-	startupMeasure1(0,0);
-	moveForward(1650,1650);
-	delayMicroseconds(1000000);
-	moveForward(1500,1500);
-	startupMeasure2(20,20);
-	delayMicroseconds(500000);
+// 	startupMeasure1(0,0);
+// 	moveForward(1650,1650);
+// 	delayMicroseconds(1000000);
+// 	moveForward(1500,1500);
+// 	startupMeasure2(20,20);
+// 	delayMicroseconds(500000);
 	
 	
 	
@@ -155,62 +161,95 @@ int main (void)
 // 	delayMicroseconds(500000);
 // 	rotate(270);
 // 	delayMicroseconds(500000);
-
- 	char str[20];
+		
+		sensor = readSensorValue();
+		
+		
+ 		char str[20];
 //  	sprintf(str,"\nVinkel: %d",d);
 //  	printf (str);
 
+// 		
+// 		sprintf(str,"\nSensor: %d",sensor);
+//  		printf (str);
+		 
 		
-
 		
 		switch (casen)
 		{
 		case 0:
-			
-			rotate(90);
-		
-// 			sprintf(str,"\nCase: %d",casen);
+			//drive_dist = (sensor - objDist) / 1.36;
+			driveTo(sensor, objDist);
+// 			sprintf(str,"\ndrive_dist: %d",drive_dist);
 // 			printf (str);
-// 			rotate(calculateAngle(getY_diff(OB1x,x1),getX_diff(OB1y,y1)));
- 			delayMicroseconds(500000);
-			break;
+// 			sprintf(str,"\nSensor: %d",sensor);
+// 			printf (str);
+		 	break;
 		case 1:
-		
-			rotate(225);
-// 			sprintf(str,"\nCase: %d",casen);
-// 			printf (str);
-// 			driveTo(calculateDistance(getY_diff(OB1x,x1),getX_diff(OB1y,y1)));
- 			delayMicroseconds(500000);
+			printf ("\nPåbyggnad hämta");
 			break;
-// 		case 2:
-// 			sprintf(str,"\nCase: %d",casen);
-// 			printf (str);
-// 			rotate(calculateAngle(getY_diff(OB2x,OB1x),getX_diff(OB2y,OB1y)));
-// 			delayMicroseconds(500000);
-// 			break;
-// 		case 3:
-// 			sprintf(str,"\nCase: %d",casen);
-// 			printf (str);
-// 			driveTo(calculateDistance(getY_diff(OB2x,OB1x),getX_diff(OB2y,OB1y)));
-// 			delayMicroseconds(500000);
-// 			break;
-// 		case 4:
-// 			sprintf(str,"\nCase: %d",casen);
-// 			printf (str);
-// 			rotate(calculateAngle(getY_diff(OB3x,OB2x),getX_diff(OB3y,OB2y)));
-// 			delayMicroseconds(500000);
-// 			break;
-// 		case 5:
-// 			sprintf(str,"\nCase: %d",casen);
-// 			printf (str);
-// 			driveTo(calculateDistance(getY_diff(OB3x,OB2x),getX_diff(OB3y,OB2y)));	
-// 			delayMicroseconds(500000);	
-// 			break;
-		default:
-			moveForward(1500,1500);	
-			delayMicroseconds(500000);
+		case 2:
+			rotate(90);
+			break;
+		case 3:	
+			printf("\nPåbyggnad lämna");
 			break;
 		}
-		casen++;
+ 		casen++;
+
+		
+		
+
+		
+// 		switch (casen)
+// 		{
+// 		case 0:
+// 			
+// 			rotate(90);
+// 		
+// // 			sprintf(str,"\nCase: %d",casen);
+// // 			printf (str);
+// // 			rotate(calculateAngle(getY_diff(OB1x,x1),getX_diff(OB1y,y1)));
+//  			delayMicroseconds(500000);
+// 			break;
+// 		case 1:
+// 		
+// 			rotate(225);
+// // 			sprintf(str,"\nCase: %d",casen);
+// // 			printf (str);
+// // 			driveTo(calculateDistance(getY_diff(OB1x,x1),getX_diff(OB1y,y1)));
+//  			delayMicroseconds(500000);
+// 			break;
+// // 		case 2:
+// // 			sprintf(str,"\nCase: %d",casen);
+// // 			printf (str);
+// // 			rotate(calculateAngle(getY_diff(OB2x,OB1x),getX_diff(OB2y,OB1y)));
+// // 			delayMicroseconds(500000);
+// // 			break;
+// // 		case 3:
+// // 			sprintf(str,"\nCase: %d",casen);
+// // 			printf (str);
+// // 			driveTo(calculateDistance(getY_diff(OB2x,OB1x),getX_diff(OB2y,OB1y)));
+// // 			delayMicroseconds(500000);
+// // 			break;
+// // 		case 4:
+// // 			sprintf(str,"\nCase: %d",casen);
+// // 			printf (str);
+// // 			rotate(calculateAngle(getY_diff(OB3x,OB2x),getX_diff(OB3y,OB2y)));
+// // 			delayMicroseconds(500000);
+// // 			break;
+// // 		case 5:
+// // 			sprintf(str,"\nCase: %d",casen);
+// // 			printf (str);
+// // 			driveTo(calculateDistance(getY_diff(OB3x,OB2x),getX_diff(OB3y,OB2y)));	
+// // 			delayMicroseconds(500000);	
+// // 			break;
+// 		default:
+// 			
+// 			moveForward(1500,1500);	
+// 			delayMicroseconds(500000);
+// 			break;
+// 		}
+// 		casen++;
 	}
 }
