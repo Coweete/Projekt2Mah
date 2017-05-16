@@ -14,7 +14,7 @@ int currentState = 1,nextState = 0;
 uint8_t rx_buf[3];
 uint8_t id_nummer =  37;
 //Avståndet til objektet, första talet är avståndet i cm och andra vinkeln roboten behöver vara i. 
-uint8_t avstand_objekt[] = {10,5};
+uint8_t avstand_objekt[] = {40,0};
 //Avståndet roboten måsta stanna till från kanten till lådan, 1: Avståndet till lådan, 2: Vinkeln till lådan
 uint8_t avstand_lada[] = {11,6};
 //Hastigheten som roboten kan röra sig med objektet i ett lyft ? 
@@ -100,7 +100,7 @@ void loop() {
       if(digitalRead(stopBot) == LOW){
         digitalWrite(Brake,HIGH);
         myservo.write(180);
-        delay(2);
+        delay(15);
         digitalWrite(Dir_b,HIGH);
         currentState = 0x33;
       }else{
