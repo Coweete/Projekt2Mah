@@ -10,6 +10,8 @@
 #include "Rotate.h"
 #include "Drive.h"
 #include "soundSensor.h"
+#include "TwiFunctions/TwiComHandler.h"
+#include "TwiFunctions/TwiFunctions.h"
 
 #include <setjmp.h>
 #include <stdio_serial.h>
@@ -17,6 +19,10 @@
 #include "consoleFunctions.h"
 // #include "../unity/unity.h"					/* Contains declarations of all functions that Unity provides */
 // #include "../Test/test_CalculateAngle.h"
+ 
+#define SIGNAL_IN PIO_PC14_IDX
+#define PICKUP PIO_PC13_IDX
+#define DELIVER PIO_PC12_IDX
 
 
 int OB1x= 20;
@@ -24,7 +30,7 @@ int OB1y = 30;
 int OB2x = 30;
 int OB2y = 30;
 int OB3x = 40;
-int OB3y = 50;
+int OB3y = 50;   
 
 int objDist = 40;
 int sensor = 0;
@@ -90,7 +96,7 @@ static void configure_console(void)
 // 			*p_variable = *p_variable + (*p_string - '0');
 // }
 
-
+extern uint8_t data_received_pab[];
 int main (void)
 {
 	sysclk_init();
@@ -103,6 +109,12 @@ int main (void)
 	configure_console();
 	initDrive();
 	init_sensor();
+	init_twi_functions();
+	
+	ioport_set_pin_dir(SIGNAL_IN,IOPORT_DIR_INPUT);
+	ioport_set_pin_dir(PICKUP,IOPORT_DIR_OUTPUT);
+	ioport_set_pin_dir(DELIVER,IOPORT_DIR_OUTPUT);
+	
 	
 // 	startupMeasure1(0,0);
 // 	moveForward(1650,1650);
@@ -185,17 +197,46 @@ int main (void)
 // 			sprintf(str,"\nSensor: %d",sensor);
 // 			printf (str);
 		 	//break;
+// 			 printf("case 0");
+// 			 pa_sendstatus(TWI_CMD_PICKUP_START,SOCK);
+			 ioport_set_pin_level(PICKUP,HIGH);
+			 casen = 1;
+			 break;
 		case 1:
-			printf ("\nPåbyggnad hämta");
+			
+			if(ioport_get_pin_level(SIGNAL_IN)){
+				casen = 2;
+			}
+			
+// 			printf("case 1");
+// 			printf ("\nPåbyggnad hämta");
+// 			int conter = 1;
+// 			while(conter){
+// 				pa_sendstatus(TWI_CMD_PICKUP_STATUS,1);
+// 				sprintf(str,"data recive %d",data_received_pab[1]);
+// 				printf(str);
+// 				if (data_received_pab[1] == 2){
+// 					//pa_sendstatus(TWI_CMD_DROPOFF_START,1);
+// 					casen = 2;
+// 					}else{
+// 						casen = 1;
+// 				}
+// 			}
 			break;
 		case 2:
+			
+			printf("case 2");
 			rotate(90);
+			casen = 3;
 			break;
 		case 3:	
-			printf("\nPåbyggnad lämna");
+			ioport_set_pin_level(DELIVER,HIGH);
+// 			printf("\nPåbyggnad lämna");
+// 			pa_sendstatus(TWI_CMD_DROPOFF_START,0);
+			casen = 4;
 			break;
 		}
- 		casen++;
+ 		//casen++;
 
 		
 		

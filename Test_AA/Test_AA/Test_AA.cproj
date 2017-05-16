@@ -30,6 +30,7 @@
       <framework-data>
         <options>
           <option id="common.boards" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="common.services.basic.clock" value="Add" config="" content-id="Atmel.ASF" />
           <option id="common.services.basic.gpio" value="Add" config="" content-id="Atmel.ASF" />
           <option id="common.services.ioport" value="Add" config="" content-id="Atmel.ASF" />
           <option id="common.utils.stdio.stdio_serial" value="Add" config="" content-id="Atmel.ASF" />
@@ -42,7 +43,8 @@
           <option id="sam.drivers.uart" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam.drivers.wdt" value="Add" config="" content-id="Atmel.ASF" />
           <option id="thirdparty.wireless.addons.sio2host" value="Add" config="uart" content-id="Atmel.ASF" />
-          <option id="common.services.basic.clock" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="common.services.basic.twi" value="Add" config="" content-id="Atmel.ASF" />
+          <option id="sam.drivers.twi" value="Add" config="" content-id="Atmel.ASF" />
           <option id="common.applications.user_application" value="Add" config="" content-id="Atmel.ASF" />
           <option id="sam.utils.cmsis.sam3x.source.template" value="Add" config="" content-id="Atmel.ASF" />
         </options>
@@ -218,6 +220,12 @@
           <file path="src/ASF/sam/drivers/rtt/rtt.h" framework="" version="3.27.0" source="sam\drivers\rtt\rtt.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/sam/drivers/wdt/wdt.c" framework="" version="3.27.0" source="sam\drivers\wdt\wdt.c" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/sam/drivers/wdt/wdt.h" framework="" version="3.27.0" source="sam\drivers\wdt\wdt.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/services/twi/twi_slave.h" framework="" version="3.20.1" source="common\services\twi\twi_slave.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/services/twi/sam_twi/twi_master.h" framework="" version="3.20.1" source="common\services\twi\sam_twi\twi_master.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/services/twi/twi_master.h" framework="" version="3.20.1" source="common\services\twi\twi_master.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/services/twi/sam_twi/twi_slave.h" framework="" version="3.20.1" source="common\services\twi\sam_twi\twi_slave.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam/drivers/twi/twi.c" framework="" version="3.20.1" source="sam\drivers\twi\twi.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam/drivers/twi/twi.h" framework="" version="3.20.1" source="sam\drivers\twi\twi.h" changed="False" content-id="Atmel.ASF" />
         </files>
         <documentation help="http://asf.atmel.com/docs/3.27.0/common.applications.user_application.arduino_due_x/html/index.html" />
         <offline-documentation help="" />
@@ -279,6 +287,8 @@
       <Value>../src/ASF/sam/drivers/rtt</Value>
       <Value>../src/ASF/sam/drivers/rtc</Value>
       <Value>../src/ASF/sam/drivers/wdt</Value>
+      <Value>../src/ASF/common/services/twi</Value>
+      <Value>../src/ASF/sam/drivers/twi</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize for size (-Os)</armgcc.compiler.optimization.level>
@@ -333,6 +343,8 @@
       <Value>../src/ASF/sam/drivers/rtt</Value>
       <Value>../src/ASF/sam/drivers/rtc</Value>
       <Value>../src/ASF/sam/drivers/wdt</Value>
+      <Value>../src/ASF/common/services/twi</Value>
+      <Value>../src/ASF/sam/drivers/twi</Value>
     </ListValues>
   </armgcc.preprocessingassembler.general.IncludePaths>
 </ArmGcc>
@@ -388,6 +400,8 @@
       <Value>../src/ASF/sam/drivers/rtt</Value>
       <Value>../src/ASF/sam/drivers/rtc</Value>
       <Value>../src/ASF/sam/drivers/wdt</Value>
+      <Value>../src/ASF/common/services/twi</Value>
+      <Value>../src/ASF/sam/drivers/twi</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize (-O1)</armgcc.compiler.optimization.level>
@@ -444,6 +458,8 @@
       <Value>../src/ASF/sam/drivers/rtt</Value>
       <Value>../src/ASF/sam/drivers/rtc</Value>
       <Value>../src/ASF/sam/drivers/wdt</Value>
+      <Value>../src/ASF/common/services/twi</Value>
+      <Value>../src/ASF/sam/drivers/twi</Value>
     </ListValues>
   </armgcc.preprocessingassembler.general.IncludePaths>
   <armgcc.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</armgcc.preprocessingassembler.debugging.DebugLevel>
@@ -511,6 +527,10 @@
     <Folder Include="Debug\src\ASF\thirdparty\wireless\addons\sio2host\" />
     <Folder Include="Debug\src\ASF\thirdparty\wireless\addons\sio2host\uart\" />
     <Folder Include="Debug\src\config\" />
+    <Folder Include="src\ASF\common\services\twi\" />
+    <Folder Include="src\ASF\common\services\twi\sam_twi\" />
+    <Folder Include="src\ASF\sam\drivers\twi\" />
+    <Folder Include="src\TwiFunctions\" />
     <Folder Include="src\" />
     <Folder Include="src\ASF\" />
     <Folder Include="src\ASF\common\" />
@@ -574,6 +594,24 @@
     <Folder Include="src\Unity" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="src\ASF\common\services\twi\twi_slave.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\common\services\twi\sam_twi\twi_master.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\common\services\twi\twi_master.h">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="src\ASF\common\services\twi\sam_twi\twi_slave.h">
+      <SubType>compile</SubType>
+    </None>
+    <Compile Include="src\ASF\sam\drivers\twi\twi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <None Include="src\ASF\sam\drivers\twi\twi.h">
+      <SubType>compile</SubType>
+    </None>
     <Compile Include="src\consoleFunctions.c">
       <SubType>compile</SubType>
     </Compile>
@@ -593,6 +631,15 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\Test\test_Runner.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\TwiFunctions\TwiComHandler.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\TwiFunctions\TwiFunctions.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\TwiFunctions\TwiFunctions.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\Unity\unity.c">
