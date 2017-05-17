@@ -34,7 +34,7 @@ void task_ultraLjud(void *pvParameters){
 		
 		vTaskDelayUntil(&xLastWakeTime,xTimeIncrement);
 	}
-	//vTaskDelete(NULL);
+	// vTaskDelete( NULL );  // För en clean exit av tasken (Kasnke ej behövs)!
 }
 
 int pulseins(void){

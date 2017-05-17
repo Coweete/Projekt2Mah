@@ -16,4 +16,5 @@ void task_kamera(void *pvParameters){
 		// Kod här.
 		vTaskDelayUntil(&xLastWakeTime,xTimeIncrement);
 	}
+	//vTaskDelete( NULL );  // För en clean exit av tasken (Kasnke ej behövs)!
 }

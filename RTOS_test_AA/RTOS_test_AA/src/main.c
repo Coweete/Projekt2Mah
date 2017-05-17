@@ -1,5 +1,6 @@
 
-
+// Elloz Lenovo Master.
+// Main Program, includes necessary libraries and header files. Initiates methods, Tasks are created and Task Scheduler executes.
 #include <asf.h>
 #include <FreeRTOSConfig.h>
 #include <FreeRTOS.h>
@@ -17,6 +18,7 @@
 #include "Functions/ConsoleFunctions.h"
 #include "Functions/calculations.h"
 
+// Antagligen bättre skapa för de olika tasken istället.
 //xSemaphoreHandle xBinarySemaphore;
 
 int main (void)
@@ -29,6 +31,7 @@ int main (void)
 	configure_console();
 	
 	
+// Behövs inte men kan vara bra att kolla ifall icke är null!
 	
 //	vSemaphoreCreateBinary( xBinarySemaphore );
 //	if( xBinarySemaphore != NULL ){

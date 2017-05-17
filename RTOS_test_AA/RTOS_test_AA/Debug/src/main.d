@@ -152,6 +152,8 @@ src/main.d src/main.o: ../src/main.c ../src/asf.h \
  ../src/Tasks/Task_nav_calc.h ../src/Tasks/Task_Navigering_Com.h \
  ../src/Tasks/Task_PdMm_Com.h ../src/Tasks/Task_ultraLjud.h \
  ../src/Functions/DelayFunctions.h ../src/Tasks/Task_regulate.h \
+ ../src/Functions/Motorfunctions.h ../src/Functions/Drive.h \
+ ../src/Functions/Regulator.h ../src/Tasks/Task_ultraLjud.h \
  ../src/Functions/Motorfunctions.h ../src/Functions/DelayFunctions.h \
  ../src/Functions/ConsoleFunctions.h ../src/Functions/calculations.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu-toolchain\arm-none-eabi\include\math.h
@@ -479,6 +481,14 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu
 ../src/Functions/DelayFunctions.h:
 
 ../src/Tasks/Task_regulate.h:
+
+../src/Functions/Motorfunctions.h:
+
+../src/Functions/Drive.h:
+
+../src/Functions/Regulator.h:
+
+../src/Tasks/Task_ultraLjud.h:
 
 ../src/Functions/Motorfunctions.h:
 

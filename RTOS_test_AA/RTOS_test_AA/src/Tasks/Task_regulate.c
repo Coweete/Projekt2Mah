@@ -6,10 +6,7 @@
  *  Modified: Elias H
  */ 
 #include "Tasks/Task_Regulate.h"
-#include "Functions/Motorfunctions.h"
-#include "Functions/Drive.h"
-#include "Functions/Regulator.h"
-#include "Tasks/Task_ultraLjud.h"
+
 
 
 void task_Regulate(void *pvParameters){
@@ -27,4 +24,5 @@ void task_Regulate(void *pvParameters){
 		}
 		vTaskDelayUntil(&xLastWakeTime,xTimeIncrement);
 	}
+ //	vTaskDelete( NULL );  // För en clean exit av tasken (Kasnke ej behövs)!
 }

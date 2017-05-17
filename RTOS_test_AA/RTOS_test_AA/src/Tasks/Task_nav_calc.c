@@ -19,6 +19,7 @@ void task_nav_calc(void *pvParameters){
 		// Kod här.
 		vTaskDelayUntil(&xLastWakeTime,xTimeIncrement);
 	}
+	//vTaskDelete( NULL );  // För en clean exit av tasken (Kasnke ej behövs)!
 }
 
 
