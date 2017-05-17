@@ -102,7 +102,7 @@ static void configure_console(void)
 // 			*p_variable = *p_variable + (*p_string - '0');
 // }
 
-void addOne(const uint32_t id, const uint32_t index){
+void addOne(uint32_t id, uint32_t index){
 	char str[20];
 	printf("\nInterrupt");
 	if ((id == ID_PIOC) && (index == INTERRUPT)){
@@ -166,8 +166,8 @@ int main (void)
 // 	char str2[4];
 // 	char str3[4];
 // 	char str4[4];
-	uint16_t x1 = 0;
-	uint16_t y1 = 0;
+// 	uint16_t x1 = 0;
+// 	uint16_t y1 = 0;
 // 	uint16_t x2 = 0;
 // 	uint16_t x3 = 0; //irrelevant
 // 	uint16_t x4 = 0; //irrelevant
@@ -214,7 +214,7 @@ int main (void)
 		//sensor = readSensorValue();
 		
 		
- 		char str[20];
+ 		//char str[20];
 //  	sprintf(str,"\nVinkel: %d",d);
 //  	printf (str);
 		

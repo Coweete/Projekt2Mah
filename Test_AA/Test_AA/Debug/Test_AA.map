@@ -9860,7 +9860,7 @@ OUTPUT(Test_AA.elf elf32-littlearm)
  .comment       0x00000000       0x5c src/ASF/sam/utils/syscalls/gcc/syscalls.o
  .comment       0x00000000       0x5c src/main.o
 
-.debug_info     0x00000000    0x15891
+.debug_info     0x00000000    0x15849
  .debug_info    0x00000000      0xb52 src/ASF/sam/drivers/twi/twi.o
  .debug_info    0x00000b52     0x1584 src/soundSensor.o
  .debug_info    0x000020d6     0x133a src/TwiFunctions/TwiFunctions.o
@@ -9886,9 +9886,9 @@ OUTPUT(Test_AA.elf elf32-littlearm)
  .debug_info    0x00012c12      0x3bd src/ASF/sam/utils/cmsis/sam3x/source/templates/gcc/startup_sam3x.o
  .debug_info    0x00012fcf      0x4c6 src/ASF/sam/utils/cmsis/sam3x/source/templates/system_sam3x.o
  .debug_info    0x00013495      0x43f src/ASF/sam/utils/syscalls/gcc/syscalls.o
- .debug_info    0x000138d4     0x1fbd src/main.o
+ .debug_info    0x000138d4     0x1f75 src/main.o
 
-.debug_abbrev   0x00000000     0x3926
+.debug_abbrev   0x00000000     0x390e
  .debug_abbrev  0x00000000      0x2db src/ASF/sam/drivers/twi/twi.o
  .debug_abbrev  0x000002db      0x330 src/soundSensor.o
  .debug_abbrev  0x0000060b      0x2e5 src/TwiFunctions/TwiFunctions.o
@@ -9914,7 +9914,7 @@ OUTPUT(Test_AA.elf elf32-littlearm)
  .debug_abbrev  0x0000314c      0x118 src/ASF/sam/utils/cmsis/sam3x/source/templates/gcc/startup_sam3x.o
  .debug_abbrev  0x00003264      0x115 src/ASF/sam/utils/cmsis/sam3x/source/templates/system_sam3x.o
  .debug_abbrev  0x00003379      0x14e src/ASF/sam/utils/syscalls/gcc/syscalls.o
- .debug_abbrev  0x000034c7      0x45f src/main.o
+ .debug_abbrev  0x000034c7      0x447 src/main.o
 
 .debug_loc      0x00000000     0x5c00
  .debug_loc     0x00000000      0x957 src/ASF/sam/drivers/twi/twi.o
@@ -10254,7 +10254,7 @@ OUTPUT(Test_AA.elf elf32-littlearm)
  .debug_str     0x00063711      0x73a src/ASF/sam/utils/syscalls/gcc/syscalls.o
                                0x4f08 (size before relaxing)
  .debug_str     0x00063e4b      0x11d src/main.o
-                              0x5fd20 (size before relaxing)
+                              0x5fd0c (size before relaxing)
 
 .debug_frame    0x00000000     0x28c0
  .debug_frame   0x00000000      0x1a0 src/ASF/sam/drivers/twi/twi.o
