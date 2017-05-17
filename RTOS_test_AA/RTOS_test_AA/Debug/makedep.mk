@@ -2,7 +2,13 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
-src\Tasks\Task_Sensor.c
+src\Functions\calculations.c
+
+src\Functions\Drive.c
+
+src\Functions\Regulator.c
+
+src\Tasks\Task_ultraLjud.c
 
 src\ASF\common\services\delay\sam\cycle_counter.c
 

@@ -3,6 +3,6 @@
 #ifndef CONSOLEFUNCTIONS_H_
 #define CONSOLEFUNCTIONS_H_
 
-int configure_Console(void);
+void configure_console(void);
 
 #endif /* CONSOLEFUNCTIONS_H_ */

@@ -547,10 +547,28 @@
     <Folder Include="src\Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\Tasks\Task_Sensor.c">
+    <Compile Include="src\Functions\calculations.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\Tasks\Task_Sensor.h">
+    <Compile Include="src\Functions\calculations.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Functions\Drive.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Functions\Drive.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Functions\Regulator.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Functions\Regulator.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Tasks\Task_ultraLjud.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Tasks\Task_ultraLjud.h">
       <SubType>compile</SubType>
     </Compile>
     <None Include="src\ASF\common\services\delay\delay.h">

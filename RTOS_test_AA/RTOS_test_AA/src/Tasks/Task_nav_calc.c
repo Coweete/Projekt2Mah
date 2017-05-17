@@ -1,24 +1,25 @@
 /*
- * Task_calculate.c
+ * Task_Nav_Calc.c
  *
  * Created: 2017-05-17 13:10:45
- *  Author: André Ahlbertz
+ *  Author: André Ahlbertz 
+ *  Modified: Elias H
  */ 
 
-#include <asf.h>
-
-#include "Task_Nav_Calc.h"
-#include "FreeRTOS.h"
+#include "Tasks/Task_Nav_Calc.h"
 
 
-static void Task_nav_calc(void *pvParameters){
+void task_nav_calc(void *pvParameters){
+	// Någon Metod/ Ingen.
+	portTickType xLastWakeTime;
+	const portTickType xTimeIncrement = 100;
+	xLastWakeTime = xTaskGetTickCount();
 	
-	//TickType_t xLastWakeTime;
-
-	
-	
+	while(1){
+		// Kod här.
+		vTaskDelayUntil(&xLastWakeTime,xTimeIncrement);
+	}
 }
-
 
 
 
