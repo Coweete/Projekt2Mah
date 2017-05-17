@@ -1,5 +1,5 @@
 /*
- * Task_regulate.h
+ * Task_Regulate.h
  *
  * Created: 2017-05-17 13:12:30
  *  Author: André Ahlbertz

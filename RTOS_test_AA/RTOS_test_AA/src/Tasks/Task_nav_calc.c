@@ -7,13 +7,13 @@
 
 #include <asf.h>
 
-#include "Task_nav_calc.h"
+#include "Task_Nav_Calc.h"
 #include "FreeRTOS.h"
 
 
-static void task_nav_calc(void *pvParameters){
+static void Task_nav_calc(void *pvParameters){
 	
-	TickType_t xLastWakeTime;
+	//TickType_t xLastWakeTime;
 
 	
 	

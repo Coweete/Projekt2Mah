@@ -56,6 +56,9 @@
 #include <compiler.h>
 #include <status_codes.h>
 
+// From module: Delay routines
+#include <delay.h>
+
 // From module: FreeRTOS mini Real-Time Kernel
 #include <FreeRTOS.h>
 #include <FreeRTOS_CLI.h>
@@ -95,8 +98,14 @@
 // From module: SAM3X startup code
 #include <exceptions.h>
 
+// From module: Standard serial I/O (stdio) - SAM implementation
+#include <stdio_serial.h>
+
 // From module: System Clock Control - SAM3X/A implementation
 #include <sysclk.h>
+
+// From module: TC - Timer Counter
+#include <tc.h>
 
 // From module: UART - Univ. Async Rec/Trans
 #include <uart.h>

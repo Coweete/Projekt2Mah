@@ -11,7 +11,7 @@
  */
 
 #include "asf.h"
-#include "DelayFunctions.h"
+#include "Functions/DelayFunctions.h"
 
 void delayInit(void)		/* Initializes the timer used for delays */
 {

@@ -2,6 +2,16 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+src\Tasks\Task_Sensor.c
+
+src\ASF\common\services\delay\sam\cycle_counter.c
+
+src\ASF\common\utils\stdio\read.c
+
+src\ASF\common\utils\stdio\write.c
+
+src\ASF\sam\drivers\tc\tc.c
+
 src\ASF\sam\drivers\usart\usart.c
 
 src\ASF\common\services\serial\usart_serial.c
@@ -10,15 +20,23 @@ src\ASF\sam\drivers\uart\uart.c
 
 src\ASF\thirdparty\freertos\freertos-7.3.0\source\FreeRTOS_CLI.c
 
-src\consoleFunctions.c
+src\ASF\thirdparty\wireless\addons\sio2host\uart\sio2host.c
 
-src\DelayFunctions.c
+src\Functions\ConsoleFunctions.c
 
-src\Motorfunctions.c
+src\Functions\DelayFunctions.c
 
-src\Tasks\Task_nav_calc.c
+src\Functions\MotorFunctions.c
 
-src\Tasks\Task_regulate.c
+src\Tasks\Task_Kamera.c
+
+src\Tasks\Task_Navigering_Com.c
+
+src\Tasks\Task_Nav_Calc.c
+
+src\Tasks\Task_PdMm_Com.c
+
+src\Tasks\Task_Regulate.c
 
 src\ASF\thirdparty\freertos\freertos-7.3.0\source\list.c
 

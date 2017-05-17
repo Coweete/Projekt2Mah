@@ -8,8 +8,8 @@
 #include <asf.h>
 #include <ioport.h>
 #include <inttypes.h>
-#include "DelayFunctions.h"
-#include "Motorfunctions.h"
+#include "Functions/DelayFunctions.h"
+#include "Functions/MotorFunctions.h"
 
 #define LEFT PIO_PC4_IDX
 #define RIGHT PIO_PC5_IDX

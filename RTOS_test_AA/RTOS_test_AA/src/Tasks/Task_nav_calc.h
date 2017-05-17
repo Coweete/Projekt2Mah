@@ -1,16 +1,16 @@
 /*
- * Task_calculate.h
+ * Task_Nav_Calc.h
  *
  * Created: 2017-05-17 13:11:00
  *  Author: André Ahlbertz
  */ 
 
 
-#ifndef TASK_CALCULATE_H_
-#define TASK_CALCULATE_H_
+#ifndef TASK_NAV_CALC_H_
+#define TASK_NAV_CALC_H_
 
-static void task_nav_calc(void *pvParameters);
+static void Task_nav_calc(void *pvParameters);
 
 
 
-#endif /* TASK_CALCULATE_H_ */
+#endif /* TASK_NAV_CALC_H_ */

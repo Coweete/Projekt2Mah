@@ -1,17 +1,10 @@
-//
-//  ConsoleFunctions.c
-//  Code to be used in task 1401c if there is a need to print on the terminal window
-//
-//	Ulrik Eklund 2014
-//
-//
 
 #include <stdio_serial.h>
 #include <asf.h>
 #include "conf_board.h"
-#include "consoleFunctions.h"
+#include "Functions/ConsoleFunctions.h"
 
-int configureConsole(void)
+int configure_Console(void)
 /* Enables feedback through the USB-cable back to terminal within Atmel Studio */
 {
 	const usart_serial_options_t uart_serial_options = {

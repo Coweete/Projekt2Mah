@@ -1,67 +1,67 @@
-/**
- * \file
- *
- * \brief Empty user application template
- *
- */
 
-/**
- * \mainpage User Application template doxygen documentation
- *
- * \par Empty user application template
- *
- * Bare minimum empty user application template
- *
- * \par Content
- *
- * -# Include the ASF header files (through asf.h)
- * -# "Insert system clock initialization code here" comment
- * -# Minimal main function that starts with a call to board_init()
- * -# "Insert application code here" comment
- *
- */
-
-/*
- * Include header files for all drivers that have been imported from
- * Atmel Software Framework (ASF).
- */
-/*
- * Support and FAQ: visit <a href="http://www.atmel.com/design-support/">Atmel Support</a>
- */
 #include <asf.h>
 #include <FreeRTOSConfig.h>
 #include <FreeRTOS.h>
+#include <stdio.h>
+#include <ioport.h>
+#include "FreeRTOSConfig.h"
+#include "FreeRTOS.h"
+#include "task.h"
 
 #include "Tasks/Task_nav_calc.h"
 #include "Tasks/Task_regulate.h"
-#include "Motorfunctions.h"
-#include "DelayFunctions.h"
-#include "consoleFunctions.h"
+#include "Functions/Motorfunctions.h"
+#include "Functions/DelayFunctions.h"
+#include "Functions/ConsoleFunctions.h"
 
 
 int main (void)
 {
-	/* Insert system clock initialization code here (sysclk_init()). */
-
-	sysclk_init();
 	board_init();
+	sysclk_init();
+	ioport_init();
+	delayInit();
+	ioport_init();
+	configure_Console();
 	
-	
-	
-	
-	xTaskCreate();
-	xTaskCreate();
-	xTaskCreate();
-	xTaskCreate();
-	xTaskCreate();
-	xTaskCreate();
+		if (xTaskCreate(task_x, (const signed char * const) "task_x", TASK_X_STACK_SIZE, NULL, TASK_X_STACK_PRIORITY, NULL) != pdPASS) {
+			printf("Failed the X Task\r\n");
+		}
 		
+		if (xTaskCreate(task_x, (const signed char * const) "task_x", TASK_X_STACK_SIZE, NULL, TASK_X_STACK_PRIORITY, NULL) != pdPASS) {
+			printf("Failed the X Task\r\n");
+		}
 		
+		if (xTaskCreate(task_x, (const signed char * const) "task_x", TASK_X_STACK_SIZE, NULL, TASK_X_STACK_PRIORITY, NULL) != pdPASS) {
+			printf("Failed the X Task\r\n");
+		}
+		
+		if (xTaskCreate(task_x, (const signed char * const) "task_x", TASK_X_STACK_SIZE, NULL, TASK_X_STACK_PRIORITY, NULL) != pdPASS) {
+			printf("Failed the X Task\r\n");
+		}
+		
+		if (xTaskCreate(task_x, (const signed char * const) "task_x", TASK_X_STACK_SIZE, NULL, TASK_X_STACK_PRIORITY, NULL) != pdPASS) {
+			printf("Failed the X Task\r\n");
+		}
+		
+		if (xTaskCreate(task_x, (const signed char * const) "task_x", TASK_X_STACK_SIZE, NULL, TASK_X_STACK_PRIORITY, NULL) != pdPASS) {
+			printf("Failed the X Task\r\n");
+		}
+		
+		if (xTaskCreate(task_x, (const signed char * const) "task_x", TASK_X_STACK_SIZE, NULL, TASK_X_STACK_PRIORITY, NULL) != pdPASS) {
+			printf("Failed the X Task\r\n");
+		}
+	
+	
+//	xTaskCreate();
+//	xTaskCreate();
+//	xTaskCreate();
+//	xTaskCreate();
+//	xTaskCreate();
+//	xTaskCreate();
 		
 		
 	vTaskStartScheduler();
 	
 	
-
-	/* Insert application code here, after the board has been initialized. */
 }
