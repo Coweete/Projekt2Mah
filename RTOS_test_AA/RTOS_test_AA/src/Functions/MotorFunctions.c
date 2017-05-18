@@ -12,7 +12,7 @@
 #include "Functions/MotorFunctions.h"
 
 #define LEFT PIO_PC5_IDX
-#define RIGHT PIO_PC7_IDX
+#define RIGHT PIO_PC6_IDX
 
 
 

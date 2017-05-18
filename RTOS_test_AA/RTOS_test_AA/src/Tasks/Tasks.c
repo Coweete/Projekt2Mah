@@ -36,11 +36,11 @@ int angle = 90;
 xSemaphoreHandle signal_semafor =0;
 xSemaphoreHandle regulate_semafor = 0;
 
-xQueueHandle taskQueue = 0;
+//xQueueHandle taskQueue = 0;
 
 void task_ultraLjud(void *pvParameters){
 	
-	taskQueue = xQueueCreate(5,sizeof(int));
+	//taskQueue = xQueueCreate(5,sizeof(int));
 	
 	
 	printf("\nTask Ultraljud");
@@ -48,7 +48,7 @@ void task_ultraLjud(void *pvParameters){
 	const portTickType xTimeIncrement = 10;
 	xLastWakeTime = xTaskGetTickCount();
 	
-	int i = 0;
+	/*int i = 0;*/
 	
 	while (1){
 		
@@ -66,15 +66,15 @@ void task_ultraLjud(void *pvParameters){
 		}
 		if(!xSemaphoreTake(signal_semafor,200)){
 				xSemaphoreGive(regulate_semafor);
-				if(!xQueueSendToBack(taskQueue,&i,0)){
-					printf("\nFailed to send");
-				}
+// 				if(!xQueueSendToBack(taskQueue,&i,0)){
+// 					printf("\nFailed to send");
+// 				}
 				//vTaskDelay(500);
 		}
 		else{
 				moveForward(1500,1500);
 		}
-		i++;
+		/*i++;*/
 		
 		
 		/*vTaskDelay(100);*/
@@ -217,17 +217,17 @@ void task_nav_calc(void *pvParameters){
 	const portTickType xTimeIncrement = 50;
 	xLastWakeTime = xTaskGetTickCount();
 	
-	int ir = 0;
+/*	int ir = 0;*/
 	
 	while(1){
 		
 		vTaskDelayUntil(&xLastWakeTime,xTimeIncrement);
 		
-		if(xQueueReceive(taskQueue,&ir,0)){
-			printf("\nReceived");
-		}else{
-			printf("\nFailed to receive");
-		}
+// 		if(xQueueReceive(taskQueue,&ir,0)){
+// 			printf("\nReceived");
+// 		}else{
+// 			printf("\nFailed to receive");
+// 		}
 		// Kod här.
 		
 	}

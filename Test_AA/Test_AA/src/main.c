@@ -102,33 +102,33 @@ static void configure_console(void)
 // 			*p_variable = *p_variable + (*p_string - '0');
 // }
 
-void addOne(uint32_t id, uint32_t index){
-	char str[20];
-	printf("\nInterrupt");
-	if ((id == ID_PIOC) && (index == INTERRUPT)){
-		count_test++;
-		sprintf(str,"\nCount_test: %d",count_test);
-		printf (str);
-	}else{
-		printf("\nError");
-	}
-}
-
-void init_interrupt(void){
-	printf("\nInit_interrupt");
-	
-	pmc_enable_periph_clk(ID_PIOC);
-	
-	pio_set_input(PIOC,INTERRUPT,PIO_PULLUP);
-	
-	pio_handler_set(PIOC,ID_PIOC,INTERRUPT,PIO_IT_EDGE,addOne);
-	
-	NVIC_EnableIRQ(PIOC_IRQn);
-	
-	pio_enable_interrupt(PIOC,INTERRUPT);
-	
-	cpu_irq_enable();
-}
+// void addOne(uint32_t id, uint32_t index){
+// 	char str[20];
+// 	printf("\nInterrupt");
+// 	if ((id == ID_PIOC) && (index == INTERRUPT)){
+// 		count_test++;
+// 		sprintf(str,"\nCount_test: %d",count_test);
+// 		printf (str);
+// 	}else{
+// 		printf("\nError");
+// 	}
+// }
+// 
+// void init_interrupt(void){
+// 	printf("\nInit_interrupt");
+// 	
+// 	pmc_enable_periph_clk(ID_PIOC);
+// 	
+// 	pio_set_input(PIOC,INTERRUPT,PIO_PULLUP);
+// 	
+// 	pio_handler_set(PIOC,ID_PIOC,INTERRUPT,PIO_IT_EDGE,addOne);
+// 	
+// 	NVIC_EnableIRQ(PIOC_IRQn);
+// 	
+// 	pio_enable_interrupt(PIOC,INTERRUPT);
+// 	
+// 	cpu_irq_enable();
+// }
 
 
 
@@ -146,7 +146,7 @@ int main (void)
 	initDrive();
 	init_sensor();
 	init_twi_functions();
-	init_interrupt();
+	//init_interrupt();
 	
 	ioport_set_pin_dir(SIGNAL_IN,IOPORT_DIR_INPUT);
 	ioport_set_pin_dir(PICKUP,IOPORT_DIR_OUTPUT);
@@ -225,8 +225,6 @@ int main (void)
 		angle = (angle + 90) % 360;
 		
 		rotate(angle);
-		
-		delayMicroseconds(500000);
 		
 		
 		
