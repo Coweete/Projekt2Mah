@@ -36,12 +36,19 @@ int angle = 90;
 xSemaphoreHandle signal_semafor =0;
 xSemaphoreHandle regulate_semafor = 0;
 
+xQueueHandle taskQueue = 0;
+
 void task_ultraLjud(void *pvParameters){
+	
+	taskQueue = xQueueCreate(3,sizeof(int));
+	
 	
 	printf("\nTask Ultraljud");
 	portTickType xLastWakeTime;
 	const portTickType xTimeIncrement = 10;
 	xLastWakeTime = xTaskGetTickCount();
+	
+	int i = 0;
 	
 	while (1){
 		
@@ -58,12 +65,16 @@ void task_ultraLjud(void *pvParameters){
 			xSemaphoreGiveFromISR(signal_semafor,NULL);
 		}
 		if(!xSemaphoreTake(signal_semafor,200)){
-				xSemaphoreGiveFromISR(regulate_semafor,NULL);
+				xSemaphoreGive(regulate_semafor);
+				if(!xQueueSend(taskQueue,&i,1000)){
+					printf("\nFailed to send");
+				}
+				vTaskDelay(2000);
 		}
 		else{
 				moveForward(1500,1500);
 		}
-		
+		i++;
 		
 		
 		/*vTaskDelay(100);*/
@@ -138,11 +149,19 @@ void task_Regulate(void *pvParameters){
 	const portTickType xTimeIncrementRegulate = 10;
 	xLastWakeTimeRegulate = xTaskGetTickCount();
 	
+	int ir = 0;
+	
 	while(1){
 		
 		vTaskDelayUntil(&xLastWakeTimeRegulate,xTimeIncrementRegulate);
 		
 		moveForward(l_speed,r_speed);
+		
+		if(xQueueReceive(taskQueue,&ir,1000)){
+			printf("\nReceived");
+		}else{
+			printf("\nFailed to receive");
+		}
 		
 		if(xSemaphoreTake(regulate_semafor,100)){
 			
@@ -156,6 +175,9 @@ void task_Regulate(void *pvParameters){
 			+ioport_get_pin_level(L4)*16+ioport_get_pin_level(L5)*32;
 			
 			e = 0 - (r_count - l_count);
+			
+			char str[10];
+			sprintf(str,"\nFelvärde: %d",e);
 			
 			r_speed=speed;
 			l_speed=speed;
@@ -202,7 +224,6 @@ void task_nav_calc(void *pvParameters){
 	while(1){
 		
 		vTaskDelayUntil(&xLastWakeTime,xTimeIncrement);
-		
 		
 		
 		// Kod här.

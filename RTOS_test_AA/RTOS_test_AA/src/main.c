@@ -1,5 +1,5 @@
 
-// Elloz Lenovo Master.
+// Elias & André.
 // Main Program, includes necessary libraries and header files. Initiates methods, Tasks are created and Task Scheduler executes.
 #include <asf.h>
 #include <FreeRTOSConfig.h>
