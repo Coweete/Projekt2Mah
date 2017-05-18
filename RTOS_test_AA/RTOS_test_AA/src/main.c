@@ -7,11 +7,11 @@
 #include <stdio.h>
 #include <ioport.h>
 #include "task.h"
-#include "Tasks/Task_Kamera.h"
-#include "Tasks/Task_nav_calc.h"
-#include "Tasks/Task_Navigering_Com.h"
-#include "Tasks/Task_PdMm_Com.h"
-#include "Tasks/Task_ultraLjud.h"
+// #include "Tasks/Task_Kamera.h"
+// #include "Tasks/Task_nav_calc.h"
+// #include "Tasks/Task_Navigering_Com.h"
+// #include "Tasks/Task_PdMm_Com.h"
+#include "Tasks/Tasks.h"
 //#include "Tasks/Task_regulate.h"
 #include "Functions/Motorfunctions.h"
 #include "Functions/DelayFunctions.h"

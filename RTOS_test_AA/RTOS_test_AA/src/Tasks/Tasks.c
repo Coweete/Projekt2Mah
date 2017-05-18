@@ -5,7 +5,7 @@
  *  Author: Elias H & André A
  */ 
 
-#include "Tasks/Task_ultraLjud.h"
+#include "Tasks/Tasks.h"
 
 //Höger
 #define R0 PIO_PA15_IDX
@@ -40,7 +40,7 @@ xQueueHandle taskQueue = 0;
 
 void task_ultraLjud(void *pvParameters){
 	
-	taskQueue = xQueueCreate(3,sizeof(int));
+	taskQueue = xQueueCreate(5,sizeof(int));
 	
 	
 	printf("\nTask Ultraljud");
@@ -66,10 +66,10 @@ void task_ultraLjud(void *pvParameters){
 		}
 		if(!xSemaphoreTake(signal_semafor,200)){
 				xSemaphoreGive(regulate_semafor);
-				if(!xQueueSend(taskQueue,&i,1000)){
+				if(!xQueueSendToBack(taskQueue,&i,0)){
 					printf("\nFailed to send");
 				}
-				vTaskDelay(2000);
+				//vTaskDelay(500);
 		}
 		else{
 				moveForward(1500,1500);
@@ -149,7 +149,7 @@ void task_Regulate(void *pvParameters){
 	const portTickType xTimeIncrementRegulate = 10;
 	xLastWakeTimeRegulate = xTaskGetTickCount();
 	
-	int ir = 0;
+	
 	
 	while(1){
 		
@@ -157,11 +157,7 @@ void task_Regulate(void *pvParameters){
 		
 		moveForward(l_speed,r_speed);
 		
-		if(xQueueReceive(taskQueue,&ir,1000)){
-			printf("\nReceived");
-		}else{
-			printf("\nFailed to receive");
-		}
+		
 		
 		if(xSemaphoreTake(regulate_semafor,100)){
 			
@@ -218,14 +214,20 @@ void task_Regulate(void *pvParameters){
 void task_nav_calc(void *pvParameters){
 	
 	portTickType xLastWakeTime;
-	const portTickType xTimeIncrement = 10;
+	const portTickType xTimeIncrement = 50;
 	xLastWakeTime = xTaskGetTickCount();
+	
+	int ir = 0;
 	
 	while(1){
 		
 		vTaskDelayUntil(&xLastWakeTime,xTimeIncrement);
 		
-		
+		if(xQueueReceive(taskQueue,&ir,0)){
+			printf("\nReceived");
+		}else{
+			printf("\nFailed to receive");
+		}
 		// Kod här.
 		
 	}

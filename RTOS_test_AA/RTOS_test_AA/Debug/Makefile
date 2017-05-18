@@ -108,7 +108,7 @@ C_SRCS +=  \
 ../src/Functions/Drive.c \
 ../src/Functions/Regulator.c \
 ../src/Functions/Rotate.c \
-../src/Tasks/Task_ultraLjud.c \
+../src/Tasks/Tasks.c \
 ../src/ASF/common/services/delay/sam/cycle_counter.c \
 ../src/ASF/common/utils/stdio/read.c \
 ../src/ASF/common/utils/stdio/write.c \
@@ -157,7 +157,7 @@ src/Functions/calculations.o \
 src/Functions/Drive.o \
 src/Functions/Regulator.o \
 src/Functions/Rotate.o \
-src/Tasks/Task_ultraLjud.o \
+src/Tasks/Tasks.o \
 src/ASF/common/services/delay/sam/cycle_counter.o \
 src/ASF/common/utils/stdio/read.o \
 src/ASF/common/utils/stdio/write.o \
@@ -199,7 +199,7 @@ src/Functions/calculations.o \
 src/Functions/Drive.o \
 src/Functions/Regulator.o \
 src/Functions/Rotate.o \
-src/Tasks/Task_ultraLjud.o \
+src/Tasks/Tasks.o \
 src/ASF/common/services/delay/sam/cycle_counter.o \
 src/ASF/common/utils/stdio/read.o \
 src/ASF/common/utils/stdio/write.o \
@@ -241,7 +241,7 @@ src/Functions/calculations.d \
 src/Functions/Drive.d \
 src/Functions/Regulator.d \
 src/Functions/Rotate.d \
-src/Tasks/Task_ultraLjud.d \
+src/Tasks/Tasks.d \
 src/ASF/common/services/delay/sam/cycle_counter.d \
 src/ASF/common/utils/stdio/read.d \
 src/ASF/common/utils/stdio/write.d \
@@ -283,7 +283,7 @@ src/Functions/calculations.d \
 src/Functions/Drive.d \
 src/Functions/Regulator.d \
 src/Functions/Rotate.d \
-src/Tasks/Task_ultraLjud.d \
+src/Tasks/Tasks.d \
 src/ASF/common/services/delay/sam/cycle_counter.d \
 src/ASF/common/utils/stdio/read.d \
 src/ASF/common/utils/stdio/write.d \

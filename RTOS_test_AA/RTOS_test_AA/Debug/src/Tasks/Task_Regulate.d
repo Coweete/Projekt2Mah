@@ -151,7 +151,7 @@ src/Tasks/Task_Regulate.d src/Tasks/Task_Regulate.o: \
  ../src/config/conf_uart_serial.h ../src/ASF/sam/drivers/tc/tc.h \
  ../src/ASF/sam/drivers/pio/pio_handler.h \
  ../src/Functions/Motorfunctions.h ../src/Functions/Drive.h \
- ../src/Functions/Regulator.h ../src/Tasks/Task_ultraLjud.h \
+ ../src/Functions/Regulator.h ../src/Tasks/Tasks.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu-toolchain\arm-none-eabi\include\inttypes.h \
  ../src/Functions/DelayFunctions.h ../src/Functions/Rotate.h \
  ../src/Functions/calculations.h \
@@ -475,7 +475,7 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu
 
 ../src/Functions/Regulator.h:
 
-../src/Tasks/Task_ultraLjud.h:
+../src/Tasks/Tasks.h:
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu-toolchain\arm-none-eabi\include\inttypes.h:
 

@@ -561,10 +561,10 @@
     <Compile Include="src\Functions\Rotate.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\Tasks\Task_ultraLjud.c">
+    <Compile Include="src\Tasks\Tasks.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\Tasks\Task_ultraLjud.h">
+    <Compile Include="src\Tasks\Tasks.h">
       <SubType>compile</SubType>
     </Compile>
     <None Include="src\ASF\common\services\delay\delay.h">
