@@ -6,23 +6,57 @@
  *  Modified: Elias H
  */ 
 #include "Tasks/Task_Regulate.h"
+#include <asf.h>
 
+// extern int stop;
+// 
+// xSemaphoreHandle signal_semafor =0;
+// 
+// void task_Regulate(void *pvParameters){
+// 	
+// 	printf("\nTask Regulate");
+// 	
+// 	vSemaphoreCreateBinary(signal_semafor);
+// 	
+// 	portTickType xLastWakeTime;
+// 	const portTickType xTimeIncrement = 150;
+// 	xLastWakeTime = xTaskGetTickCount();
+// 	while(1){
+// 		if (xSemaphoreTake(signal_semafor,100)){
+// 			printf("\nDrive 0");
+// 			moveForward(1500,1500);
+// 		}else {
+// 			printf("\nDrive 100");
+// 			driveTo(100);
+// 		}
+// 		//vTaskDelay(xTimeIncrement);
+// 		vTaskDelayUntil(&xLastWakeTime,xTimeIncrement);
+// 	}
+//  //	vTaskDelete( NULL );  // För en clean exit av tasken (Kasnke ej behövs)!
+// }
 
+// void addOne(uint32_t id, uint32_t index){
+// 	printf("\nInterrupt");
+// 	if ((id == ID_PIOC) && (index == PIO_PC9)){
+// 		xSemaphoreGiveFromISR(signal_semafor,NULL);
+// 		printf ("\nOk");
+// 		}else{
+// 		printf("\nError");
+// 	}
+// }
 
-void task_Regulate(void *pvParameters){
-	initMotor();
-	initDrive();
-	initRegulator();
-	portTickType xLastWakeTime;
-	const portTickType xTimeIncrement = 100;
-	xLastWakeTime = xTaskGetTickCount();
-	while(1){
-		if (distanceStop()){
-			driveTo(0);
-		}else {
-			driveTo(100);
-		}
-		vTaskDelayUntil(&xLastWakeTime,xTimeIncrement);
-	}
- //	vTaskDelete( NULL );  // För en clean exit av tasken (Kasnke ej behövs)!
-}
+// void init_interrupt(void){
+// 	printf("\nInit_interrupt ok");
+// 	
+// 	pmc_enable_periph_clk(ID_PIOC);
+// 	
+// 	pio_set_input(PIOC,PIO_PC9,PIO_PULLUP);			//INPUT VIKTIGT!!!
+// 	
+// 	pio_handler_set(PIOC,ID_PIOC,PIO_PC9,PIO_IT_HIGH_LEVEL,addOne);
+// 	
+// 	NVIC_EnableIRQ(PIOC_IRQn);
+// 	
+// 	pio_enable_interrupt(PIOC,PIO_PC9);
+// 	
+// 	
+// }

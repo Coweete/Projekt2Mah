@@ -555,6 +555,12 @@
     <Compile Include="src\Functions\Regulator.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\Functions\Rotate.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Functions\Rotate.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\Tasks\Task_ultraLjud.c">
       <SubType>compile</SubType>
     </Compile>

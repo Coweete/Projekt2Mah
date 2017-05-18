@@ -6,9 +6,20 @@
  */ 
 #include <asf.h>
 #include <FreeRTOS.h>
-#include <asf.h>
+#include <ioport.h>
+#include <stdlib.h>
+#include <inttypes.h>
 //#include "Sensor/soundSensor.h"
+#include "Functions/Motorfunctions.h"
 #include "Functions/DelayFunctions.h"
+//#include "Functions/Drive.h"
+//#include "Functions/Regulator.h"
+#include "Functions/Rotate.h"
+#include "Functions/calculations.h"
+
+
+
+
 
 //DigitalPin 23
 //#define EchoPin PIO_PA14_IDX
@@ -23,13 +34,20 @@
 #ifndef TASK_ULTRALJUD_H_
 #define TASK_ULTRALJUD_H_
 #define TASK_ULTRALJUD_STACK_SIZE (1024/sizeof(portSTACK_TYPE))
-#define TASK_ULTRALJUD_STACK_PRIORITY (5)
+#define TASK_ULTRALJUD_STACK_PRIORITY (4)
+
+#define TASK_REGULATE_H_
+#define TASK_REGULATE_STACK_SIZE (1024/sizeof(portSTACK_TYPE))
+#define TASK_REGULATE_STACK_PRIORITY (2)
+
+#define TASK_NAV_CALC_H_
+#define TASK_NAV_CALC_STACK_SIZE (1024/sizeof(portSTACK_TYPE))
+#define TASK_NAV_CALC_STACK_PRIORITY (5)
 
 int pulseins(void); 
 void init_sensor(void);
 void task_ultraLjud(void *pvParameters);
-int distanceStop(void);
-
-
+void task_Regulate(void *pvParameters);
+void task_nav_calc(void *pvParameters);
 
 #endif /* TASK_SENSOR_H_ */

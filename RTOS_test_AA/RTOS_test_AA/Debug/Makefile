@@ -107,6 +107,7 @@ C_SRCS +=  \
 ../src/Functions/calculations.c \
 ../src/Functions/Drive.c \
 ../src/Functions/Regulator.c \
+../src/Functions/Rotate.c \
 ../src/Tasks/Task_ultraLjud.c \
 ../src/ASF/common/services/delay/sam/cycle_counter.c \
 ../src/ASF/common/utils/stdio/read.c \
@@ -155,6 +156,7 @@ OBJS +=  \
 src/Functions/calculations.o \
 src/Functions/Drive.o \
 src/Functions/Regulator.o \
+src/Functions/Rotate.o \
 src/Tasks/Task_ultraLjud.o \
 src/ASF/common/services/delay/sam/cycle_counter.o \
 src/ASF/common/utils/stdio/read.o \
@@ -196,6 +198,7 @@ OBJS_AS_ARGS +=  \
 src/Functions/calculations.o \
 src/Functions/Drive.o \
 src/Functions/Regulator.o \
+src/Functions/Rotate.o \
 src/Tasks/Task_ultraLjud.o \
 src/ASF/common/services/delay/sam/cycle_counter.o \
 src/ASF/common/utils/stdio/read.o \
@@ -237,6 +240,7 @@ C_DEPS +=  \
 src/Functions/calculations.d \
 src/Functions/Drive.d \
 src/Functions/Regulator.d \
+src/Functions/Rotate.d \
 src/Tasks/Task_ultraLjud.d \
 src/ASF/common/services/delay/sam/cycle_counter.d \
 src/ASF/common/utils/stdio/read.d \
@@ -278,6 +282,7 @@ C_DEPS_AS_ARGS +=  \
 src/Functions/calculations.d \
 src/Functions/Drive.d \
 src/Functions/Regulator.d \
+src/Functions/Rotate.d \
 src/Tasks/Task_ultraLjud.d \
 src/ASF/common/services/delay/sam/cycle_counter.d \
 src/ASF/common/utils/stdio/read.d \
@@ -330,6 +335,8 @@ LINKER_SCRIPT_DEP+=  \
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

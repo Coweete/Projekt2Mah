@@ -152,7 +152,10 @@ src/Tasks/Task_Regulate.d src/Tasks/Task_Regulate.o: \
  ../src/ASF/sam/drivers/pio/pio_handler.h \
  ../src/Functions/Motorfunctions.h ../src/Functions/Drive.h \
  ../src/Functions/Regulator.h ../src/Tasks/Task_ultraLjud.h \
- ../src/Functions/DelayFunctions.h
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu-toolchain\arm-none-eabi\include\inttypes.h \
+ ../src/Functions/DelayFunctions.h ../src/Functions/Rotate.h \
+ ../src/Functions/calculations.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu-toolchain\arm-none-eabi\include\math.h
 
 ../src/Tasks/Task_Regulate.h:
 
@@ -474,4 +477,12 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu
 
 ../src/Tasks/Task_ultraLjud.h:
 
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu-toolchain\arm-none-eabi\include\inttypes.h:
+
 ../src/Functions/DelayFunctions.h:
+
+../src/Functions/Rotate.h:
+
+../src/Functions/calculations.h:
+
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu-toolchain\arm-none-eabi\include\math.h:

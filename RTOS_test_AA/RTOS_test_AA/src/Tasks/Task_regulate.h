@@ -13,13 +13,13 @@
 #include "Tasks/Task_ultraLjud.h"
 
 #ifndef TASK_REGULATE_H_
-#define TASK_REGULATE_H_
-#define TASK_REGULATE_STACK_SIZE (1024/sizeof(portSTACK_TYPE))
-#define TASK_REGULATE_STACK_PRIORITY (3)
+// #define TASK_REGULATE_H_
+// #define TASK_REGULATE_STACK_SIZE (1024/sizeof(portSTACK_TYPE))
+// #define TASK_REGULATE_STACK_PRIORITY (2)
 
-void task_Regulate(void *pvParameters);
-
-
+// void task_Regulate(void *pvParameters);
+// void addOne(uint32_t id, uint32_t index);
+// void init_interrupt(void);
 
 
 #endif /* TASK_REGULATE_H_ */

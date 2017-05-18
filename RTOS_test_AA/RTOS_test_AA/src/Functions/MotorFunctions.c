@@ -11,8 +11,8 @@
 #include "Functions/DelayFunctions.h"
 #include "Functions/MotorFunctions.h"
 
-#define LEFT PIO_PC4_IDX
-#define RIGHT PIO_PC5_IDX
+#define LEFT PIO_PC5_IDX
+#define RIGHT PIO_PC7_IDX
 
 
 
@@ -39,4 +39,5 @@ void moveForward(int l,int r){
 	pulseLeft(l);
 	pulseRight(r);
 	delayMicroseconds(5250);
+	
 }

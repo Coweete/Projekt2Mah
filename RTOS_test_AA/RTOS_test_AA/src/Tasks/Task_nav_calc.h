@@ -9,12 +9,12 @@
 #include <FreeRTOS.h>
 
 #ifndef TASK_NAV_CALC_H_
-#define TASK_NAV_CALC_H_
-#define TASK_NAV_CALC_STACK_SIZE (1024/sizeof(portSTACK_TYPE))
-#define TASK_NAV_CALC_STACK_PRIORITY (6)
-
-void task_nav_calc(void *pvParameters);
-
+// #define TASK_NAV_CALC_H_
+// #define TASK_NAV_CALC_STACK_SIZE (1024/sizeof(portSTACK_TYPE))
+// #define TASK_NAV_CALC_STACK_PRIORITY (6)
+// 
+// void task_nav_calc(void *pvParameters);
+// 
 
 
 #endif /* TASK_NAV_CALC_H_ */

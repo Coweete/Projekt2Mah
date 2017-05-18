@@ -8,6 +8,8 @@ src\Functions\Drive.c
 
 src\Functions\Regulator.c
 
+src\Functions\Rotate.c
+
 src\Tasks\Task_ultraLjud.c
 
 src\ASF\common\services\delay\sam\cycle_counter.c

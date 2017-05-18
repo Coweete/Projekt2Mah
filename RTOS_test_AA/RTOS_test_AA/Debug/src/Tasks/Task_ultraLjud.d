@@ -150,7 +150,10 @@ src/Tasks/Task_ultraLjud.d src/Tasks/Task_ultraLjud.o: \
  ../src/ASF/sam/drivers/uart/uart.h ../src/ASF/sam/drivers/usart/usart.h \
  ../src/config/conf_uart_serial.h ../src/ASF/sam/drivers/tc/tc.h \
  ../src/ASF/sam/drivers/pio/pio_handler.h \
- ../src/Functions/DelayFunctions.h
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu-toolchain\arm-none-eabi\include\inttypes.h \
+ ../src/Functions/Motorfunctions.h ../src/Functions/DelayFunctions.h \
+ ../src/Functions/Rotate.h ../src/Functions/calculations.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu-toolchain\arm-none-eabi\include\math.h
 
 ../src/Tasks/Task_ultraLjud.h:
 
@@ -464,4 +467,14 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu
 
 ../src/ASF/sam/drivers/pio/pio_handler.h:
 
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu-toolchain\arm-none-eabi\include\inttypes.h:
+
+../src/Functions/Motorfunctions.h:
+
 ../src/Functions/DelayFunctions.h:
+
+../src/Functions/Rotate.h:
+
+../src/Functions/calculations.h:
+
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu-toolchain\arm-none-eabi\include\math.h:
