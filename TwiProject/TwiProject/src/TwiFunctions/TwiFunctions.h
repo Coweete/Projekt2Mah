@@ -17,6 +17,8 @@ void init_twi_functions();
 void send_package(uint8_t twi_state,uint8_t slave);
 void receive_package(uint8_t slave);
 void pa_sendstatus(TwiCmd twi_state, uint8_t understate);
+void na_sendstatus(TwiCmd twi_state);
+
 //void send_test_package(uint8_t twi_state,uint8_t slave);
 //void test_recieve(uint8_t slave);
 

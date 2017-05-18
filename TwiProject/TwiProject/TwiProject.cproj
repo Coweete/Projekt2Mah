@@ -576,6 +576,12 @@
     <Compile Include="src\Task\TaskTwiEgen.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\Test\TestVikingarna.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Test\TestVikingarna.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\Test\test_runner.c">
       <SubType>compile</SubType>
     </Compile>
