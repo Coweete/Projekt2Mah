@@ -8,6 +8,8 @@ src\Task\TaskNavigationCom.c
 
 src\Task\TaskTwiEgen.c
 
+src\Test\TestVikingarna.c
+
 src\Test\test_runner.c
 
 src\unity\unity.c

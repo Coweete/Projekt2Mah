@@ -1,4 +1,5 @@
-src/main.d src/main.o: ../src/main.c ../src/asf.h \
+src/Test/TestVikingarna.d src/Test/TestVikingarna.o: \
+ ../src/Test/TestVikingarna.c ../src/asf.h \
  ../src/ASF/sam/utils/compiler.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu-toolchain\lib\gcc\arm-none-eabi\4.8.4\include\stddef.h \
  ../src/ASF/common/utils/parts.h \
@@ -155,11 +156,8 @@ src/main.d src/main.o: ../src/main.c ../src/asf.h \
  ../src/ASF/common/services/twi/sam_twi/twi_master.h \
  ../src/ASF/common/services/twi/twi_slave.h \
  ../src/ASF/common/services/twi/sam_twi/twi_slave.h \
- ../src/ASF/sam/drivers/pio/pio_handler.h ../src/consoleFunctions.h \
- ../src/TwiFunctions/TwiFunctions.h ../src/TwiFunctions/TwiComHandler.h \
- ../src/Task/TaskTwiEgen.h ../src/Task/task_blink.h \
- ../src/TwiFunctions/TwiComHandler.h ../src/Task/TaskNavigationCom.h \
- ../src/PiCom/piCom.h ../src/Test/TestVikingarna.h
+ ../src/ASF/sam/drivers/pio/pio_handler.h ../src/Test/TestVikingarna.h \
+ ../src/TwiFunctions/TwiFunctions.h ../src/TwiFunctions/TwiComHandler.h
 
 ../src/asf.h:
 
@@ -483,20 +481,8 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu
 
 ../src/ASF/sam/drivers/pio/pio_handler.h:
 
-../src/consoleFunctions.h:
+../src/Test/TestVikingarna.h:
 
 ../src/TwiFunctions/TwiFunctions.h:
 
 ../src/TwiFunctions/TwiComHandler.h:
-
-../src/Task/TaskTwiEgen.h:
-
-../src/Task/task_blink.h:
-
-../src/TwiFunctions/TwiComHandler.h:
-
-../src/Task/TaskNavigationCom.h:
-
-../src/PiCom/piCom.h:
-
-../src/Test/TestVikingarna.h:

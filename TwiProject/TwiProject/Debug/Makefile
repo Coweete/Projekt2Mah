@@ -112,6 +112,7 @@ C_SRCS +=  \
 ../src/PiCom/piCom.c \
 ../src/Task/TaskNavigationCom.c \
 ../src/Task/TaskTwiEgen.c \
+../src/Test/TestVikingarna.c \
 ../src/Test/test_runner.c \
 ../src/unity/unity.c \
 ../src/ASF/common/services/delay/sam/cycle_counter.c \
@@ -158,6 +159,7 @@ OBJS +=  \
 src/PiCom/piCom.o \
 src/Task/TaskNavigationCom.o \
 src/Task/TaskTwiEgen.o \
+src/Test/TestVikingarna.o \
 src/Test/test_runner.o \
 src/unity/unity.o \
 src/ASF/common/services/delay/sam/cycle_counter.o \
@@ -197,6 +199,7 @@ OBJS_AS_ARGS +=  \
 src/PiCom/piCom.o \
 src/Task/TaskNavigationCom.o \
 src/Task/TaskTwiEgen.o \
+src/Test/TestVikingarna.o \
 src/Test/test_runner.o \
 src/unity/unity.o \
 src/ASF/common/services/delay/sam/cycle_counter.o \
@@ -236,6 +239,7 @@ C_DEPS +=  \
 src/PiCom/piCom.d \
 src/Task/TaskNavigationCom.d \
 src/Task/TaskTwiEgen.d \
+src/Test/TestVikingarna.d \
 src/Test/test_runner.d \
 src/unity/unity.d \
 src/ASF/common/services/delay/sam/cycle_counter.d \
@@ -275,6 +279,7 @@ C_DEPS_AS_ARGS +=  \
 src/PiCom/piCom.d \
 src/Task/TaskNavigationCom.d \
 src/Task/TaskTwiEgen.d \
+src/Test/TestVikingarna.d \
 src/Test/test_runner.d \
 src/unity/unity.d \
 src/ASF/common/services/delay/sam/cycle_counter.d \
@@ -325,6 +330,8 @@ LINKER_SCRIPT_DEP+=  \
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

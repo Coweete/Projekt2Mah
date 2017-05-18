@@ -37,13 +37,13 @@
 #include "TwiFunctions/TwiComHandler.h"
 #include "Task/TaskNavigationCom.h"
 #include "PiCom/piCom.h"
+#include "Test/TestVikingarna.h"
 
 #define TASK_TWI_SIZE	(1024/sizeof(portSTACK_TYPE))
 #define TASK_TWI_NAV    3
 #define TASK_TWI_PRIO	2
 #define TASK_BLINK		1
 
-extern uint8_t data_received_pab[];
 
 int main (void)
 {
@@ -56,47 +56,37 @@ int main (void)
 	printf("Start of inint\n");
 	init_twi_functions();
 	
-	char str[20];
+	//testloop();
+
+	//pa_sendstatus(TWI_CMD_PICKUP_START,0);
+	//na_sendstatus(XY1);
 	
-	printf("Start pickup\n");
-	pa_sendstatus(TWI_CMD_PICKUP_START,SOCK);
-	
-	pa_sendstatus(TWI_CMD_PICKUP_STATUS,1);
-	int conter = 1;
-	while(conter){
-		pa_sendstatus(TWI_CMD_PICKUP_STATUS,1);
-		sprintf(str,"data recive %d",data_received_pab[1]);
-		printf(str);	
-		if (data_received_pab[1] == 2){
-			pa_sendstatus(TWI_CMD_DROPOFF_START,1);
-		}else{
-		}
-		delay_ms(1000);
-	}
-	
-	
-	/*
 	xTaskCreate(task_nav_com,(const signed char* const) "navigation",TASK_TWI_SIZE,NULL,TASK_TWI_NAV,NULL);
-	xTaskCreate(task_blink,(const signed char* const) "blink",TASK_TWI_SIZE,NULL,TASK_BLINK,NULL);
-	xTaskCreate(task_twi,(const signed char* const) "com",TASK_TWI_SIZE,NULL,TASK_TWI_PRIO,NULL);
+	//xTaskCreate(task_blink,(const signed char* const) "blink",TASK_TWI_SIZE,NULL,TASK_BLINK,NULL);
+	//xTaskCreate(task_twi,(const signed char* const) "com",TASK_TWI_SIZE,NULL,TASK_TWI_PRIO,NULL);
 	vTaskStartScheduler();
-	*/
+	
 	while (1){
 		
 	}
 }
 
-
-	/*
-	//send_package(16);
-	printf("SEND TO FIRST\n");
-	send_package(Identifiering);
-	printf("Recive from first\n");
-	recive_package();
-	printf("skriv i consolen \n");
-	sscanf("%i",*sa);
-	sprintf(sa,"input: %i",tesas);
-	printf("Input: ");
-	printf(sa);
-	*/
-	
+//För att testa med skicka till påbyggnaden!
+// 	printf("Start pickup\n");
+// 	pa_sendstatus(TWI_CMD_PICKUP_START,SOCK);
+//
+// 	pa_sendstatus(TWI_CMD_PICKUP_STATUS,1);
+// 	int conter = 1;
+// 	while(conter){
+// 		pa_sendstatus(TWI_CMD_PICKUP_STATUS,1);
+// 		sprintf(str,"data recive 1%d",data_received_pab[1]);
+// 		printf(str);
+// 		sprintf(str,"data recive 2%d",data_received_pab[2]);
+// 		printf(str);
+// 		if (data_received_pab[1] == 2){
+// 			pa_sendstatus(TWI_CMD_DROPOFF_START,1);
+// 		}else{
+// 		}
+// 		delay_ms(1000);
+// 	}
+//

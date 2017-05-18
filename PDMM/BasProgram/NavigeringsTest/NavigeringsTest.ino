@@ -1,7 +1,7 @@
 #include <Wire.h>
 
-uint8_t rx_buf[3];
-uint8_t send_data[3];
+uint8_t rx_buf[5];
+uint8_t send_data[5];
 uint8_t twi_state;
 
 void setup() {
@@ -17,8 +17,12 @@ void loop() {
 }
 
 void requestEvent(){
-  send_data[0] = rx_buf[0];
-  Wire.write(send_data,3);
+  send_data[0] = 11;
+  send_data[1] = 12;
+  send_data[2] = 13;
+  send_data[3] = 14;
+  send_data[4] = 15;
+  Wire.write(send_data,5);
 }
 
 void receiveEvent(int howMany){
@@ -29,12 +33,8 @@ void receiveEvent(int howMany){
     i++;
   }
   Serial.println(rx_buf[0]);
-  Serial.println(rx_buf[1]);
 
-  if(0x25 == rx_buf[0]){
-    send_data[1] = 13;
-    send_data[2] = 37;
-  }
+  
   
 }
 

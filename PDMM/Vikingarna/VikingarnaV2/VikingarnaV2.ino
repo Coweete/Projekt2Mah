@@ -128,6 +128,7 @@ void receiveEvent(int howMany){
     rx_buf[i] = twi_state;
     i++;
   }
+  Serial.println("IN rec");
   Serial.println(rx_buf[0]);
   Serial.println(rx_buf[1]);
   switch(rx_buf[0]){

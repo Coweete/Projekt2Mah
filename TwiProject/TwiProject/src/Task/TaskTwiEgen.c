@@ -11,28 +11,53 @@
 //Digital pin 7
 #define Pinne PIO_PC23_IDX
 
-xSemaphoreHandle signal_semafor = 0;
+//xSemaphoreHandle signal_semafor = 0;
+uint8_t cases = 1, flag = 1,state = SOCK;
+extern uint8_t data_received_pab[];
 
 void task_twi(void *pvParameters){
 	
 	portTickType xLastWakeTime;
-	const portTickType xTimeIncrement = 2000;
+	const portTickType xTimeIncrement = 5000;
 	xLastWakeTime = xTaskGetTickCount();
-	ioport_set_pin_dir(Pinne,IOPORT_DIR_OUTPUT);
-	vSemaphoreCreateBinary(signal_semafor);
-	
+	ioport_set_pin_dir(Pinne,IOPORT_DIR_INPUT);
+	pa_sendstatus(TWI_CMD_ARM_INIT,0);
 	int counter = 1;
 	
 	while (1){
 		printf("In send task\n");
-		//GOOGLA UPP FREERTOS macro för att byta från ticks till ms
-		//xSemaphoreTake(signal_semafor,1000);
-		ioport_set_pin_level(Pinne,HIGH);
-		send_package(TWI_CMD_PICKUP_START,TWI_SLAVE_PABYGGNAD);
-		receive_package(TWI_SLAVE_PABYGGNAD);
-		ioport_set_pin_level(Pinne,LOW);
+		switch(cases){
+			case 1:
+					printf("CASE 1");
+					if (HIGH == flag){
+						pa_sendstatus(TWI_CMD_PICKUP_START,SOCK);
+						flag = 0;
+					}
+					receive_package(TWI_SLAVE_PABYGGNAD);
+					if(2 == data_received_pab[1]){
+						cases = 2;
+						flag = 1;
+					}
+			break;
+			case 2:
+					printf("Case 2");
+					if (HIGH == flag){
+						pa_sendstatus(TWI_CMD_DROPOFF_START,0);
+						flag = 0;
+					}
+					receive_package(TWI_SLAVE_PABYGGNAD);
+					if(2 == data_received_pab[1]){
+						cases = 2;
+						flag = 1;
+					}									
+			break;
+			case 3:
+				if(LOW == ioport_get_pin_level(Pinne)){
+					cases = 1;
+				}
+			break;	
+		}
 		printf("END OF TASK\n");
-		//xSemaphoreGive(signal_semafor);
 		vTaskDelayUntil(&xLastWakeTime,xTimeIncrement);
 	}
 }
