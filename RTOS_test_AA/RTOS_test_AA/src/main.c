@@ -17,6 +17,7 @@
 #include "Functions/DelayFunctions.h"
 #include "Functions/ConsoleFunctions.h"
 #include "Functions/calculations.h"
+#include "Functions/TaskFunctions.h"
 
 // Antagligen bättre skapa för de olika tasken istället.
 //xSemaphoreHandle xBinarySemaphore;
@@ -65,7 +66,7 @@ int main (void)
 	initMotor();
 	//initDrive();
 	//initRegulator();
-				
+	init_taskFunctions();		
 	
 	
 	

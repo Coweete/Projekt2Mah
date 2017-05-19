@@ -10,6 +10,8 @@ src\Functions\Regulator.c
 
 src\Functions\Rotate.c
 
+src\Functions\TaskFunctions.c
+
 src\Tasks\Tasks.c
 
 src\ASF\common\services\delay\sam\cycle_counter.c

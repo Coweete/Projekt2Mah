@@ -11,8 +11,8 @@
 #include "Functions/DelayFunctions.h"
 #include "Functions/MotorFunctions.h"
 
-#define LEFT PIO_PC5_IDX
-#define RIGHT PIO_PC6_IDX
+#define LEFT PIO_PC4_IDX
+#define RIGHT PIO_PC5_IDX
 
 
 

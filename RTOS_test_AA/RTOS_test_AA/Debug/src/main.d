@@ -154,7 +154,8 @@ src/main.d src/main.o: ../src/main.c ../src/asf.h \
  ../src/Functions/Rotate.h ../src/Functions/calculations.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu-toolchain\arm-none-eabi\include\math.h \
  ../src/Functions/Motorfunctions.h ../src/Functions/DelayFunctions.h \
- ../src/Functions/ConsoleFunctions.h ../src/Functions/calculations.h
+ ../src/Functions/ConsoleFunctions.h ../src/Functions/calculations.h \
+ ../src/Functions/TaskFunctions.h
 
 ../src/asf.h:
 
@@ -487,3 +488,5 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu
 ../src/Functions/ConsoleFunctions.h:
 
 ../src/Functions/calculations.h:
+
+../src/Functions/TaskFunctions.h:

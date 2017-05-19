@@ -6,41 +6,25 @@
  */ 
 
 #include "Tasks/Tasks.h"
-
-//Höger
-#define R0 PIO_PA15_IDX
-#define R1 PIO_PD1_IDX
-#define R2 PIO_PD3_IDX
-#define R3 PIO_PD9_IDX
-#define R4 PIO_PD10_IDX
-#define R5 PIO_PC2_IDX
-#define R_RESET PIO_PB26_IDX
-
-//Vänster
-#define L0 PIO_PD0_IDX
-#define L1 PIO_PD2_IDX
-#define L2 PIO_PD6_IDX
-#define L3 PIO_PA7_IDX
-#define L4 PIO_PC1_IDX
-#define L5 PIO_PC3_IDX
-#define L_RESET PIO_PA14_IDX
+#include "Functions/TaskFunctions.h"
 
 
 long sensordistance = 0;
 
-int n = 0;
+int n = 1;
 int angle = 90;
-
+int dir = 45;
+char str[10];
 
 
 xSemaphoreHandle signal_semafor =0;
 xSemaphoreHandle regulate_semafor = 0;
 
-//xQueueHandle taskQueue = 0;
+xQueueHandle taskQueue = 0;
 
 void task_ultraLjud(void *pvParameters){
 	
-	//taskQueue = xQueueCreate(5,sizeof(int));
+	taskQueue = xQueueCreate(5,sizeof(int));
 	
 	
 	printf("\nTask Ultraljud");
@@ -48,7 +32,7 @@ void task_ultraLjud(void *pvParameters){
 	const portTickType xTimeIncrement = 10;
 	xLastWakeTime = xTaskGetTickCount();
 	
-	/*int i = 0;*/
+	
 	
 	while (1){
 		
@@ -64,17 +48,19 @@ void task_ultraLjud(void *pvParameters){
 		if(sensordistance <= 35){
 			xSemaphoreGiveFromISR(signal_semafor,NULL);
 		}
-		if(!xSemaphoreTake(signal_semafor,200)){
+		if(!xSemaphoreTake(signal_semafor,20)){
 				xSemaphoreGive(regulate_semafor);
-// 				if(!xQueueSendToBack(taskQueue,&i,0)){
-// 					printf("\nFailed to send");
-// 				}
+				printf("\nOk");
+				if(!xQueueSendToBack(taskQueue,&n,20)){
+					printf("\nFailed to send");
+					
+				}
 				//vTaskDelay(500);
 		}
 		else{
 				moveForward(1500,1500);
+				printf("\nStopp");
 		}
-		/*i++;*/
 		
 		
 		/*vTaskDelay(100);*/
@@ -114,36 +100,16 @@ void init_sensor(void){
 	vSemaphoreCreateBinary(signal_semafor);
 	vSemaphoreCreateBinary(regulate_semafor);
 	
-	ioport_set_pin_dir(R_RESET,IOPORT_DIR_OUTPUT);
-	ioport_set_pin_dir(L_RESET,IOPORT_DIR_OUTPUT);
-	ioport_set_pin_dir(R0,IOPORT_DIR_INPUT);
-	ioport_set_pin_dir(R1,IOPORT_DIR_INPUT);
-	ioport_set_pin_dir(R2,IOPORT_DIR_INPUT);
-	ioport_set_pin_dir(R3,IOPORT_DIR_INPUT);
-	ioport_set_pin_dir(R4,IOPORT_DIR_INPUT);
-	ioport_set_pin_dir(R5,IOPORT_DIR_INPUT);
-	ioport_set_pin_dir(L0,IOPORT_DIR_INPUT);
-	ioport_set_pin_dir(L1,IOPORT_DIR_INPUT);
-	ioport_set_pin_dir(L2,IOPORT_DIR_INPUT);
-	ioport_set_pin_dir(L3,IOPORT_DIR_INPUT);
-	ioport_set_pin_dir(L4,IOPORT_DIR_INPUT);
-	ioport_set_pin_dir(L5,IOPORT_DIR_INPUT);
-	printf("\nPins OK");
+	
 }
 
 void task_Regulate(void *pvParameters){
 	
-	int newcount = 0;
-	int r_count = 0;
-	int l_count = 0;
-	int e = 0;
-	int Kp = 4;
-	int speed = 1650;
-	int r_speed = 0;
-	int l_speed = 0;
 	
-	r_speed=speed;
-	l_speed=speed;
+	
+	int ir;
+	
+	
 	
 	portTickType xLastWakeTimeRegulate;
 	const portTickType xTimeIncrementRegulate = 10;
@@ -155,54 +121,39 @@ void task_Regulate(void *pvParameters){
 		
 		vTaskDelayUntil(&xLastWakeTimeRegulate,xTimeIncrementRegulate);
 		
-		moveForward(l_speed,r_speed);
-		
-		
-		
+
 		if(xSemaphoreTake(regulate_semafor,100)){
 			
-			ioport_set_pin_level(R_RESET,LOW);
-			ioport_set_pin_level(L_RESET,LOW);
+			if(xQueueReceive(taskQueue,&ir,20)){
+				sprintf(str, "\nReceived: %d", ir);
+				printf(str);
+				}else{
+				printf("\nFailed to receive");
+			}
 			
-			r_count = ioport_get_pin_level(R0)+ioport_get_pin_level(R1)*2+ioport_get_pin_level(R2)*4+ioport_get_pin_level(R3)*8
-			+ioport_get_pin_level(R4)*16+ioport_get_pin_level(R5)*32;
-			
-			l_count = ioport_get_pin_level(L0)+ioport_get_pin_level(L1)*2+ioport_get_pin_level(L2)*4+ioport_get_pin_level(L3)*8
-			+ioport_get_pin_level(L4)*16+ioport_get_pin_level(L5)*32;
-			
-			e = 0 - (r_count - l_count);
-			
-			char str[10];
-			sprintf(str,"\nFelvärde: %d",e);
-			
-			r_speed=speed;
-			l_speed=speed;
-			if(e > 0) {
-
-				r_speed=speed-(e*Kp);
-				l_speed=speed+(e*Kp);
+			switch (ir)
+			{
+			case 0:					//Kör framåt
+				driveForward();					//Kör tills den inte gör det
+				break;
+			case 1:					//Sväng
+				if(rotate(angle, dir)){			//angle = slut-riktning, dir = nuvarande riktning
+					n=1;
+				}
+				break;
+			case 2:					//Sensor-sök
 				
-			}
-			else if (e < 0){
-				
-				r_speed=speed+(e*Kp);
-				l_speed=speed-(e*Kp);
-			}
-			else{
-				moveForward(l_speed,r_speed);
+				break;
+			default:
+				printf("\nDefault");
+				break;
 			}
 			
-			newcount = newcount + r_count;
+			//moveForward(1500,1500);
 			
-			r_count = 0;
-			l_count = 0;
-
-			ioport_set_pin_level(R_RESET,HIGH);
-			ioport_set_pin_level(L_RESET,HIGH);
 			
 		}
-		newcount = 0;
-		moveForward(1500,1500);
+		
 		
 	}
 	

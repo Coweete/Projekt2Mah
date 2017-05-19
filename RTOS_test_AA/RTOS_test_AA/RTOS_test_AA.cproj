@@ -561,6 +561,12 @@
     <Compile Include="src\Functions\Rotate.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\Functions\TaskFunctions.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Functions\TaskFunctions.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\Tasks\Tasks.c">
       <SubType>compile</SubType>
     </Compile>
