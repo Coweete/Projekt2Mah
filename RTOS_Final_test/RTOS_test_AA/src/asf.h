@@ -59,7 +59,7 @@
 // From module: Delay routines
 #include <delay.h>
 
-// From module: FreeRTOS mini Real-Time Kernel
+// From module: FreeRTOS - Kernel 7.3.0
 #include <FreeRTOS.h>
 #include <FreeRTOS_CLI.h>
 #include <StackMacros.h>
@@ -106,6 +106,15 @@
 
 // From module: TC - Timer Counter
 #include <tc.h>
+
+// From module: TWI - Two-Wire Interface - SAM implementation
+#include <sam_twi/twi_master.h>
+#include <sam_twi/twi_slave.h>
+#include <twi_master.h>
+#include <twi_slave.h>
+
+// From module: TWI - Two-wire Interface
+#include <twi.h>
 
 // From module: UART - Univ. Async Rec/Trans
 #include <uart.h>

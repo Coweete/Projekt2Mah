@@ -2,6 +2,12 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+src\Tasks\TaskNavigationCom.c
+
+src\TwiFunctions\TwiFunctions.c
+
+src\ASF\sam\drivers\twi\twi.c
+
 src\Functions\calculations.c
 
 src\Functions\Drive.c
@@ -9,6 +15,8 @@ src\Functions\Drive.c
 src\Functions\Regulator.c
 
 src\Functions\Rotate.c
+
+src\Tasks\TaskNavigation.c
 
 src\Tasks\Tasks.c
 

@@ -17,6 +17,7 @@
 #include "Functions/DelayFunctions.h"
 #include "Functions/ConsoleFunctions.h"
 #include "Functions/calculations.h"
+#include "TwiFunctions/TwiFunctions.h"
 
 // Antagligen bättre skapa för de olika tasken istället.
 //xSemaphoreHandle xBinarySemaphore;
@@ -63,13 +64,14 @@ int main (void)
 	configure_console();
 	init_sensor();
 	initMotor();
+	init_twi_functions();
+	na_sendstatus(SOCKETXY);			// hämtar info om strumpan
+	pa_sendstatus(TWI_CMD_ARM_INIT,0);	// hämtar info om armen
 	//initDrive();
 	//initRegulator();
 				
 	
-	
-	
-	
+
 	printf("\nInit ok");
 	
 
