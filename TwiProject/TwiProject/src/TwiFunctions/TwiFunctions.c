@@ -2,7 +2,7 @@
 * TwiFunctions.c
 *
 * Created: 2017-05-05 10:24:13
-*  Author: Jounne
+*  Author: Jonatan Fridsten
 */
 #include <asf.h>
 #include <twi_master.h>
@@ -11,44 +11,45 @@
 #include "TwiFunctions.h"
 #include "TwiComHandler.h"
 
-#define TWI_SPEED					100000						//Twi communication speed
-#define TWI_SLAVE_MEM_ADDR			0x00						//Twi slave  memory address
-#define TWI_MASTER					CONF_BOARD_TWI0				//Sets the Twi too TWI0
-#define TWI_DATA_RECIEVE_LENGTH_PA		3						//Receive length pa
-#define TWI_DATA_SEND_LENGTH_PA			3						//Send length Pa
-#define TWI_DATA_RECIEVE_LENGTH_NA		5						//Receive length Navigation
-#define TWI_DATA_SEND_LENGTH_NA			1						//Send length Navigation
+#define TWI_SPEED					100000						//Hastigheten på twi bussen
+#define TWI_SLAVE_MEM_ADDR			0x00						//Twi slav addressen
+#define TWI_MASTER					CONF_BOARD_TWI0				//Sätter TWI till TWIO på due kortet
+#define TWI_DATA_RECIEVE_LENGTH_PA		3						//Längden på paketet för skicka till påbyggnad
+#define TWI_DATA_SEND_LENGTH_PA			3						//Längden på paketet för att ta emot från påbyggnaden
+#define TWI_DATA_RECIEVE_LENGTH_NA		5						//Längden på paketet för att ta emot från posititonssystemet
+#define TWI_DATA_SEND_LENGTH_NA			1						//Längden på paketet för att skicka till positionssystemet
 
-struct ArmInfo arminformation;									//Info about PA
-struct ObjectInfo objectinfo[4];								//Stores all information about the objects
+struct ArmInfo arminformation;									//Information om påbyggnaden kommer att sparas i denna structen
+struct ObjectInfo objectinfo[4];								//Information om objekten kommer att lagras i denna lista med structer
+																//[0] = Strumpa,[1] = Kloss,[2] = Glas,[3] = En positionen av lådan, den andra ligger i origo  
 
-uint8_t data_received_pab[TWI_DATA_RECIEVE_LENGTH_PA] = {};		//Receive data PA
-uint8_t data_received_nav[TWI_DATA_RECIEVE_LENGTH_NA] = {};		//Receive data Nav
-uint8_t send_data_pab[TWI_DATA_SEND_LENGTH_PA] = {};			//Send data PA
-uint8_t send_data_nav[TWI_DATA_SEND_LENGTH_NA] = {};			//Send data NA
+uint8_t data_received_pab[TWI_DATA_RECIEVE_LENGTH_PA] = {};		//Datan som kommer att hittas från paketet från påbyggnaden
+uint8_t data_received_nav[TWI_DATA_RECIEVE_LENGTH_NA] = {};		//Datan från positionssystemet
+uint8_t send_data_pab[TWI_DATA_SEND_LENGTH_PA] = {};			//Datan som skickas till påbyggnaden
+uint8_t send_data_nav[TWI_DATA_SEND_LENGTH_NA] = {};			//Datan som skickas till positionssystemet
 
-//Send packet to Pab
+//Paketet som skickas till påbyggnaden
 twi_package_t packet_pab = {
-	.addr[0]		= TWI_SLAVE_MEM_ADDR >> 8,					//TWI slave memory address data MSB
-	.addr[1]		= 0,										//TWI slave memory address data LSB
-	.addr_length	= 0,										//TWI slave memory address data size
-	.chip			= TWI_SLAVE_PABYGGNAD,						//TWI slave bus address
-	.buffer			= (void *) send_data_pab,					//transfer data source buffer
-	.length			= TWI_DATA_SEND_LENGTH_PA					//transfer data size(bytes)
+	.addr[0]		= TWI_SLAVE_MEM_ADDR >> 8,					//TWI slav, Minnes adressen MSB
+	.addr[1]		= 0,										//TWI slav, Minnes adressen LSB
+	.addr_length	= 0,										//TWI slav, storleken på minnes adressen
+	.chip			= TWI_SLAVE_PABYGGNAD,						//TWI slav, adressen
+	.buffer			= (void *) send_data_pab,					//Pekare till datan
+	.length			= TWI_DATA_SEND_LENGTH_PA					//Storleken på datan
 };
 
-//Send packet to Nav
+//Paketet som skickas till positionssystemet
 twi_package_t packet_nav = {
 	.addr[0]		= TWI_SLAVE_MEM_ADDR >> 8,					//TWI slave memory address data MSB
 	.addr[1]		= 0,										//TWI slave memory address data LSB
 	.addr_length	= 0,										//TWI slave memory address data size
 	.chip			= TWI_SLAVE_NAVIGERING,						//TWI slave bus address
-	.buffer			= (void *) send_data_nav,					//transfer data source buffer
-	.length			= TWI_DATA_SEND_LENGTH_NA					//transfer data size(bytes)
+	.buffer			= (void *) send_data_nav,					//Pekare till datan
+	.length			= TWI_DATA_SEND_LENGTH_NA					//Storleken på datan
 	
 };
 
-//Receive packet Pab
+//Hämtningspacket för påbyggnaden
 twi_package_t packet_received_pab ={
 	.addr[0]		= TWI_SLAVE_MEM_ADDR >> 8,					
 	.addr[0]		= 0,										
@@ -58,7 +59,7 @@ twi_package_t packet_received_pab ={
 	.length			= TWI_DATA_RECIEVE_LENGTH_PA
 };
 
-//Receive packet Nav
+//Hämtnings paketet för positionssystemet
 twi_package_t packet_received_nav ={
 	.addr[0]		= TWI_SLAVE_MEM_ADDR >> 8,
 	.addr[0]		= 0,
@@ -68,7 +69,9 @@ twi_package_t packet_received_nav ={
 	.length			= TWI_DATA_RECIEVE_LENGTH_NA
 };
 
-//Sets due to master
+/************************************************************************/
+/*Sätter Ardunino Due till Master på twi bussen		                    */
+/************************************************************************/
 void init_twi_functions(){
 	twi_master_options_t opt;
 	opt.speed = TWI_SPEED;
@@ -76,7 +79,10 @@ void init_twi_functions(){
 	}
 }
 
-
+/************************************************************************/
+/* Tar han om kommunikationen mellan mastern och						*/
+/* slaven för positionssytemet											*/
+/************************************************************************/
 void na_sendstatus(TwiCmd twi_state){
 	char ar[20];
 	switch(twi_state){
@@ -85,70 +91,47 @@ void na_sendstatus(TwiCmd twi_state){
 		send_package(XY1,TWI_SLAVE_NAVIGERING);
 		receive_package(TWI_SLAVE_NAVIGERING);
 		break;
+		
 		//Led 2 position
 		case XY2:
 		send_package(XY2,TWI_SLAVE_NAVIGERING);
 		receive_package(TWI_SLAVE_NAVIGERING);
 		break;
+		
 		//socket position
 		case SOCKETXY:
 		send_package(SOCKETXY,TWI_SLAVE_NAVIGERING);
 		receive_package(TWI_SLAVE_NAVIGERING);
 		objectinfo[0].theObject = SOCK;
 		objectinfo[0].xpos = ((data_received_nav[1] << 8) | (data_received_nav[2] << 0));
-		objectinfo[0].ypox = ((data_received_nav[3] << 8) | (data_received_nav[4]) <<0);
-		printf("SOCKET");
-		sprintf(ar,"Object: %d \n", objectinfo[0].theObject);
-		printf(ar);
-		sprintf(ar,"xpos: %d \n", objectinfo[0].xpos);
-		printf(ar);
-		sprintf(ar,"ypos: %d \n", objectinfo[0].ypox);
-		printf(ar);
+		objectinfo[0].ypox = ((data_received_nav[3] << 8) | (data_received_nav[4] <<0));
 		break;
+		
 		//Square position
 		case SQUAREXY:
 		send_package(SQUAREXY,TWI_SLAVE_NAVIGERING);
 		receive_package(TWI_SLAVE_NAVIGERING);
 		objectinfo[1].theObject = SQUARE;
 		objectinfo[1].xpos = ((data_received_nav[1] << 8) | (data_received_nav[2] << 0));
-		objectinfo[1].ypox = ((data_received_nav[3] << 8) | (data_received_nav[4]) <<0);
-		printf("SQUARE");
-		sprintf(ar,"Object: %d \n", objectinfo[1].theObject);
-		printf(ar);
-		sprintf(ar,"xpos: %d \n", objectinfo[1].xpos);
-		printf(ar);
-		sprintf(ar,"ypos: %d \n", objectinfo[1].ypox);
-		printf(ar);
+		objectinfo[1].ypox = ((data_received_nav[3] << 8) | (data_received_nav[4] <<0));
 		break;
+		
 		//Glass position
 		case GLASSXY:
 		send_package(GLASSXY,TWI_SLAVE_NAVIGERING);
 		receive_package(TWI_SLAVE_NAVIGERING);
 		objectinfo[2].theObject = GLASS;
 		objectinfo[2].xpos = ((data_received_nav[1] << 8) | (data_received_nav[2] << 0));
-		objectinfo[2].ypox = ((data_received_nav[3] << 8) | (data_received_nav[4]) <<0);
-		printf("Glass");
-		sprintf(ar,"Object: %d \n", objectinfo[2].theObject);
-		printf(ar);
-		sprintf(ar,"xpos: %d \n", objectinfo[2].xpos);
-		printf(ar);
-		sprintf(ar,"ypos: %d \n", objectinfo[2].ypox);
-		printf(ar);
+		objectinfo[2].ypox = ((data_received_nav[3] << 8) | (data_received_nav[4] <<0));
 		break;
+		
 		//Boxgal info
 		case BOXGOALXY:
 		send_package(BOXGOALXY,TWI_SLAVE_NAVIGERING);
 		receive_package(TWI_SLAVE_NAVIGERING);
 		objectinfo[3].theObject = BOXGOALXY;
 		objectinfo[3].xpos = ((data_received_nav[1] << 8) | (data_received_nav[2] << 0));
-		objectinfo[3].ypox = ((data_received_nav[3] << 8) | (data_received_nav[4]) <<0);
-		printf("BOX");
-		sprintf(ar,"Object: %d \n", objectinfo[3].theObject);
-		printf(ar);
-		sprintf(ar,"xpos: %d \n", objectinfo[3].xpos);
-		printf(ar);
-		sprintf(ar,"ypos: %d \n", objectinfo[3].ypox);
-		printf(ar);
+		objectinfo[3].ypox = ((data_received_nav[3] << 8) | (data_received_nav[4] <<0));
 		break;
 	}
 	
@@ -157,6 +140,7 @@ void na_sendstatus(TwiCmd twi_state){
 
 void pa_sendstatus(TwiCmd twi_state, uint8_t underState){
 	switch (twi_state){
+		//Hämtar information om påbyggnaden
 		case TWI_CMD_ARM_INIT:
 			send_data_pab[1] = TWI_CMD_ARM_REQ_BOX_INFO;
 			send_package(TWI_CMD_ARM_INIT,TWI_SLAVE_PABYGGNAD);
