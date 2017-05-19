@@ -11,7 +11,7 @@
 
 long sensordistance = 0;
 
-int n = 1;
+int n = 2;
 int angle = 90;
 int dir = 45;
 char str[10];
@@ -45,14 +45,14 @@ void task_ultraLjud(void *pvParameters){
 		duration = pulseins();
 		sensordistance = (duration/42)/58.2;
 		
-		if(sensordistance <= 35){
+		if(sensordistance <= 5){
 			xSemaphoreGiveFromISR(signal_semafor,NULL);
 		}
 		if(!xSemaphoreTake(signal_semafor,20)){
 				xSemaphoreGive(regulate_semafor);
-				printf("\nOk");
+				//printf("\nOk");
 				if(!xQueueSendToBack(taskQueue,&n,20)){
-					printf("\nFailed to send");
+					//printf("\nFailed to send");
 					
 				}
 				//vTaskDelay(500);
@@ -138,11 +138,17 @@ void task_Regulate(void *pvParameters){
 				break;
 			case 1:					//Sväng
 				if(rotate(angle, dir)){			//angle = slut-riktning, dir = nuvarande riktning
-					n=1;
+					n=3;
+				}else{
+					printf("\nRotate not completed");
 				}
 				break;
 			case 2:					//Sensor-sök
-				
+				if(cameraSearch()){
+					n=3;
+				}else{
+					printf("\nObject not found");
+				}
 				break;
 			default:
 				printf("\nDefault");

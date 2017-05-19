@@ -30,6 +30,16 @@
 #define L5 PIO_PC3_IDX
 #define L_RESET PIO_PA14_IDX
 
+//Kamera
+#define START_CAMERA PIO_PC7_IDX	//Pinne 39
+
+#define TURN_LEFT PIO_PC8_IDX		//Pinne 40
+#define ON_TARGET PIO_PA19_IDX		//Pinne 42
+#define TURN_RIGHT PIO_PC19_IDX		//Pinne 44
+#define OFF_TARGET PIO_PC17_IDX		//Pinne 46
+
+
+
 int r_count = 0;
 int l_count = 0;
 int e = 0;
@@ -55,7 +65,20 @@ void init_taskFunctions(void){
 	ioport_set_pin_dir(L3,IOPORT_DIR_INPUT);
 	ioport_set_pin_dir(L4,IOPORT_DIR_INPUT);
 	ioport_set_pin_dir(L5,IOPORT_DIR_INPUT);
+	
+	ioport_set_pin_dir(TURN_LEFT,IOPORT_DIR_INPUT);
+	ioport_set_pin_dir(TURN_RIGHT,IOPORT_DIR_INPUT);
+	ioport_set_pin_dir(ON_TARGET,IOPORT_DIR_INPUT);
+	ioport_set_pin_dir(OFF_TARGET,IOPORT_DIR_INPUT);
+	ioport_set_pin_dir(START_CAMERA,IOPORT_DIR_OUTPUT);
+	
+	ioport_set_pin_level(START_CAMERA,LOW);
+
+	
+	
 	printf("\nPins OK");
+	
+	
 	
 	
 	
@@ -176,4 +199,37 @@ int rotate(int turn_angle, int direction){		//Minimum vinkel är fyra
 	ioport_set_pin_level(R_RESET,HIGH);
 	
 	return 1;
+}
+
+int cameraSearch(void){
+	
+	ioport_set_pin_level(START_CAMERA,HIGH);
+	
+	int r = 0;
+	
+	while(0 == r){
+		if(ioport_get_pin_level(TURN_LEFT)){
+			moveForward(1400,1600);
+			printf("\nTurn left");
+		} 
+		else if(ioport_get_pin_level(TURN_RIGHT)){
+			moveForward(1600,1400);	
+			printf("\nTurn right");
+		}
+		else if(ioport_get_pin_level(OFF_TARGET)){
+			moveForward(1600,1400);
+			printf("\nTurn around");
+		}else if(ioport_get_pin_level(ON_TARGET)){
+			r=1;
+			printf("\nOn target");
+		}else{
+			printf("\nError");
+		}
+	}
+	
+	ioport_set_pin_level(START_CAMERA,LOW);
+	
+	moveForward(1500,1500);
+	
+	return r;	
 }

@@ -12,6 +12,6 @@
 void init_taskFunctions(void);
 void driveForward(void);
 int rotate(int turn_angle, int direction);
-
+int cameraSearch(void);
 
 #endif /* TASKFUNCTIONS_H_ */
