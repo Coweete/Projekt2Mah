@@ -91,7 +91,7 @@ void loop() {
   delay(5000);                
   Serial.println("Motor 2 stop");
   digitalWrite(BRAKE2, HIGH);  // sätta brake till hög då stannar motorn
-  delay(5000);
+//  delay(5000);
   nextstate = '3';
   break;
   
@@ -99,18 +99,18 @@ void loop() {
   Serial.println("backward motor 1");
   digitalWrite(BRAKE, LOW);  // sätta brake till låg igen
   digitalWrite(DIR, HIGH);    //ändra riktning på motor 1 genom att sätta dir till låg och då hela armen tillbax
-  analogWrite(PWM, 200);     // Sätta hastighet till motor
+  analogWrite(PWM, 230);     // Sätta hastighet till motor
   digitalWrite(BRAKE2, LOW);
   digitalWrite(DIR2, LOW);
   analogWrite(PWM2, 175);
-  delay(25000);
+  delay(22000);
   Serial.println("Motor 1 stop backward");
   digitalWrite(BRAKE, HIGH);  // sätta brake till hög då stannar motorn
   digitalWrite(BRAKE2, HIGH);
     endtime = millis();
   if(millis()==endtime){
   send_data[1] = 2;
-  delay(5000);
+  //delay(5000);
   nextstate = '4';
   }else{
     send_data[1] = 4;
@@ -158,14 +158,6 @@ void loop() {
   }*/
  // break;    
 case'6':
-   /*   endtime = millis();
-      if(millis()==endtime){
-      send_data[1] = 2;
-      delay(5000);
-      nextstate = '4';
-      }else{
-      send_data[1] = 4;
-       }*/
 Serial.println("button2");
   if(buttonState == LOW)
     {
