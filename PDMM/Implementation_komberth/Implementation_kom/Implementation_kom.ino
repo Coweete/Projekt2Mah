@@ -67,11 +67,17 @@ void loop() {
   Serial.println("Forward MOTOR 1");
   digitalWrite(BRAKE, LOW);  //sätta brake (stop) låg för att motorn ska köra
   digitalWrite(DIR, LOW);   // Sätta DIR till hög för att motor1 ska köras framåt alltså hela armen
-  analogWrite(PWM, 255);     // Hastighet för motor, max 255 
-//  delay(17000);     
-  delay(2000);     
+  analogWrite(PWM, 255);     // Hastighet för motor, max 255
+  digitalWrite(BRAKE2, LOW);  //sätta brake (stop) låg för att motorn ska köra
+  digitalWrite(DIR2, HIGH);   // Sätta DIR till hög för att motor 2 ska köras framåt (klon) greppar
+  analogWrite(PWM2, 110); 
+   delay(4000);
+   digitalWrite(BRAKE2, HIGH);
+  delay(14000);     
+//  delay(1000);     
   Serial.println("Motor stop");
   digitalWrite(BRAKE, HIGH);  // sätta brake till hög då stannar motorn 
+ 
   nextstate = '2';
     
   break;
@@ -82,10 +88,10 @@ void loop() {
   digitalWrite(BRAKE2, LOW);  //sätta brake (stop) låg för att motorn ska köra
   digitalWrite(DIR2, LOW);   // Sätta DIR till hög för att motor 2 ska köras framåt (klon) greppar
   analogWrite(PWM2, 255);     // Hastighet för motor, max 255  
-  delay(3000);                
+  delay(5000);                
   Serial.println("Motor 2 stop");
   digitalWrite(BRAKE2, HIGH);  // sätta brake till hög då stannar motorn
-  delay(3000);
+  delay(5000);
   nextstate = '3';
   break;
   
@@ -93,11 +99,11 @@ void loop() {
   Serial.println("backward motor 1");
   digitalWrite(BRAKE, LOW);  // sätta brake till låg igen
   digitalWrite(DIR, HIGH);    //ändra riktning på motor 1 genom att sätta dir till låg och då hela armen tillbax
-  analogWrite(PWM, 255);     // Sätta hastighet till motor
+  analogWrite(PWM, 200);     // Sätta hastighet till motor
   digitalWrite(BRAKE2, LOW);
   digitalWrite(DIR2, LOW);
   analogWrite(PWM2, 175);
-  delay(17000);
+  delay(25000);
   Serial.println("Motor 1 stop backward");
   digitalWrite(BRAKE, HIGH);  // sätta brake till hög då stannar motorn
   digitalWrite(BRAKE2, HIGH);
