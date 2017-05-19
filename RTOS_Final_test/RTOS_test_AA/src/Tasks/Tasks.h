@@ -32,10 +32,10 @@
 #define TriggerPin PIO_PC22_IDX
 #define Channel2
 
-#ifndef TASK_ULTRALJUD_H_
-#define TASK_ULTRALJUD_H_
-#define TASK_ULTRALJUD_STACK_SIZE (1024/sizeof(portSTACK_TYPE))
-#define TASK_ULTRALJUD_STACK_PRIORITY (5)
+#ifndef TASK_NAVIGATION_H_
+#define TASK_NAVIGATION_H_
+#define TASK_NAVIGATION_STACK_SIZE (1024/sizeof(portSTACK_TYPE))
+#define TASK_NAVIGATION_STACK_PRIORITY (5)
 
 #define TASK_REGULATE_H_
 #define TASK_REGULATE_STACK_SIZE (1024/sizeof(portSTACK_TYPE))
@@ -44,7 +44,7 @@
 
 int pulseins(void); 
 void init_sensor(void);
-void task_ultraLjud(void *pvParameters);
+void task_Navigation(void *pvParameters);
 void task_Regulate(void *pvParameters);
 void task_nav_calc(void *pvParameters);
 

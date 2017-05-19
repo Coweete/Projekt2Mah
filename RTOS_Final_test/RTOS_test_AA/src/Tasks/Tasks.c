@@ -38,12 +38,12 @@ xSemaphoreHandle regulate_semafor = 0;
 
 //xQueueHandle taskQueue = 0;
 
-void task_ultraLjud(void *pvParameters){
+void task_Navigation(void *pvParameters){
 	
 	//taskQueue = xQueueCreate(5,sizeof(int));
 	
 	
-	printf("\nTask Ultraljud");
+	printf("\nTask Navigation");
 	portTickType xLastWakeTime;
 	const portTickType xTimeIncrement = 10;
 	xLastWakeTime = xTaskGetTickCount();

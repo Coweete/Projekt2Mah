@@ -78,7 +78,7 @@ int main (void)
 			printf("Failed the Regulator Task\r\n");
 		}
  		
-		if (xTaskCreate(task_ultraLjud, (const signed char * const) "ULTRALJUD SENSOR", TASK_ULTRALJUD_STACK_SIZE, NULL, TASK_ULTRALJUD_STACK_PRIORITY, NULL) != pdPASS) {
+		if (xTaskCreate(task_Navigation, (const signed char * const) "ULTRALJUD SENSOR", TASK_NAVIGATION_STACK_SIZE, NULL, TASK_NAVIGATION_STACK_PRIORITY, NULL) != pdPASS) {
 			printf("Failed the UltraDistance Sensor Task\r\n");
 		}
 		

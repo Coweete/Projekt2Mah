@@ -13,7 +13,7 @@
     <OutputFileExtension>.elf</OutputFileExtension>
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
     <AssemblyName>RTOS_test_AA</AssemblyName>
-    <Name>RTOS_test_AA</Name>
+    <Name>RTOS_Final_Test</Name>
     <RootNamespace>RTOS_test_AA</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>

@@ -295,9 +295,9 @@ src/ASF/sam/utils/cmsis/sam3x/source/templates/system_sam3x.d \
 src/ASF/sam/utils/syscalls/gcc/syscalls.d \
 src/main.d
 
-OUTPUT_FILE_PATH +=RTOS_test_AA.elf
+OUTPUT_FILE_PATH +=RTOS_Final_Test.elf
 
-OUTPUT_FILE_PATH_AS_ARGS +=RTOS_test_AA.elf
+OUTPUT_FILE_PATH_AS_ARGS +=RTOS_Final_Test.elf
 
 ADDITIONAL_DEPENDENCIES:=
 
@@ -553,14 +553,14 @@ all: $(OUTPUT_FILE_PATH) $(ADDITIONAL_DEPENDENCIES)
 $(OUTPUT_FILE_PATH): $(OBJS) $(USER_OBJS) $(OUTPUT_FILE_DEP) $(LIB_DEP) $(LINKER_SCRIPT_DEP)
 	@echo Building target: $@
 	@echo Invoking: ARM/GNU Linker : 4.8.4
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\ARM GCC\Native\4.8.1443\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -mthumb -Wl,-Map="RTOS_test_AA.map" -Wl,--start-group -larm_cortexM3l_math -lm  -Wl,--end-group -L"../cmsis/linkerScripts" -L"../src/ASF/thirdparty/CMSIS/Lib/GCC"  -Wl,--gc-sections -mcpu=cortex-m3 -Wl,--entry=Reset_Handler -Wl,--cref -mthumb -T../src/ASF/sam/utils/linker_scripts/sam3x/sam3x8/gcc/flash.ld  
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\ARM GCC\Native\4.8.1443\arm-gnu-toolchain\bin\arm-none-eabi-gcc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -mthumb -Wl,-Map="RTOS_Final_Test.map" -Wl,--start-group -larm_cortexM3l_math -lm  -Wl,--end-group -L"../cmsis/linkerScripts" -L"../src/ASF/thirdparty/CMSIS/Lib/GCC"  -Wl,--gc-sections -mcpu=cortex-m3 -Wl,--entry=Reset_Handler -Wl,--cref -mthumb -T../src/ASF/sam/utils/linker_scripts/sam3x/sam3x8/gcc/flash.ld  
 	@echo Finished building target: $@
-	"C:\Program Files (x86)\Atmel\Atmel Toolchain\ARM GCC\Native\4.8.1443\arm-gnu-toolchain\bin\arm-none-eabi-objcopy.exe" -O binary "RTOS_test_AA.elf" "RTOS_test_AA.bin"
-	"C:\Program Files (x86)\Atmel\Atmel Toolchain\ARM GCC\Native\4.8.1443\arm-gnu-toolchain\bin\arm-none-eabi-objcopy.exe" -O ihex -R .eeprom -R .fuse -R .lock -R .signature  "RTOS_test_AA.elf" "RTOS_test_AA.hex"
-	"C:\Program Files (x86)\Atmel\Atmel Toolchain\ARM GCC\Native\4.8.1443\arm-gnu-toolchain\bin\arm-none-eabi-objcopy.exe" -j .eeprom --set-section-flags=.eeprom=alloc,load --change-section-lma .eeprom=0 --no-change-warnings -O binary "RTOS_test_AA.elf" "RTOS_test_AA.eep" || exit 0
-	"C:\Program Files (x86)\Atmel\Atmel Toolchain\ARM GCC\Native\4.8.1443\arm-gnu-toolchain\bin\arm-none-eabi-objdump.exe" -h -S "RTOS_test_AA.elf" > "RTOS_test_AA.lss"
-	"C:\Program Files (x86)\Atmel\Atmel Toolchain\ARM GCC\Native\4.8.1443\arm-gnu-toolchain\bin\arm-none-eabi-objcopy.exe" -O srec -R .eeprom -R .fuse -R .lock -R .signature  "RTOS_test_AA.elf" "RTOS_test_AA.srec"
-	"C:\Program Files (x86)\Atmel\Atmel Toolchain\ARM GCC\Native\4.8.1443\arm-gnu-toolchain\bin\arm-none-eabi-size.exe" "RTOS_test_AA.elf"
+	"C:\Program Files (x86)\Atmel\Atmel Toolchain\ARM GCC\Native\4.8.1443\arm-gnu-toolchain\bin\arm-none-eabi-objcopy.exe" -O binary "RTOS_Final_Test.elf" "RTOS_Final_Test.bin"
+	"C:\Program Files (x86)\Atmel\Atmel Toolchain\ARM GCC\Native\4.8.1443\arm-gnu-toolchain\bin\arm-none-eabi-objcopy.exe" -O ihex -R .eeprom -R .fuse -R .lock -R .signature  "RTOS_Final_Test.elf" "RTOS_Final_Test.hex"
+	"C:\Program Files (x86)\Atmel\Atmel Toolchain\ARM GCC\Native\4.8.1443\arm-gnu-toolchain\bin\arm-none-eabi-objcopy.exe" -j .eeprom --set-section-flags=.eeprom=alloc,load --change-section-lma .eeprom=0 --no-change-warnings -O binary "RTOS_Final_Test.elf" "RTOS_Final_Test.eep" || exit 0
+	"C:\Program Files (x86)\Atmel\Atmel Toolchain\ARM GCC\Native\4.8.1443\arm-gnu-toolchain\bin\arm-none-eabi-objdump.exe" -h -S "RTOS_Final_Test.elf" > "RTOS_Final_Test.lss"
+	"C:\Program Files (x86)\Atmel\Atmel Toolchain\ARM GCC\Native\4.8.1443\arm-gnu-toolchain\bin\arm-none-eabi-objcopy.exe" -O srec -R .eeprom -R .fuse -R .lock -R .signature  "RTOS_Final_Test.elf" "RTOS_Final_Test.srec"
+	"C:\Program Files (x86)\Atmel\Atmel Toolchain\ARM GCC\Native\4.8.1443\arm-gnu-toolchain\bin\arm-none-eabi-size.exe" "RTOS_Final_Test.elf"
 	
 	
 
@@ -572,5 +572,5 @@ $(OUTPUT_FILE_PATH): $(OBJS) $(USER_OBJS) $(OUTPUT_FILE_DEP) $(LIB_DEP) $(LINKER
 clean:
 	-$(RM) $(OBJS_AS_ARGS) $(EXECUTABLES)  
 	-$(RM) $(C_DEPS_AS_ARGS)   
-	rm -rf "RTOS_test_AA.elf" "RTOS_test_AA.a" "RTOS_test_AA.hex" "RTOS_test_AA.bin" "RTOS_test_AA.lss" "RTOS_test_AA.eep" "RTOS_test_AA.map" "RTOS_test_AA.srec"
+	rm -rf "RTOS_Final_Test.elf" "RTOS_Final_Test.a" "RTOS_Final_Test.hex" "RTOS_Final_Test.bin" "RTOS_Final_Test.lss" "RTOS_Final_Test.eep" "RTOS_Final_Test.map" "RTOS_Final_Test.srec"
 	
