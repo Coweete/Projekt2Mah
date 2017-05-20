@@ -52,6 +52,7 @@ void setup() {
 }
 
 void loop() {
+  //Serial.println(objekt);
   switch(currentState){
     case 0x20:
     Serial.println("Return to normal pos");
@@ -99,10 +100,21 @@ void loop() {
     Serial.println("Start grab");
       if(digitalRead(stopBot) == LOW){
         digitalWrite(Brake,HIGH);
+        if(4 == objekt){
+          digitalWrite(Dir_b,HIGH);
+          digitalWrite(Brake,LOW);
+          delay(1000);
+          digitalWrite(Brake,HIGH);
+          myservo.write(180);
+          delay(500);
+          currentState = 0x33;
+        }else{
         myservo.write(180);
-        delay(15);
+        delay(500);
         digitalWrite(Dir_b,HIGH);
         currentState = 0x33;
+        }
+
       }else{
         //send_data[1] = 6;
       }
@@ -152,13 +164,7 @@ void receiveEvent(int howMany){
     break;
     case 0x22: //PICKUP START
       Serial.print("Pickup start");
-      if(2 == rx_buf[1]){
-         objekt = 1;
-      }else if(3 == rx_buf[1]){
-          objekt = 2;
-      }else if(4 == rx_buf[1]){
-          objekt = 3;
-      }
+      objekt = rx_buf[1];
       currentState = 0x22;
     break;
     case 0x23: //dropoff status
