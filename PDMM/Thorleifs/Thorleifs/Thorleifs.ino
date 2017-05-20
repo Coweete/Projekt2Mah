@@ -16,7 +16,7 @@ int buttonStateUppe = 0;
 int buttonStateNere = 0;
 
 //Olika tillstånd för Armen
-enum State {Begin, Greppa, HissenUpp, LossaGreppet, HissenNer};
+enum State {Begin, HissenNer , Greppa, HissenUpp, LossaGreppet};
 
 State currentState = Begin; // Börjar i tillståndet Begin
 State nextState;
@@ -42,23 +42,24 @@ void loop() {
     case Begin:
       if (buttonStateUppe == LOW) {
         digitalWrite(BRAKE_A, HIGH);
-        analogWrite(PWM_A, 0); §
+        analogWrite(PWM_A, 0); 
+        analogWrite(PWM_B, 0);
         digitalWrite(DIR_B, HIGH);
         Serial.println("Hissen is up!");
         delay(5000);
         nextState = LossaGreppet;
       } else {
         Serial.println("Hissen on the way up");
-        digitalWrite(DIR_A, HIGH);
+        digitalWrite(DIR_A, HIGH);   // RÖD Kopplingstråd TILL + OCH BLÅ TILL -
         digitalWrite(BRAKE_A, LOW);
-        analogWrite(PWM_A, 80);
+        analogWrite(PWM_A, 150);
       }
       break;
 
     case LossaGreppet:
       if (buttonStateUppe == LOW) {
         Serial.println("Lossar upp greppet");
-        digitalWrite(DIR_B, HIGH);
+        //digitalWrite(DIR_B, LOW);
         analogWrite(PWM_B, 0);
         delay(5000);
         nextState = HissenNer;
@@ -74,7 +75,7 @@ void loop() {
         nextState = Greppa;
       } else {
         Serial.println("HISSEN PÅVÄG NER");
-        analogWrite(PWM_A, 100); // Hastighet hiss ner.
+        analogWrite(PWM_A, 110); // Hastighet hiss ner.
         digitalWrite(DIR_A, LOW);// Hiss åker ner.
         digitalWrite(BRAKE_A, LOW);// Ingen Brake på hiss.
       }
@@ -85,12 +86,12 @@ void loop() {
         Serial.println("GREPPAR OBJEKTET");
         digitalWrite(BRAKE_A, HIGH);// Brake på hissen.
         delay(15);
-        digitalWrite(DIR_B, HIGH);// För att öppna klorna.
+        digitalWrite(DIR_B, HIGH);// För att öppna klorna.  BLÅ TILL + OCH SVART TILL -
         analogWrite(PWM_B, 255); // Öppnar hela greppet.
-        delay(2000);
+        delay(3000);
         digitalWrite(DIR_B, LOW); // För att stänga klorna
         analogWrite(PWM_B, 255);  // Omsluter med full kraft.
-        delay(2000);
+        delay(5000);
         nextState = HissenUpp;
       }
       break;
@@ -100,18 +101,16 @@ void loop() {
       if (buttonStateUppe == LOW) {
         digitalWrite(BRAKE_A, HIGH); // Brake på hissen.
         delay(2000);
-        analogWrite(PWM_B, 0); // Lossar om greppet för objektet.
+      //  analogWrite(PWM_B, 0); // Lossar om greppet för objektet.
       } else {
         digitalWrite(DIR_A, HIGH); // Hissen åker upp.
         digitalWrite(BRAKE_A, LOW);// Ingen Brake på hissen.
-
+        digitalWrite(DIR_B, LOW); // För att stänga klorna
         analogWrite(PWM_B, 255);// Omsluter med full kraft.
         nextState = Begin;
       }
       nextState = Begin;
       break;
-
-
 
     default:
       Serial.println("default");
