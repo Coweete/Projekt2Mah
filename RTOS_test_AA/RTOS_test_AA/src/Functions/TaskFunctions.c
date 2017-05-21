@@ -9,7 +9,7 @@
 
 #include "Functions/MotorFunctions.h"
 #include "Functions/TaskFunctions.h"
-
+#include "TwiFunctions/TwiFunctions.h"
 
 
 //Höger
@@ -47,6 +47,9 @@ int Kp = 4;
 int speed = 1650;
 int r_speed = 0;
 int l_speed = 0;
+extern uint8_t data_received_nav[];
+int16_t currentx1,currenty1;
+
 
 char str[20];
 
@@ -233,3 +236,16 @@ int cameraSearch(void){
 	
 	return r;	
 }
+
+void getCurrentPos(){
+	na_sendstatus(XY1);
+	currentx1 = ((data_received_nav[1] << 8) | (data_received_nav[2] << 0));
+	currenty1 = ((data_received_nav[3] << 8) | (data_received_nav[4] << 0));
+	sprintf(str, "\ncurrent x=%d y=%d",currentx1,currenty1);
+	printf(str);
+}
+
+void getStartData(){
+	na_sendstatus(SOCKETXY);
+}
+

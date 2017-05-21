@@ -79,7 +79,7 @@
 //#define CONF_BOARD_SPI1_NPCS2
 //#define CONF_BOARD_SPI1_NPCS3
 
-//#define CONF_BOARD_TWI0
+#define CONF_BOARD_TWI0 TWI0
 
 //#define CONF_BOARD_TWI1
 

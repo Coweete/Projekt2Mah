@@ -2,6 +2,10 @@
 # Automatically-generated file. Do not edit or delete the file
 ################################################################################
 
+src\TwiFunctions\TwiFunctions.c
+
+src\ASF\sam\drivers\twi\twi.c
+
 src\Functions\calculations.c
 
 src\Functions\Drive.c

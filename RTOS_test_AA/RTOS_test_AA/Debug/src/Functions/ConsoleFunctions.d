@@ -148,6 +148,13 @@ src/Functions/ConsoleFunctions.d src/Functions/ConsoleFunctions.o: \
  ../src/ASF/common/services/ioport/ioport.h \
  ../src/ASF/common/services/ioport/sam/ioport_pio.h \
  ../src/ASF/sam/drivers/pmc/sleep.h ../src/ASF/sam/drivers/tc/tc.h \
+ ../src/ASF/common/services/twi/sam_twi/twi_master.h \
+ ../src/ASF/sam/drivers/twi/twi.h \
+ ../src/ASF/common/services/twi/sam_twi/twi_slave.h \
+ ../src/ASF/common/services/twi/twi_master.h \
+ ../src/ASF/common/services/twi/sam_twi/twi_master.h \
+ ../src/ASF/common/services/twi/twi_slave.h \
+ ../src/ASF/common/services/twi/sam_twi/twi_slave.h \
  ../src/ASF/sam/drivers/pio/pio_handler.h ../src/config/conf_board.h \
  ../src/Functions/ConsoleFunctions.h
 
@@ -458,6 +465,20 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu
 ../src/ASF/sam/drivers/pmc/sleep.h:
 
 ../src/ASF/sam/drivers/tc/tc.h:
+
+../src/ASF/common/services/twi/sam_twi/twi_master.h:
+
+../src/ASF/sam/drivers/twi/twi.h:
+
+../src/ASF/common/services/twi/sam_twi/twi_slave.h:
+
+../src/ASF/common/services/twi/twi_master.h:
+
+../src/ASF/common/services/twi/sam_twi/twi_master.h:
+
+../src/ASF/common/services/twi/twi_slave.h:
+
+../src/ASF/common/services/twi/sam_twi/twi_slave.h:
 
 ../src/ASF/sam/drivers/pio/pio_handler.h:
 

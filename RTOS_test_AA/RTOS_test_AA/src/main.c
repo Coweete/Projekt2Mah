@@ -18,6 +18,7 @@
 #include "Functions/ConsoleFunctions.h"
 #include "Functions/calculations.h"
 #include "Functions/TaskFunctions.h"
+#include "TwiFunctions/TwiFunctions.h"
 
 // Antagligen bättre skapa för de olika tasken istället.
 //xSemaphoreHandle xBinarySemaphore;
@@ -67,7 +68,7 @@ int main (void)
 	//initDrive();
 	//initRegulator();
 	init_taskFunctions();		
-	
+	init_twi_functions();
 	
 	
 	

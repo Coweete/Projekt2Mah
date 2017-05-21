@@ -7,22 +7,29 @@
 
 #include "Tasks/Tasks.h"
 #include "Functions/TaskFunctions.h"
+#include "TwiFunctions/TwiFunctions.h"
 
+long sensordistance = 10;
 
-long sensordistance = 0;
-
-int n = 2;
+int n = 0;
 int angle = 90;
 int dir = 45;
 char str[10];
-
+extern uint8_t data_received_pab[];
+extern struct ObjectInfo objectinfo[4];
+int flag_test = 1;
 
 xSemaphoreHandle signal_semafor =0;
 xSemaphoreHandle regulate_semafor = 0;
 
+
+
 xQueueHandle taskQueue = 0;
 
 void task_ultraLjud(void *pvParameters){
+	
+	vSemaphoreCreateBinary(signal_semafor);
+	vSemaphoreCreateBinary(regulate_semafor);
 	
 	taskQueue = xQueueCreate(5,sizeof(int));
 	
@@ -32,7 +39,10 @@ void task_ultraLjud(void *pvParameters){
 	const portTickType xTimeIncrement = 10;
 	xLastWakeTime = xTaskGetTickCount();
 	
-	
+	printf("\nGet start data");
+	getStartData();
+	sprintf(str,"\nstart data. x=%d y=%d",objectinfo[0].xpos,objectinfo[0].ypox);
+	printf(str);
 	
 	while (1){
 		
@@ -48,6 +58,7 @@ void task_ultraLjud(void *pvParameters){
 		if(sensordistance <= 5){
 			xSemaphoreGiveFromISR(signal_semafor,NULL);
 		}
+		
 		if(!xSemaphoreTake(signal_semafor,20)){
 				xSemaphoreGive(regulate_semafor);
 				//printf("\nOk");
@@ -55,11 +66,29 @@ void task_ultraLjud(void *pvParameters){
 					//printf("\nFailed to send");
 					
 				}
-				//vTaskDelay(500);
 		}
 		else{
-				moveForward(1500,1500);
-				printf("\nStopp");
+			
+			
+			
+			//vTaskDelay(500);	
+			moveForward(1500,1500);
+			printf("\nStopp");
+			getCurrentPos();
+			//vTaskDelay(100);
+			if(flag_test){
+				printf("Start pa\n");
+				pa_sendstatus(TWI_CMD_PICKUP_START,SOCK);
+				flag_test=0;
+				}else{
+				printf("done sending\n");
+				pa_sendstatus(TWI_CMD_PICKUP_STATUS,0);
+				if (data_received_pab[1]==2){
+					flag_test=1;
+					pa_sendstatus(TWI_CMD_DROPOFF_START,0);
+				}
+			}
+				
 		}
 		
 		
@@ -97,8 +126,7 @@ void init_sensor(void){
 	ioport_set_pin_dir(EchoPin,IOPORT_DIR_INPUT);
 	printf("\nSet Echo & Trigger OK");
 	
-	vSemaphoreCreateBinary(signal_semafor);
-	vSemaphoreCreateBinary(regulate_semafor);
+	
 	
 	
 }
