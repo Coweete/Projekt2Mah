@@ -71,7 +71,7 @@ void task_ultraLjud(void *pvParameters){
 		switch (main_case)
 		{
 		case 1:
-			targetAngle = calculateAngle(xtest1,ytest1,xtest2,ytest2);
+			targetAngle = calculateAngle(xtest1,ytest1,xtest2,ytest2);		//Fungerar
 			sprintf(str,"\ntarget angle = %d",targetAngle);
 			printf(str);	
 			if(rotate(targetAngle,currentAngle)==targetAngle){
