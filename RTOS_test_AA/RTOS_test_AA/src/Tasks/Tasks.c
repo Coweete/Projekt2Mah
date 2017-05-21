@@ -21,7 +21,7 @@ int flag_test = 1;
 int main_case = 1;
 
 int targetAngle = 0;
-int currentAngle = 0; // 0 till höger, 90 till vänster, 
+int currentAngle = 90; // 0 till höger, 90 till vänster, 
 int addAngle = 0;
 
 uint16_t xtest1 = 0;
@@ -48,7 +48,7 @@ void task_ultraLjud(void *pvParameters){
 	
 	printf("\nTask Ultraljud");
 	portTickType xLastWakeTime;
-	const portTickType xTimeIncrement = 1000;
+	const portTickType xTimeIncrement = 500;
 	xLastWakeTime = xTaskGetTickCount();
 	
 // 	printf("\nGet start data");
@@ -67,7 +67,6 @@ void task_ultraLjud(void *pvParameters){
 		duration = pulseins();
 		sensordistance = (duration/42)/58.2;
 		
-		//returnCounter();
 		
 		switch (main_case)
 		{
@@ -78,10 +77,10 @@ void task_ultraLjud(void *pvParameters){
 			if(rotate(targetAngle,currentAngle)==targetAngle){
 				moveForward(1500,1500);
 				main_case = 0;
+			}else{
+				printf("Rotate else");
+				main_case = 4;
 			}
-			
-			
-			vTaskDelay(500);
 			
 			currentAngle = (currentAngle + 360 + addAngle) % 360;
 			

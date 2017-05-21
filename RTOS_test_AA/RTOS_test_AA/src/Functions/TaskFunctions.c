@@ -120,9 +120,8 @@ void init_interrupt(void){
 	printf("\nInit_interrupt ok");
 }
 
-void returnCounter(void){
-	sprintf(str,"\nCounter = %d",interruptCounter);
-	printf(str);
+void resetCounter(void){
+	interruptCounter = 0;
 }
 
 
@@ -212,18 +211,18 @@ int rotate(int turn_angle, int direction){		//Minimum vinkel är fyra
 	//Sväng vänster
 
 	if(direct_angle > 0){
-		//while(r_count < (abs(direct_angle) / 4)){
+		while(r_count < (abs(direct_angle) / 4)){
 			r_count = ioport_get_pin_level(R0)+ioport_get_pin_level(R1)*2+ioport_get_pin_level(R2)*4+ioport_get_pin_level(R3)*8
 			+ioport_get_pin_level(R4)*16+ioport_get_pin_level(R5)*32;
 			
 
 			moveForward(1400,1600);
 
-		//}
+		}
 		
 		
 		
-		int count_total = interruptCounter * 4;  //r_count * 4;
+		int count_total = r_count * 4;
 		//printf("RCOUNT =%d ",r_count);
 		sprintf(str,"\ncount_right = %d", count_total);
 		printf(str);
@@ -235,7 +234,7 @@ int rotate(int turn_angle, int direction){		//Minimum vinkel är fyra
 	//Sväng höger
 
 	else if(direct_angle < 0){
-		//while(l_count < (abs(direct_angle) / 4)){
+		while(l_count < (abs(direct_angle) / 4)){
 			l_count = ioport_get_pin_level(L0)+ioport_get_pin_level(L1)*2+ioport_get_pin_level(L2)*4+ioport_get_pin_level(L3)*8
 			+ioport_get_pin_level(L4)*16+ioport_get_pin_level(L5)*32;
 			
@@ -244,7 +243,7 @@ int rotate(int turn_angle, int direction){		//Minimum vinkel är fyra
 
 			moveForward(1600,1400);
 
-		//}
+		}
 		
 		int count_total = -l_count * 4;
 		sprintf(str,"\ncount_left = %d", count_total);
@@ -269,7 +268,7 @@ int rotate(int turn_angle, int direction){		//Minimum vinkel är fyra
 	ioport_set_pin_level(L_RESET,HIGH);
 	ioport_set_pin_level(R_RESET,HIGH);
 
-	return interruptCounter;
+	return ret;
 }
 
 int cameraSearch(void){

@@ -14,7 +14,7 @@
 int calculateDistance(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2 );
 int calculateAngle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2 );
 int calculateSetPoint(uint16_t x1, uint16_t x2, uint16_t x3, uint16_t y1 );
-
+int calculateDirection(uint16_t x1, uint16_t x2, uint16_t x3, uint16_t y1);
 
 
 #endif /* CALCULATIONS_H_ */

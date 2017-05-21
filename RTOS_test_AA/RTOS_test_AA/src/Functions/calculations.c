@@ -28,7 +28,7 @@ int calculateAngle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2 ){	//Vinke
 	mot = y2 - y1;
 	
 	
-	int angle = acos(nar/(sqrt((mot*mot)+(nar*nar)))) * (180/M_PI);
+	int angle = (acos(nar/(sqrt((mot*mot)+(nar*nar)))) * (180/M_PI));
 	
 	if(nar < 0 && mot > 0){
 		angle = angle + 90;
@@ -39,6 +39,8 @@ int calculateAngle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2 ){	//Vinke
 	else if(nar > 0 && mot < 0){
 		angle = angle + 270;
 	}
+	
+	angle = angle % 360;
 	
 	return angle;
 }
@@ -55,3 +57,28 @@ int calculateSetPoint(uint16_t x1, uint16_t x2, uint16_t x3, uint16_t y1 ){		//R
 	
 	return set_point;
 }
+
+int calculateDirection(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2){				//Ena lampan och andra lampan
+	int mot, nar;
+	nar = x2 - x1;
+	mot = y2 - y1;
+	
+	
+	int dir = (acos(nar/(sqrt((mot*mot)+(nar*nar)))) * (180/M_PI));
+	
+	if(nar < 0 && mot > 0){
+		dir = dir + 90;
+	}
+	else if(nar < 0 && mot < 0){
+		dir = dir + 180;
+	}
+	else if(nar > 0 && mot < 0){
+		dir = dir + 270;
+	}
+	
+	dir = (dir + 90) % 360;
+	
+	return dir;
+	
+}
+
