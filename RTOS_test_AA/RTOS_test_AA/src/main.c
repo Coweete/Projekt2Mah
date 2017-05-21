@@ -25,33 +25,10 @@
 
 // xSemaphoreHandle signal_semafor =0;
 // 
-// void addOne(uint32_t id, uint32_t index);
-// void init_interrupt(void);
-// 
-// void addOne(uint32_t id, uint32_t index){
-// 	printf("\nInterrupt");
-// 	if ((id == ID_PIOC) && (index == PIO_PC9)){
-// 		printf ("\nOk");
-// 		}else{
-// 		printf("\nError");
-// 	}
-// }
-// 
-// void init_interrupt(void){
-// 	printf("\nInit_interrupt ok");
-// 	
-// 	pmc_enable_periph_clk(ID_PIOC);
-// 	
-// 	pio_set_input(PIOC,PIO_PC9,PIO_PULLUP);			//INPUT VIKTIGT!!!
-// 	
-// 	pio_handler_set(PIOC,ID_PIOC,PIO_PC9,PIO_IT_HIGH_LEVEL,addOne);
-// 	
-// 	NVIC_EnableIRQ(PIOC_IRQn);
-// 	
-// 	pio_enable_interrupt(PIOC,PIO_PC9);
+
 // 	
 // 	
-// }
+
 
 
 
@@ -69,7 +46,7 @@ int main (void)
 	//initRegulator();
 	init_taskFunctions();		
 	init_twi_functions();
-	
+	init_interrupt();
 	
 	
 	printf("\nInit ok");

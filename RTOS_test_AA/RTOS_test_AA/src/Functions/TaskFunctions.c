@@ -5,11 +5,14 @@
  *  Author: Spellabbet
  */ 
 
+#include <asf.h>
 #include <ioport.h>
+#include <stdio.h>
 
 #include "Functions/MotorFunctions.h"
 #include "Functions/TaskFunctions.h"
 #include "TwiFunctions/TwiFunctions.h"
+#include <math.h>
 
 
 //Höger
@@ -39,6 +42,8 @@
 #define OFF_TARGET PIO_PC17_IDX		//Pinne 46
 
 
+
+int interruptCounter = 0;
 
 int r_count = 0;
 int l_count = 0;
@@ -89,8 +94,45 @@ void init_taskFunctions(void){
 
 
 
+void addOne(uint32_t id, uint32_t index){
+// 	printf("\nInterrupt");
+// 	if ((id == ID_PIOC) && (index == PIO_PC9)){
+// 		printf ("\nOk");
+// 		}else{
+// 		printf("\nError");
+// 	}
+	//printf("\nOk");
+	interruptCounter++;
+}
+
+void init_interrupt(void){
+	
+	pmc_enable_periph_clk(ID_PIOC);
+
+	pio_set_input(PIOC,PIO_PC9,PIO_PULLUP);
+
+	pio_handler_set(PIOC,ID_PIOC,PIO_PC9,PIO_IT_HIGH_LEVEL,addOne);
+
+	NVIC_EnableIRQ(PIOC_IRQn);
+
+	pio_enable_interrupt(PIOC,PIO_PC9);
+	
+	printf("\nInit_interrupt ok");
+}
+
+void returnCounter(void){
+	sprintf(str,"\nCounter = %d",interruptCounter);
+	printf(str);
+}
+
 
 void driveForward(void){
+	
+	r_count = 0;
+	l_count = 0;
+	
+	
+	
 	moveForward(l_speed,r_speed);
 	
 	r_speed=speed;
@@ -109,8 +151,8 @@ void driveForward(void){
 	e = 0 - (r_count - l_count);
 	
 	
-	sprintf(str,"\nFelvärde: %d",e);
-	printf(str);
+// 	sprintf(str,"\nFelvärde: %d",e);
+// 	printf(str);
 	
 	r_speed=speed;
 	l_speed=speed;
@@ -129,8 +171,7 @@ void driveForward(void){
 		moveForward(l_speed,r_speed);
 	}
 	
-	r_count = 0;
-	l_count = 0;
+	
 	
 	ioport_set_pin_level(R_RESET,HIGH);
 	ioport_set_pin_level(L_RESET,HIGH);
@@ -138,17 +179,32 @@ void driveForward(void){
 
 int rotate(int turn_angle, int direction){		//Minimum vinkel är fyra
 
+// 	sprintf(str,"\nturn_angle: %d",turn_angle);
+// 	printf(str);
+// 	
+// 	sprintf(str,"\ndirection: %d",direction);
+// 	printf(str);
+	
+	
+	
+	int ret = 0;
+	
 	int reverse_angle = (direction + 180) % 360;
+	
+	sprintf(str,"\nreverse_angle: %d",reverse_angle);
+	printf(str);
 
 	int direct_angle = ((abs(reverse_angle - 360) + turn_angle) % 360) - 180;
 
-// 	char str[10];
-// 
-// 	sprintf(str,"\nNew angle: %d", d);
-// 	printf(str);
-// 
-// 	sprintf(str,"\ndirect_angle = %d", direct_angle);
-// 	printf(str);
+	sprintf(str,"\ndirect_angle: %d",direct_angle);
+	printf(str);
+
+	r_count = 0;
+	l_count = 0;
+
+	printf("\ncount null");
+
+	//returnCounter();
 
 	ioport_set_pin_level(L_RESET,LOW);
 	ioport_set_pin_level(R_RESET,LOW);
@@ -156,52 +212,64 @@ int rotate(int turn_angle, int direction){		//Minimum vinkel är fyra
 	//Sväng vänster
 
 	if(direct_angle > 0){
-		while(r_count < (abs(direct_angle) * 0.25)){
+		//while(r_count < (abs(direct_angle) / 4)){
 			r_count = ioport_get_pin_level(R0)+ioport_get_pin_level(R1)*2+ioport_get_pin_level(R2)*4+ioport_get_pin_level(R3)*8
 			+ioport_get_pin_level(R4)*16+ioport_get_pin_level(R5)*32;
 			
 
 			moveForward(1400,1600);
 
-		}
-
-		int count_right = r_count * 4;
-		sprintf(str,"\ncount_right = %d", count_right);
+		//}
+		
+		
+		
+		int count_total = interruptCounter * 4;  //r_count * 4;
+		//printf("RCOUNT =%d ",r_count);
+		sprintf(str,"\ncount_right = %d", count_total);
 		printf(str);
+
+		ret = count_total;
 		
 	}
 
 	//Sväng höger
 
 	else if(direct_angle < 0){
-		while(l_count < (abs(direct_angle) * 0.25)){
+		//while(l_count < (abs(direct_angle) / 4)){
 			l_count = ioport_get_pin_level(L0)+ioport_get_pin_level(L1)*2+ioport_get_pin_level(L2)*4+ioport_get_pin_level(L3)*8
 			+ioport_get_pin_level(L4)*16+ioport_get_pin_level(L5)*32;
 			
+			sprintf(str,"\nl_count = %d", l_count);
+			printf(str);
 
 			moveForward(1600,1400);
 
-		}
-
-
-		int count_left = l_count * 4;
-		sprintf(str,"\ncount_left = %d", count_left);
+		//}
+		
+		int count_total = -l_count * 4;
+		sprintf(str,"\ncount_left = %d", count_total);
 		printf(str);
+		
+		ret = count_total;
+		
+		
 	}
 
 	//Stoppa
 
 	else{
 		moveForward(1500,1500);
+		
 	}
 	
-	l_count = 0;
-	r_count = 0;
+	sprintf(str,"\nCounter = %d",interruptCounter);
+	printf(str);
+
 
 	ioport_set_pin_level(L_RESET,HIGH);
 	ioport_set_pin_level(R_RESET,HIGH);
-	
-	return 1;
+
+	return interruptCounter;
 }
 
 int cameraSearch(void){
