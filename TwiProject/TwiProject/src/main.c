@@ -61,7 +61,7 @@ int main (void)
 	//pa_sendstatus(TWI_CMD_PICKUP_START,0);
 	//na_sendstatus(XY1);
 	
-	//xTaskCreate(task_nav_com,(const signed char* const) "navigation",TASK_TWI_SIZE,NULL,TASK_TWI_NAV,NULL);
+	xTaskCreate(task_nav_com,(const signed char* const) "navigation",TASK_TWI_SIZE,NULL,TASK_TWI_NAV,NULL);
 	//xTaskCreate(task_blink,(const signed char* const) "blink",TASK_TWI_SIZE,NULL,TASK_BLINK,NULL);
 	//xTaskCreate(task_twi,(const signed char* const) "com",TASK_TWI_SIZE,NULL,TASK_TWI_PRIO,NULL);
 	//vTaskStartScheduler();

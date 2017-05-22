@@ -17,11 +17,7 @@ void loop() {
 }
 
 void requestEvent(){
-  send_data[0] = 11;
-  send_data[1] = 0;
-  send_data[2] = 130;
-  send_data[3] = 0;
-  send_data[4] = 150;
+
   Wire.write(send_data,5);
 }
 
@@ -33,6 +29,19 @@ void receiveEvent(int howMany){
     i++;
   }
   Serial.println(rx_buf[0]);
+  if(rx_buf[0] == 0x52){
+      send_data[0] = 0x52;
+      send_data[1] = 0;
+      send_data[2] = 130;
+      send_data[3] = 0;
+      send_data[4] = 150;
+  }else{
+      send_data[0] = 0x52;
+      send_data[1] = 0;
+      send_data[2] = 130;
+      send_data[3] = 0;
+      send_data[4] = 150;
+  }
 
   
   
