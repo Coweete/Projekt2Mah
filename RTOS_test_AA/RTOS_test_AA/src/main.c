@@ -44,9 +44,9 @@ int main (void)
 	initMotor();
 	//initDrive();
 	//initRegulator();
-	init_taskFunctions();		
+	init_taskFunctions();
 	init_twi_functions();
-	init_interrupt();
+	//init_interrupt();
 	
 	
 	printf("\nInit ok");
@@ -60,9 +60,9 @@ int main (void)
 // 			printf("Failed the Camera Task\r\n");
 // 		}
 // 		
-		if (xTaskCreate(task_nav_calc, (const signed char * const) "NAV_CALCULATOR", TASK_NAV_CALC_STACK_SIZE, NULL, TASK_NAV_CALC_STACK_PRIORITY, NULL) != pdPASS) {
-			printf("Failed the Navigation Calculator Task\r\n");
-		}
+// 		if (xTaskCreate(task_nav_calc, (const signed char * const) "NAV_CALCULATOR", TASK_NAV_CALC_STACK_SIZE, NULL, TASK_NAV_CALC_STACK_PRIORITY, NULL) != pdPASS) {
+// 			printf("Failed the Navigation Calculator Task\r\n");
+// 		}
 		
 // 		if (xTaskCreate(task_nav_com, (const signed char * const) "NAV_COMMUNICATION", TASK_NAVIGERING_COM_STACK_SIZE, NULL, TASK_NAVIGERING_COM_STACK_PRIORITY, NULL) != pdPASS) {
 // 			printf("Failed the Navigation Communication Task\r\n");

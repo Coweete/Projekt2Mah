@@ -15,8 +15,11 @@ int calculateDistance (uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2){ //Av
 	mot = y2 - y1;
 	
 	int dist = sqrt((mot*mot)+(nar*nar));
-		
-		
+	
+	char strCalc[20];
+	sprintf(strCalc,"\nCalc = %d",dist);
+	printf(strCalc);	
+	printf("Hello?");
 	return dist;
 	
 }

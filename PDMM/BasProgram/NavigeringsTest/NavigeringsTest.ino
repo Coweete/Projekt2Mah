@@ -18,10 +18,10 @@ void loop() {
 
 void requestEvent(){
   send_data[0] = 11;
-  send_data[1] = 12;
-  send_data[2] = 13;
-  send_data[3] = 14;
-  send_data[4] = 15;
+  send_data[1] = 0;
+  send_data[2] = 130;
+  send_data[3] = 0;
+  send_data[4] = 150;
   Wire.write(send_data,5);
 }
 

@@ -53,6 +53,7 @@ int speed = 1650;
 int r_speed = 0;
 int l_speed = 0;
 extern uint8_t data_received_nav[];
+int16_t currentPos[4];
 int16_t currentx1,currenty1;
 
 
@@ -125,21 +126,21 @@ void resetCounter(void){
 }
 
 
-void driveForward(void){
+int driveForward(void){
 	
 	r_count = 0;
 	l_count = 0;
 	
-	
-	
-	moveForward(l_speed,r_speed);
+	int driveCount = 0;
 	
 	r_speed=speed;
 	l_speed=speed;
 	
+	moveForward(l_speed,r_speed);
 	
-	ioport_set_pin_level(R_RESET,LOW);
-	ioport_set_pin_level(L_RESET,LOW);
+
+// 	ioport_set_pin_level(R_RESET,LOW);
+// 	ioport_set_pin_level(L_RESET,LOW);
 	
 	r_count = ioport_get_pin_level(R0)+ioport_get_pin_level(R1)*2+ioport_get_pin_level(R2)*4+ioport_get_pin_level(R3)*8
 	+ioport_get_pin_level(R4)*16+ioport_get_pin_level(R5)*32;
@@ -147,14 +148,19 @@ void driveForward(void){
 	l_count = ioport_get_pin_level(L0)+ioport_get_pin_level(L1)*2+ioport_get_pin_level(L2)*4+ioport_get_pin_level(L3)*8
 	+ioport_get_pin_level(L4)*16+ioport_get_pin_level(L5)*32;
 	
+	ioport_set_pin_level(R_RESET,HIGH);
+	ioport_set_pin_level(L_RESET,HIGH);
+	vTaskDelay(3);
+	ioport_set_pin_level(R_RESET,LOW);
+	ioport_set_pin_level(L_RESET,LOW);
 	e = 0 - (r_count - l_count);
 	
 	
-// 	sprintf(str,"\nFelvärde: %d",e);
-// 	printf(str);
+	sprintf(str,"\nFelvärde: %d",e);
+	printf(str);
 	
-	r_speed=speed;
-	l_speed=speed;
+// 	r_speed=speed;
+// 	l_speed=speed;
 	if(e > 0) {
 		
 		r_speed=speed-(e*Kp);
@@ -169,11 +175,13 @@ void driveForward(void){
 	else{
 		moveForward(l_speed,r_speed);
 	}
+
+	driveCount = (r_count+l_count)/2;
 	
+	sprintf(str,"\ndriveCount = %d",driveCount);
+	printf(str);
 	
-	
-	ioport_set_pin_level(R_RESET,HIGH);
-	ioport_set_pin_level(L_RESET,HIGH);
+	return driveCount;
 }
 
 int rotate(int turn_angle, int direction){		//Minimum vinkel är fyra
@@ -183,7 +191,6 @@ int rotate(int turn_angle, int direction){		//Minimum vinkel är fyra
 // 	
 // 	sprintf(str,"\ndirection: %d",direction);
 // 	printf(str);
-	
 	
 	
 	int ret = 0;
@@ -310,6 +317,8 @@ void getCurrentPos(){
 	currenty1 = ((data_received_nav[3] << 8) | (data_received_nav[4] << 0));
 	sprintf(str, "\ncurrent x=%d y=%d",currentx1,currenty1);
 	printf(str);
+	currentPos[0] = currentx1;
+	currentPos[1] = currenty1;
 }
 
 void getStartData(){

@@ -14,21 +14,27 @@ long sensordistance = 10;
 int n = 0;
 int angle = 135;
 int dir = 45;
-char str[10];
+char str[30];
+
 extern uint8_t data_received_pab[];
+extern uint8_t data_received_nav[];
 extern struct ObjectInfo objectinfo[4];
+extern struct ArmInfo arminformation;
+
 int flag_test = 1;
 int main_case = 1;
 
 int targetAngle = 0;
 int currentAngle = 90; // 0 till höger, 90 till vänster, 
 int addAngle = 0;
+int targetDistance = 0;
+int drivenToTarget = 0;
 
 uint16_t xtest1 = 0;
 uint16_t ytest1 = 0;
 uint16_t xtest2 = 200;
 uint16_t ytest2 = 200;
-
+extern int16_t currentPos[4];
 
 xSemaphoreHandle signal_semafor =0;
 xSemaphoreHandle regulate_semafor = 0;
@@ -51,10 +57,10 @@ void task_ultraLjud(void *pvParameters){
 	const portTickType xTimeIncrement = 500;
 	xLastWakeTime = xTaskGetTickCount();
 	
-// 	printf("\nGet start data");
-// 	getStartData();
-// 	sprintf(str,"\nstart data. x=%d y=%d",objectinfo[0].xpos,objectinfo[0].ypox);
-// 	printf(str);
+	printf("\nGet start data");
+	getStartData();
+	sprintf(str,"\nstart data. x=%d y=%d",objectinfo[0].xpos,objectinfo[0].ypox);
+	printf(str);
 	
 	while (1){
 		
@@ -67,34 +73,51 @@ void task_ultraLjud(void *pvParameters){
 		duration = pulseins();
 		sensordistance = (duration/42)/58.2;
 		
-		
 		switch (main_case)
 		{
 		case 1:
-			targetAngle = calculateAngle(xtest1,ytest1,xtest2,ytest2);		//Fungerar
+			printf("\nMain case 1");
+			getStartData();
+			targetAngle = calculateAngle(currentPos[0],currentPos[1],objectinfo[0].xpos,objectinfo[0].ypox);		//Fungerar
 			sprintf(str,"\ntarget angle = %d",targetAngle);
 			printf(str);	
-			if(rotate(targetAngle,currentAngle)==targetAngle){
-				moveForward(1500,1500);
-				main_case = 0;
-			}else{
-				printf("Rotate else");
-				main_case = 4;
-			}
+			addAngle = rotate(targetAngle,currentAngle);
 			
 			currentAngle = (currentAngle + 360 + addAngle) % 360;
 			
 			sprintf(str,"\ncurrentAngle = %d",currentAngle);
 			printf(str);
 				
-			
+			main_case = 2;
 
 			break;
 		case 2:
+			printf("\nMain case 2");
+			targetDistance = calculateDistance(xtest1,ytest1,xtest2,ytest2);
+			
+			sprintf(str,"\ndistance to target = %d",targetDistance);
+			printf(str);
+			
+			
+			
+			drivenToTarget = drivenToTarget + (driveForward() * 1.36);
+			printf("\nDistance drive");
+			
+			sprintf(str,"\ndriven to target = %d",drivenToTarget);
+			printf(str);
+			
+			
+
+			if(30 > (targetDistance-drivenToTarget)){
+				moveForward(1500,1500);
+				printf("\nDistance stop");
+				main_case = 3;
+			} 
 			
 			break;
 		case 3:
-		
+			printf("\nMain case 3");
+			
 			break;
 		default:	
 			printf("\nmain default");

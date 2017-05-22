@@ -77,7 +77,9 @@ void init_twi_functions(){
 	twi_master_options_t opt;
 	opt.speed = TWI_SPEED;
 	if(twi_master_setup(TWI_MASTER,&opt) == TWI_SUCCESS){
+		printf("TWI OK");
 	}
+	
 }
 
 /************************************************************************/
@@ -90,7 +92,7 @@ void na_sendstatus(TwiCmd twi_state){
 		//Led 1 position
 		case XY1:
 		send_package(XY1,TWI_SLAVE_NAVIGERING);
-		delayMicroseconds(50000);
+		vTaskDelay(10);
 		receive_package(TWI_SLAVE_NAVIGERING);
 		break;
 		
