@@ -55,6 +55,11 @@ void setup() {
   pinMode(KnappHissUppe, INPUT_PULLUP);
   pinMode(KnappHissNere, INPUT_PULLUP);
 
+
+  digitalWrite(DIR_A,LOW);
+  digitalWrite(BRAKE_A,HIGH);
+  analogWrite(PWM_A,200);
+
   Wire.begin(2);                  //Startar upp TWI bibliotektet och sätter adressen till 2.
   Wire.onRequest(requestEvent);   //Sätter ihop ett avbrott för när mastern vill att slaven skall skicka information.
   Wire.onReceive(receiveEvent);   //Sätter ihop ett avbrott för när slaven skall ta imot information.
@@ -69,18 +74,19 @@ void loop() {
     case Begin:  // Körs bara en gång , annars "0x20".
       Serial.println("Return to normal pos");
       if (buttonStateUppe == LOW) {
-        digitalWrite(BRAKE_A, HIGH);
-        analogWrite(PWM_A, 0);
-        analogWrite(PWM_B, 0);
-        digitalWrite(DIR_B, HIGH);
+        //digitalWrite(BRAKE_A, HIGH);
+        digitalWrite(PWM_A,LOW);
+       digitalWrite(DIR_B, LOW); // ÖPPNAR KLORNA.
+       // analogWrite(PWM_B, 255  );
+       digitalWrite(PWM_B,HIGH);
         Serial.println("Hissen is up!");
         delay(5000);
         //     nextState = LossaGreppet;
       } else {
         Serial.println("Hissen on the way up");
-        digitalWrite(DIR_A, HIGH);   // RÖD Kopplingstråd TILL + OCH BLÅ TILL -
-        digitalWrite(BRAKE_A, LOW);
-        analogWrite(PWM_A, 150);
+        digitalWrite(DIR_A, LOW); //UPP
+     
+        digitalWrite(PWM_A,HIGH);
       }
       break;
 
@@ -89,7 +95,8 @@ void loop() {
       Serial.println("start pickup");
       Serial.println(buttonStateUppe);
       if (buttonStateUppe == LOW) {
-        digitalWrite(DIR_A, LOW);
+        digitalWrite(PWM_A,HIGH);
+        digitalWrite(DIR_A, HIGH);
         digitalWrite(BRAKE_A, LOW);
         pickupStatus = 5;
         currentState = Greppa;
@@ -111,10 +118,8 @@ void loop() {
     case Greppa:
       Serial.println("Start grab");
       if (buttonStateNere == LOW) {
-        digitalWrite(BRAKE_A, HIGH);
-        digitalWrite(PWM_B, 255);
-        delay(3000);
-        digitalWrite(DIR_A, HIGH);
+        digitalWrite(DIR_B, HIGH);
+         digitalWrite(PWM_B,HIGH);
         currentState = HissenUpp;
       } else {
         //send_data[1] = 6;
@@ -130,7 +135,7 @@ void loop() {
       } else {
         digitalWrite(DIR_A, HIGH);
         digitalWrite(BRAKE_A, LOW);
-        analogWrite(PWM_A, 150);
+        digitalWrite(DIR_B,HIGH);
       }
       break;
 
@@ -139,7 +144,8 @@ void loop() {
     case LossaGreppet:
       //Dropp off start
       if (buttonStateUppe == LOW) {
-        analogWrite(PWM_B, 0);
+        digitalWrite(DIR_B, LOW);
+        digitalWrite(PWM_B,HIGH);
         delay(5000);
         send_data[1] = 2;
         //  nextState = HissenNer;
