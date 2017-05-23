@@ -72,9 +72,9 @@ int main (void)
 // 			printf("Failed the PDMM Communication Task\r\n");
 // 		}
 		
-		if (xTaskCreate(task_Regulate, (const signed char * const) "REGULATOR", TASK_REGULATE_STACK_SIZE, NULL, TASK_REGULATE_STACK_PRIORITY, NULL) != pdPASS) {
-			printf("Failed the Regulator Task\r\n");
-		}
+// 		if (xTaskCreate(task_Regulate, (const signed char * const) "REGULATOR", TASK_REGULATE_STACK_SIZE, NULL, TASK_REGULATE_STACK_PRIORITY, NULL) != pdPASS) {
+// 			printf("Failed the Regulator Task\r\n");
+// 		}
  		
 		if (xTaskCreate(task_ultraLjud, (const signed char * const) "ULTRALJUD SENSOR", TASK_ULTRALJUD_STACK_SIZE, NULL, TASK_ULTRALJUD_STACK_PRIORITY, NULL) != pdPASS) {
 			printf("Failed the UltraDistance Sensor Task\r\n");

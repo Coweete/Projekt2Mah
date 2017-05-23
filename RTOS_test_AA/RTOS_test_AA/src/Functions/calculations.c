@@ -61,10 +61,10 @@ int calculateSetPoint(uint16_t x1, uint16_t x2, uint16_t x3, uint16_t y1 ){		//R
 	return set_point;
 }
 
-int calculateDirection(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2){				//Ena lampan och andra lampan
+int calculateDirection(uint16_t xLeft, uint16_t yLeft, uint16_t xRight, uint16_t yRight){				//Ena lampan och andra lampan
 	int mot, nar;
-	nar = x2 - x1;
-	mot = y2 - y1;
+	nar = xRight - xLeft;
+	mot = yRight - yLeft;
 	
 	
 	int dir = (acos(nar/(sqrt((mot*mot)+(nar*nar)))) * (180/M_PI));

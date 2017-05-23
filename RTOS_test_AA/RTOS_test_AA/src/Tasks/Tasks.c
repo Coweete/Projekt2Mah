@@ -28,46 +28,50 @@ int e_test = 0;
 int v_test = 0;
 int h_test = 0;
 
+int currentX = 0;
+int currentY = 0;
+
+
 int targetAngle = 0;
 int currentAngle = 0; // 0 till höger, 90 till vänster, 
 int addAngle = 0;
 int targetDistance = 0;
 int drivenToTarget = 0;
 
-uint16_t xtest1 = 0;
-uint16_t ytest1 = 0;
-uint16_t xtest2 = 200;
-uint16_t ytest2 = 200;
+// uint16_t xtest1 = 0;
+// uint16_t ytest1 = 0;
+// uint16_t xtest2 = 200;
+// uint16_t ytest2 = 200;
 extern int16_t currentPos[4];
 
-xSemaphoreHandle signal_semafor =0;
-xSemaphoreHandle regulate_semafor = 0;
-xSemaphoreHandle main_semafor = 0;
-
-
-xQueueHandle taskQueue = 0;
+// xSemaphoreHandle signal_semafor =0;
+// xSemaphoreHandle regulate_semafor = 0;
+// xSemaphoreHandle main_semafor = 0;
+// 
+// 
+// xQueueHandle taskQueue = 0;
 
 void task_ultraLjud(void *pvParameters){
 	
-	vSemaphoreCreateBinary(signal_semafor);
-	vSemaphoreCreateBinary(regulate_semafor);
-	vSemaphoreCreateBinary(main_semafor);
-	
-	taskQueue = xQueueCreate(5,sizeof(int));
+// 	vSemaphoreCreateBinary(signal_semafor);
+// 	vSemaphoreCreateBinary(regulate_semafor);
+// 	vSemaphoreCreateBinary(main_semafor);
+// 	
+// 	taskQueue = xQueueCreate(5,sizeof(int));
 
 	
 	printf("\nTask Ultraljud");
 	portTickType xLastWakeTime;
-	const portTickType xTimeIncrement = 100;
+	const portTickType xTimeIncrement = 500;
 	xLastWakeTime = xTaskGetTickCount();
 	
-	printf("TRYING TO SEND TO PA");
+	printf("\nTRYING TO SEND TO PA");
 	pa_sendstatus(TWI_CMD_ARM_INIT,SOCK);
 	
 	
 	printf("\nGet start data");
 	getStartData();
-	sprintf(str,"\nstart data. x=%d y=%d",objectinfo[1].xpos,objectinfo[1].ypox);
+	sprintf(str,"\nStart data. x=%d y=%d",objectinfo[1].xpos,objectinfo[1].ypox);
 	printf(str);
 	
 	while (1){
@@ -84,144 +88,133 @@ void task_ultraLjud(void *pvParameters){
 		switch (main_case)
 		{
 		case 1:
-			printf("\nMain case 1");
+			printf("\nTurn to square");
 			getStartData();
 			getCurrentPos();
-			targetAngle = calculateAngle(currentPos[0],currentPos[0],objectinfo[1].xpos,objectinfo[1].ypox);		//Fungerar
-			sprintf(str,"\ntarget angle = %d",targetAngle);
+			
+			vTaskDelay(10);
+			
+			currentX = (currentPos[0] + currentPos[2]) / 2;
+			currentY = (currentPos[1] + currentPos[3]) / 2;
+			
+			vTaskDelay(10);
+			
+			targetAngle = calculateAngle(currentX,currentY,objectinfo[1].xpos,objectinfo[1].ypox);		//Fungerar
+			sprintf(str,"\nTarget angle = %d",targetAngle);
 			printf(str);	
-			addAngle = rotate(targetAngle,currentAngle);
 			
-			currentAngle = (currentAngle + 360 + addAngle) % 360;
-			
-			sprintf(str,"\ncurrentAngle = %d",currentAngle);
-			printf(str);
-			
-				
-			main_case = 2;
-
+			if(rotate(targetAngle)){
+					main_case = 2;
+			}
 			break;
 		case 2:
-			printf("\nMain case 2");
+			printf("\nDrive to square");
 			getCurrentPos();
+
+			vTaskDelay(10);
 			
-// 			if(flag_test){
-// 				startx = currentPos[0];
-// 				flag_test = 0;
-// 			} 
+			currentX = (currentPos[0] + currentPos[2]) / 2;
+			currentY = (currentPos[1] + currentPos[3]) / 2;
 			
+			vTaskDelay(10);
 			
-			targetDistance = calculateDistance(currentPos[0],currentPos[1],objectinfo[1].xpos,objectinfo[1].ypox);
-			
-// 			sprintf(str,"\ndistance to target = %d",targetDistance);
-// 			printf(str);
-// 			//börvärde
-// 			v_test = calculateSetPoint(currentPos[0],startx,objectinfo[1].xpos,objectinfo[1].ypox);
-// 			//ärvärde
-// 			h_test = currentPos[0];
-// 			
-// 			e_test = v_test - h_test;
-// 			
-// 			
-// 			drivenToTarget = drivenToTarget + (driveForward(targetDistance) * 1.36);
-// 			printf("\nDistance drive");
-// 			
-// 			sprintf(str,"\ndriven to target = %d",drivenToTarget);
-// 			printf(str);
+			targetDistance = calculateDistance(currentX,currentY,objectinfo[1].xpos,objectinfo[1].ypox);
 				
 			if(1==driveForward(targetDistance)){
-				main_case = 5;
+				main_case = 3;
 			}	
-
-// 			if(30 > (targetDistance)){		//-drivenToTarget
-// 				moveForward(1500,1500);
-// 				printf("\nDistance stop");
-// 				drivenToTarget = 0;
-// 				main_case = 3;
-// 				flag_test = 1;
-// 			}
-			
-			
-			
-
 			break;
-// 		case 3:
-// 			printf("\nMain case 3");
-// 			getCurrentPos();
-// 			targetAngle = calculateAngle(currentPos[0],currentPos[1],50,0);		//Fungerar
-// 			sprintf(str,"\ntarget angle = %d",targetAngle);
-// 			printf(str);
-// 			addAngle = rotate(targetAngle,currentAngle);
-// 			
-// 			currentAngle = (currentAngle + 360 + addAngle) % 360;
-// 			
-// 			sprintf(str,"\ncurrentAngle = %d",currentAngle);
-// 			printf(str);
-// 			
-// 			main_case = 4;
-// 			break;
-// 		case 4:
-// 		printf("\nMain case 4");
-// 		getCurrentPos();
-// 		
-// 		if(flag_test){
-// 			startx = currentPos[0];
-// 			flag_test = 0;
-// 		}
-// 		
-// 		targetDistance = calculateDistance(currentPos[0],currentPos[1],50,0);
-// 		
-// 		sprintf(str,"\ndistance to target = %d",targetDistance);
-// 		printf(str);
-// 		
-// 		//börvärde
-// 		v_test = calculateSetPoint(currentPos[0],startx,objectinfo[1].xpos,objectinfo[1].ypox);
-// 		//ärvärde
-// 		h_test = currentPos[0];
-// 		
-// 		e_test = v_test - h_test;
-// 		
-// 		drivenToTarget = drivenToTarget + (driveForward(e_test) * 1.36);
-// 		printf("\nDistance drive");
-// 		
-// 		sprintf(str,"\ndriven to target = %d",drivenToTarget);
-// 		printf(str);
-// 		
-// 		
-// 
-// 		if(30 > (targetDistance)){		//-drivenToTarget
-// 			moveForward(1500,1500);
-// 			printf("\nDistance stop");
-// 			drivenToTarget = 0;
-// 			main_case = 0;
-// 		}
-		
-//		break;
-		case 5:
-	
+		case 3:
+			printf("\nCamera Search");
 			if(cameraSearch()){
-				main_case = 6;
+				main_case = 4;
 				pa_sendstatus(TWI_CMD_PICKUP_START,SQUARE);
 			}else{
-				main_case = 5;
+				main_case = 3;
 				printf("\nElse_camera");
 			}
-		case 6:
+			break;
+		case 4:
+			printf("\nPickup obj");
 			pa_sendstatus(TWI_CMD_PICKUP_STATUS,0);
 			if(data_received_pab[1] == 2){
-				main_case = 0;
+				main_case = 5;
 			}else{
 				//inte klar;
 			}
 			break;
+		case 5:
+			printf("\nTurn to box");
+			getStartData();
+			getCurrentPos();
+			
+			vTaskDelay(10);
+			
+			currentX = (currentPos[0] + currentPos[2]) / 2;
+			currentY = (currentPos[1] + currentPos[3]) / 2;
+			
+			vTaskDelay(10);
+			
+			targetAngle = calculateAngle(currentX,currentY,50,0);		//Fungerar
+			sprintf(str,"\ntarget angle = %d",targetAngle);
+			printf(str);
+			
+			if(rotate(targetAngle)){
+				main_case = 6;
+			}
+			break;
+			
+		case 6:
+			printf("\nDrive to box");
+			getCurrentPos();
+
+			vTaskDelay(10);
+			
+			currentX = (currentPos[0] + currentPos[2]) / 2;
+			currentY = (currentPos[1] + currentPos[3]) / 2;
+			
+			vTaskDelay(10);
+			
+			targetDistance = calculateDistance(currentX,currentY,50,0);
+			
+			if(1==driveForward(targetDistance)){
+				main_case = 7;
+			}
+			break;
+			
+		case 7:
+			printf("\nDrop off");
+			
+			//Kod här
 		
+			break;
+			
+		case 8:
+			printf("\nTurn to Sock");
+			getStartData();
+			getCurrentPos();
+			
+			vTaskDelay(10);
+			
+			currentX = (currentPos[0] + currentPos[2]) / 2;
+			currentY = (currentPos[1] + currentPos[3]) / 2;
+			
+			vTaskDelay(10);
+			
+			targetAngle = calculateAngle(currentX,currentY,objectinfo[1].xpos,objectinfo[1].ypox);		//Fungerar
+			sprintf(str,"\ntarget angle = %d",targetAngle);
+			printf(str);
+			
+			if(rotate(targetAngle)){
+				main_case = 0;
+			}
+			break;		
 		default:	
 			printf("\nmain default");
 			break;
 			
 		}
 		
-		sprintf(str,"\nX = %d och y = %d",currentPos[0],currentPos[1]);
 		
 		
 		
@@ -302,90 +295,90 @@ void init_sensor(void){
 	
 }
 
-void task_Regulate(void *pvParameters){
-	
-	
-	
-	int ir;
-	
-	
-	
-	portTickType xLastWakeTimeRegulate;
-	const portTickType xTimeIncrementRegulate = 10;
-	xLastWakeTimeRegulate = xTaskGetTickCount();
-	
-	
-	
-	while(1){
-		
-		vTaskDelayUntil(&xLastWakeTimeRegulate,xTimeIncrementRegulate);
-		
-
-		if(xSemaphoreTake(regulate_semafor,100)){
-			
-			if(xQueueReceive(taskQueue,&ir,20)){
-				sprintf(str, "\nReceived: %d", ir);
-				printf(str);
-				}else{
-				printf("\nFailed to receive");
-			}
-			
-			switch (ir)
-			{
-			case 0:					//Kör framåt
-				//driveForward();					//Kör tills den inte gör det
-				break;
-			case 1:					//Sväng
-				if(rotate(angle, dir)){			//angle = slut-riktning, dir = nuvarande riktning
-					n=3;
-				}else{
-					printf("\nRotate not completed");
-				}
-				break;
-			case 2:					//Sensor-sök
-				if(cameraSearch()){
-					n=3;
-				}else{
-					printf("\nObject not found");
-				}
-				break;
-			default:
-				printf("\nDefault");
-				break;
-			}
-			
-			//moveForward(1500,1500);
-			
-			
-		}
-		
-		
-	}
-	
-	
-	
-	//vTaskDelay(100);
-}
-
-void task_nav_calc(void *pvParameters){
-	
-	portTickType xLastWakeTime;
-	const portTickType xTimeIncrement = 50;
-	xLastWakeTime = xTaskGetTickCount();
-	
-/*	int ir = 0;*/
-	
-	while(1){
-		
-		vTaskDelayUntil(&xLastWakeTime,xTimeIncrement);
-		
-// 		if(xQueueReceive(taskQueue,&ir,0)){
-// 			printf("\nReceived");
-// 		}else{
-// 			printf("\nFailed to receive");
+// void task_Regulate(void *pvParameters){
+// 	
+// 	
+// 	
+// 	int ir;
+// 	
+// 	
+// 	
+// 	portTickType xLastWakeTimeRegulate;
+// 	const portTickType xTimeIncrementRegulate = 10;
+// 	xLastWakeTimeRegulate = xTaskGetTickCount();
+// 	
+// 	
+// 	
+// 	while(1){
+// 		
+// 		vTaskDelayUntil(&xLastWakeTimeRegulate,xTimeIncrementRegulate);
+// 		
+// 
+// 		if(xSemaphoreTake(regulate_semafor,100)){
+// 			
+// 			if(xQueueReceive(taskQueue,&ir,20)){
+// 				sprintf(str, "\nReceived: %d", ir);
+// 				printf(str);
+// 				}else{
+// 				printf("\nFailed to receive");
+// 			}
+// 			
+// 			switch (ir)
+// 			{
+// 			case 0:					//Kör framåt
+// 				//driveForward();					//Kör tills den inte gör det
+// 				break;
+// 			case 1:					//Sväng
+// 				if(rotate(angle, dir)){			//angle = slut-riktning, dir = nuvarande riktning
+// 					n=3;
+// 				}else{
+// 					printf("\nRotate not completed");
+// 				}
+// 				break;
+// 			case 2:					//Sensor-sök
+// 				if(cameraSearch()){
+// 					n=3;
+// 				}else{
+// 					printf("\nObject not found");
+// 				}
+// 				break;
+// 			default:
+// 				printf("\nDefault");
+// 				break;
+// 			}
+// 			
+// 			//moveForward(1500,1500);
+// 			
+// 			
 // 		}
-		// Kod här.
-		
-	}
-	//vTaskDelete( NULL );  // För en clean exit av tasken (Kasnke ej behövs)!
-}
+// 		
+// 		
+// 	}
+// 	
+// 	
+// 	
+// 	//vTaskDelay(100);
+// }
+// 
+// void task_nav_calc(void *pvParameters){
+// 	
+// 	portTickType xLastWakeTime;
+// 	const portTickType xTimeIncrement = 50;
+// 	xLastWakeTime = xTaskGetTickCount();
+// 	
+// /*	int ir = 0;*/
+// 	
+// 	while(1){
+// 		
+// 		vTaskDelayUntil(&xLastWakeTime,xTimeIncrement);
+// 		
+// // 		if(xQueueReceive(taskQueue,&ir,0)){
+// // 			printf("\nReceived");
+// // 		}else{
+// // 			printf("\nFailed to receive");
+// // 		}
+// 		// Kod här.
+// 		
+// 	}
+// 	//vTaskDelete( NULL );  // För en clean exit av tasken (Kasnke ej behövs)!
+// }

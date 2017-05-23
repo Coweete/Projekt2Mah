@@ -48,6 +48,9 @@ uint16_t startx = 0;
 
 int interruptCounter = 0;
 
+int direction = 0;
+
+
 int r_count = 0;
 int l_count = 0;
 int e = 0;
@@ -57,7 +60,7 @@ int r_speed = 0;
 int l_speed = 0;
 extern uint8_t data_received_nav[];
 int16_t currentPos[4];
-int16_t currentx1,currenty1;
+int16_t currentx1,currenty1,currentx2,currenty2;
 
 
 char str[20];
@@ -139,8 +142,8 @@ int driveForward(int tarDist){
 	
 	int driveCount = 0;
 	int testing = 0;
-	int v_test = 0;
-	int h_test = 0;
+// 	int v_test = 0;
+// 	int h_test = 0;
 	int e_test = 0;
 	
 	r_speed=speed;
@@ -226,7 +229,7 @@ int driveForward(int tarDist){
 	return testing;
 }
 
-int rotate(int turn_angle, int direction){		//Minimum vinkel är fyra
+int rotate(int turn_angle){		//Minimum vinkel är fyra
 
 // 	sprintf(str,"\nturn_angle: %d",turn_angle);
 // 	printf(str);
@@ -234,13 +237,15 @@ int rotate(int turn_angle, int direction){		//Minimum vinkel är fyra
 // 	sprintf(str,"\ndirection: %d",direction);
 // 	printf(str);
 	
+	direction = calculateDirection(currentx1,currenty1,currentx2,currenty2);
+	
+	sprintf(str,"\nDirection: %d",direction);
+	printf(str);
 	
 	int ret = 0;
 	
 	int reverse_angle = (direction + 180) % 360;
 	
-	sprintf(str,"\nreverse_angle: %d",reverse_angle);
-	printf(str);
 
 	int direct_angle = ((abs(reverse_angle - 360) + turn_angle) % 360) - 180;
 
@@ -278,7 +283,7 @@ int rotate(int turn_angle, int direction){		//Minimum vinkel är fyra
 		sprintf(str,"\ncount_right = %d", count_total);
 		printf(str);
 
-		ret = count_total;
+		ret = 1;
 		
 	}
 
@@ -300,7 +305,7 @@ int rotate(int turn_angle, int direction){		//Minimum vinkel är fyra
 		sprintf(str,"\ncount_left = %d", count_total);
 		printf(str);
 		
-		ret = count_total;
+		ret = 1;
 		
 		
 	}
@@ -355,17 +360,25 @@ int cameraSearch(void){
 	return r;	
 }
 
-void getCurrentPos(){
+void getCurrentPos(void){
 	na_sendstatus(XY1);
 	currentx1 = ((data_received_nav[1] << 8) | (data_received_nav[2] << 0));
 	currenty1 = ((data_received_nav[3] << 8) | (data_received_nav[4] << 0));
-	sprintf(str, "\ncurrent x=%d y=%d",currentx1,currenty1);
+	sprintf(str, "\ncurrent x1=%d y1=%d",currentx1,currenty1);
 	printf(str);
+	
+	//Två rader in här
+	
+	sprintf(str, "\ncurrent x2=%d y2=%d",currentx2,currenty2);
+	printf(str);
+	
 	currentPos[0] = currentx1;
 	currentPos[1] = currenty1;
+	currentPos[2] = currentx2;
+	currentPos[3] = currentx2;
 }
 
-void getStartData(){
+void getStartData(void){
 	na_sendstatus(SQUAREXY);
 }
 
