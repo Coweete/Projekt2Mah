@@ -206,9 +206,27 @@ void task_ultraLjud(void *pvParameters){
 			printf(str);
 			
 			if(rotate(targetAngle)){
+				main_case = 9;
+			}
+			break;	
+		case 9:
+			printf("\nDrive to sock");
+			getCurrentPos();
+			
+			vTaskDelay(10);
+			
+			currentX = (currentPos[0] + currentPos[2]) / 2;
+			currentY = (currentPos[1] + currentPos[3]) / 2;
+			
+			vTaskDelay(10);
+			
+			targetDistance = calculateDistance(currentX,currentY,objectinfo[1].xpos,objectinfo[1].ypox);
+			
+			if(1==driveForward(targetDistance)){
 				main_case = 0;
 			}
-			break;		
+			break;
+				
 		default:	
 			printf("\nmain default");
 			break;
