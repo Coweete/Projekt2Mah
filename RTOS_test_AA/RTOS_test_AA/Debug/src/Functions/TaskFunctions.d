@@ -159,6 +159,7 @@ src/Functions/TaskFunctions.d src/Functions/TaskFunctions.o: \
  ../src/ASF/sam/drivers/pio/pio_handler.h \
  ../src/Functions/MotorFunctions.h ../src/Functions/TaskFunctions.h \
  ../src/TwiFunctions/TwiFunctions.h ../src/TwiFunctions/TwiComHandler.h \
+ ../src/Functions/calculations.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu-toolchain\arm-none-eabi\include\math.h
 
 ../src/asf.h:
@@ -492,5 +493,7 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu
 ../src/TwiFunctions/TwiFunctions.h:
 
 ../src/TwiFunctions/TwiComHandler.h:
+
+../src/Functions/calculations.h:
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\arm\ gcc\native\4.8.1443\arm-gnu-toolchain\arm-none-eabi\include\math.h:

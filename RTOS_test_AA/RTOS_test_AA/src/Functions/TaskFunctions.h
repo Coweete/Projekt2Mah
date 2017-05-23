@@ -15,7 +15,7 @@ void addOne(uint32_t id, uint32_t index);
 void init_interrupt(void);
 void resetCounter(void);
 
-int driveForward(void);
+int driveForward(int);
 int rotate(int turn_angle, int direction);
 int cameraSearch(void);
 void getCurrentPos();

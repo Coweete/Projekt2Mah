@@ -12,6 +12,7 @@
 #include "Functions/MotorFunctions.h"
 #include "Functions/TaskFunctions.h"
 #include "TwiFunctions/TwiFunctions.h"
+#include "Functions/calculations.h"
 #include <math.h>
 
 
@@ -41,7 +42,9 @@
 #define TURN_RIGHT PIO_PC19_IDX		//Pinne 44
 #define OFF_TARGET PIO_PC17_IDX		//Pinne 46
 
+extern struct ObjectInfo objectinfo[4];
 
+uint16_t startx = 0;
 
 int interruptCounter = 0;
 
@@ -126,62 +129,101 @@ void resetCounter(void){
 }
 
 
-int driveForward(void){
+int driveForward(int tarDist){
+	
+	 sprintf(str,"\nTarget Distance: %d",tarDist);
+	 printf(str);
 	
 	r_count = 0;
 	l_count = 0;
 	
 	int driveCount = 0;
+	int testing = 0;
+	int v_test = 0;
+	int h_test = 0;
+	int e_test = 0;
 	
 	r_speed=speed;
 	l_speed=speed;
 	
 	moveForward(l_speed,r_speed);
 	
+	
+	if (70 < tarDist){
+		moveForward(1650,1650);
+	} 
+	else{
+		moveForward(1500,1500);
+		testing = 1;
+	}
+		
+// 		if(testing){
+// 			startx = currentPos[0];
+// 			testing = 0;
+// 		}else{
+// 			//börvärde
+// 			v_test = calculateSetPoint(currentPos[0],startx,objectinfo[1].xpos,objectinfo[1].ypox);
+// 			//ärvärde
+// 			h_test = currentPos[0];
+// 			
+// 			e_test = v_test - h_test;
+// 			
+// 			sprintf(str,"\nv: %d h: %d e: %d",v_test,h_test,e_test);
+// 			printf(str);
+// 			
+// 		}	
+	
 
 // 	ioport_set_pin_level(R_RESET,LOW);
 // 	ioport_set_pin_level(L_RESET,LOW);
 	
-	r_count = ioport_get_pin_level(R0)+ioport_get_pin_level(R1)*2+ioport_get_pin_level(R2)*4+ioport_get_pin_level(R3)*8
-	+ioport_get_pin_level(R4)*16+ioport_get_pin_level(R5)*32;
+		r_count = ioport_get_pin_level(R0)+ioport_get_pin_level(R1)*2+ioport_get_pin_level(R2)*4+ioport_get_pin_level(R3)*8
+		+ioport_get_pin_level(R4)*16+ioport_get_pin_level(R5)*32;
 	
-	l_count = ioport_get_pin_level(L0)+ioport_get_pin_level(L1)*2+ioport_get_pin_level(L2)*4+ioport_get_pin_level(L3)*8
-	+ioport_get_pin_level(L4)*16+ioport_get_pin_level(L5)*32;
+		l_count = ioport_get_pin_level(L0)+ioport_get_pin_level(L1)*2+ioport_get_pin_level(L2)*4+ioport_get_pin_level(L3)*8
+		+ioport_get_pin_level(L4)*16+ioport_get_pin_level(L5)*32;
 	
-	ioport_set_pin_level(R_RESET,HIGH);
-	ioport_set_pin_level(L_RESET,HIGH);
-	vTaskDelay(3);
-	ioport_set_pin_level(R_RESET,LOW);
-	ioport_set_pin_level(L_RESET,LOW);
-	e = 0 - (r_count - l_count);
+		ioport_set_pin_level(R_RESET,HIGH);
+		ioport_set_pin_level(L_RESET,HIGH);
+		vTaskDelay(3);
+		ioport_set_pin_level(R_RESET,LOW);
+		ioport_set_pin_level(L_RESET,LOW);
+	
+	
+	
+	
+	
+		e_test = 0 -	(r_count - l_count);
 	
 	
 	sprintf(str,"\nFelvärde: %d",e);
 	printf(str);
 	
-// 	r_speed=speed;
-// 	l_speed=speed;
-	if(e > 0) {
+	r_speed=speed;
+	l_speed=speed;
+		if(e_test > 0) {
 		
-		r_speed=speed-(e*Kp);
-		l_speed=speed+(e*Kp);
+			r_speed=speed-(e*Kp);
+			l_speed=speed+(e*Kp);
 		
-	}
-	else if (e < 0){
+		}
+		else if (e_test < 0){
 		
-		r_speed=speed+(e*Kp);
-		l_speed=speed-(e*Kp);
-	}
-	else{
-		moveForward(l_speed,r_speed);
-	}
+			r_speed=speed+(e*Kp);
+			l_speed=speed-(e*Kp);
+		}
+		else{
+			moveForward(l_speed,r_speed);
+		}
+	
+
 
 	driveCount = (r_count+l_count)/2;
 	
 	sprintf(str,"\ndriveCount = %d",driveCount);
 	printf(str);
 	
-	return driveCount;
+	return testing;
 }
 
 int rotate(int turn_angle, int direction){		//Minimum vinkel är fyra
@@ -222,6 +264,8 @@ int rotate(int turn_angle, int direction){		//Minimum vinkel är fyra
 			r_count = ioport_get_pin_level(R0)+ioport_get_pin_level(R1)*2+ioport_get_pin_level(R2)*4+ioport_get_pin_level(R3)*8
 			+ioport_get_pin_level(R4)*16+ioport_get_pin_level(R5)*32;
 			
+			sprintf(str,"\nr_count = %d", r_count);
+			printf(str);
 
 			moveForward(1400,1600);
 
@@ -322,6 +366,6 @@ void getCurrentPos(){
 }
 
 void getStartData(){
-	na_sendstatus(SOCKETXY);
+	na_sendstatus(SQUAREXY);
 }
 

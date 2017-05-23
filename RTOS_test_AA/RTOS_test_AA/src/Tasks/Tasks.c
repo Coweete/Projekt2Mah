@@ -23,9 +23,13 @@ extern struct ArmInfo arminformation;
 
 int flag_test = 1;
 int main_case = 1;
+//uint16_t startx = 0;
+int e_test = 0;
+int v_test = 0;
+int h_test = 0;
 
 int targetAngle = 0;
-int currentAngle = 90; // 0 till höger, 90 till vänster, 
+int currentAngle = 0; // 0 till höger, 90 till vänster, 
 int addAngle = 0;
 int targetDistance = 0;
 int drivenToTarget = 0;
@@ -50,16 +54,20 @@ void task_ultraLjud(void *pvParameters){
 	vSemaphoreCreateBinary(main_semafor);
 	
 	taskQueue = xQueueCreate(5,sizeof(int));
-	
+
 	
 	printf("\nTask Ultraljud");
 	portTickType xLastWakeTime;
-	const portTickType xTimeIncrement = 500;
+	const portTickType xTimeIncrement = 100;
 	xLastWakeTime = xTaskGetTickCount();
+	
+	printf("TRYING TO SEND TO PA");
+	pa_sendstatus(TWI_CMD_ARM_INIT,SOCK);
+	
 	
 	printf("\nGet start data");
 	getStartData();
-	sprintf(str,"\nstart data. x=%d y=%d",objectinfo[0].xpos,objectinfo[0].ypox);
+	sprintf(str,"\nstart data. x=%d y=%d",objectinfo[1].xpos,objectinfo[1].ypox);
 	printf(str);
 	
 	while (1){
@@ -78,7 +86,8 @@ void task_ultraLjud(void *pvParameters){
 		case 1:
 			printf("\nMain case 1");
 			getStartData();
-			targetAngle = calculateAngle(currentPos[0],currentPos[1],objectinfo[0].xpos,objectinfo[0].ypox);		//Fungerar
+			getCurrentPos();
+			targetAngle = calculateAngle(currentPos[0],currentPos[0],objectinfo[1].xpos,objectinfo[1].ypox);		//Fungerar
 			sprintf(str,"\ntarget angle = %d",targetAngle);
 			printf(str);	
 			addAngle = rotate(targetAngle,currentAngle);
@@ -87,45 +96,132 @@ void task_ultraLjud(void *pvParameters){
 			
 			sprintf(str,"\ncurrentAngle = %d",currentAngle);
 			printf(str);
+			
 				
 			main_case = 2;
 
 			break;
 		case 2:
 			printf("\nMain case 2");
-			targetDistance = calculateDistance(xtest1,ytest1,xtest2,ytest2);
+			getCurrentPos();
 			
-			sprintf(str,"\ndistance to target = %d",targetDistance);
-			printf(str);
+// 			if(flag_test){
+// 				startx = currentPos[0];
+// 				flag_test = 0;
+// 			} 
 			
 			
+			targetDistance = calculateDistance(currentPos[0],currentPos[1],objectinfo[1].xpos,objectinfo[1].ypox);
 			
-			drivenToTarget = drivenToTarget + (driveForward() * 1.36);
-			printf("\nDistance drive");
+// 			sprintf(str,"\ndistance to target = %d",targetDistance);
+// 			printf(str);
+// 			//börvärde
+// 			v_test = calculateSetPoint(currentPos[0],startx,objectinfo[1].xpos,objectinfo[1].ypox);
+// 			//ärvärde
+// 			h_test = currentPos[0];
+// 			
+// 			e_test = v_test - h_test;
+// 			
+// 			
+// 			drivenToTarget = drivenToTarget + (driveForward(targetDistance) * 1.36);
+// 			printf("\nDistance drive");
+// 			
+// 			sprintf(str,"\ndriven to target = %d",drivenToTarget);
+// 			printf(str);
+				
+			if(1==driveForward(targetDistance)){
+				main_case = 5;
+			}	
+
+// 			if(30 > (targetDistance)){		//-drivenToTarget
+// 				moveForward(1500,1500);
+// 				printf("\nDistance stop");
+// 				drivenToTarget = 0;
+// 				main_case = 3;
+// 				flag_test = 1;
+// 			}
 			
-			sprintf(str,"\ndriven to target = %d",drivenToTarget);
-			printf(str);
 			
 			
 
-			if(30 > (targetDistance-drivenToTarget)){
-				moveForward(1500,1500);
-				printf("\nDistance stop");
-				main_case = 3;
-			} 
-			
 			break;
-		case 3:
-			printf("\nMain case 3");
-			
+// 		case 3:
+// 			printf("\nMain case 3");
+// 			getCurrentPos();
+// 			targetAngle = calculateAngle(currentPos[0],currentPos[1],50,0);		//Fungerar
+// 			sprintf(str,"\ntarget angle = %d",targetAngle);
+// 			printf(str);
+// 			addAngle = rotate(targetAngle,currentAngle);
+// 			
+// 			currentAngle = (currentAngle + 360 + addAngle) % 360;
+// 			
+// 			sprintf(str,"\ncurrentAngle = %d",currentAngle);
+// 			printf(str);
+// 			
+// 			main_case = 4;
+// 			break;
+// 		case 4:
+// 		printf("\nMain case 4");
+// 		getCurrentPos();
+// 		
+// 		if(flag_test){
+// 			startx = currentPos[0];
+// 			flag_test = 0;
+// 		}
+// 		
+// 		targetDistance = calculateDistance(currentPos[0],currentPos[1],50,0);
+// 		
+// 		sprintf(str,"\ndistance to target = %d",targetDistance);
+// 		printf(str);
+// 		
+// 		//börvärde
+// 		v_test = calculateSetPoint(currentPos[0],startx,objectinfo[1].xpos,objectinfo[1].ypox);
+// 		//ärvärde
+// 		h_test = currentPos[0];
+// 		
+// 		e_test = v_test - h_test;
+// 		
+// 		drivenToTarget = drivenToTarget + (driveForward(e_test) * 1.36);
+// 		printf("\nDistance drive");
+// 		
+// 		sprintf(str,"\ndriven to target = %d",drivenToTarget);
+// 		printf(str);
+// 		
+// 		
+// 
+// 		if(30 > (targetDistance)){		//-drivenToTarget
+// 			moveForward(1500,1500);
+// 			printf("\nDistance stop");
+// 			drivenToTarget = 0;
+// 			main_case = 0;
+// 		}
+		
+//		break;
+		case 5:
+	
+			if(cameraSearch()){
+				main_case = 6;
+				pa_sendstatus(TWI_CMD_PICKUP_START,SQUARE);
+			}else{
+				main_case = 5;
+				printf("\nElse_camera");
+			}
+		case 6:
+			pa_sendstatus(TWI_CMD_PICKUP_STATUS,0);
+			if(data_received_pab[1] == 2){
+				main_case = 0;
+			}else{
+				//inte klar;
+			}
 			break;
+		
 		default:	
 			printf("\nmain default");
 			break;
 			
 		}
 		
-		
+		sprintf(str,"\nX = %d och y = %d",currentPos[0],currentPos[1]);
 		
 		
 		
@@ -237,7 +333,7 @@ void task_Regulate(void *pvParameters){
 			switch (ir)
 			{
 			case 0:					//Kör framåt
-				driveForward();					//Kör tills den inte gör det
+				//driveForward();					//Kör tills den inte gör det
 				break;
 			case 1:					//Sväng
 				if(rotate(angle, dir)){			//angle = slut-riktning, dir = nuvarande riktning

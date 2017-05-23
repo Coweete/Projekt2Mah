@@ -14,7 +14,8 @@
 
 #define TWI_SPEED					100000						//Hastigheten på twi bussen
 #define TWI_SLAVE_MEM_ADDR			0x00						//Twi slav addressen
-#define TWI_MASTER					CONF_BOARD_TWI0				//Sätter TWI till TWIO på due kortet
+#define TWI_MASTER_NAV				CONF_BOARD_TWI0				//Sätter TWI till TWIO på due kortet
+#define TWI_MASTER_PAB				CONF_BOARD_TWI1
 #define TWI_DATA_RECIEVE_LENGTH_PA		3						//Längden på paketet för skicka till påbyggnad
 #define TWI_DATA_SEND_LENGTH_PA			3						//Längden på paketet för att ta emot från påbyggnaden
 #define TWI_DATA_RECIEVE_LENGTH_NA		5						//Längden på paketet för att ta emot från posititonssystemet
@@ -76,10 +77,12 @@ twi_package_t packet_received_nav ={
 void init_twi_functions(){
 	twi_master_options_t opt;
 	opt.speed = TWI_SPEED;
-	if(twi_master_setup(TWI_MASTER,&opt) == TWI_SUCCESS){
-		printf("TWI OK");
+	if(twi_master_setup(TWI_MASTER_NAV,&opt) == TWI_SUCCESS){
+		printf("TWI NAV OK");
 	}
-	
+	if(twi_master_setup(TWI_MASTER_PAB,&opt) == TWI_SUCCESS){
+		printf("TWI PAB OK");
+	}
 }
 
 /************************************************************************/
@@ -208,7 +211,7 @@ void  send_package(uint8_t twi_state,uint8_t slave){
 		packet_nav.chip = slave;
 		packet_nav.buffer = (void *)send_data_nav;
 		printf("TRYING TO SEND\n");
-		while(twi_master_write(TWI_MASTER,&packet_nav));
+		while(twi_master_write(TWI_MASTER_NAV,&packet_nav));
 		printf("done sending nav\n");
 		
 	}else if(TWI_SLAVE_PABYGGNAD == slave){
@@ -217,7 +220,7 @@ void  send_package(uint8_t twi_state,uint8_t slave){
 		packet_pab.chip = slave;
 		packet_pab.buffer = (void *)send_data_pab;
 		printf("TRYING TO SEND\n");
-		while(twi_master_write(TWI_MASTER,&packet_pab));
+		while(twi_master_write(TWI_MASTER_NAV,&packet_pab));
 		printf("done sending pab\n");
 	}
 }
@@ -231,12 +234,12 @@ void receive_package(uint8_t slave){
 	
 	if (slave == TWI_SLAVE_NAVIGERING){
 		printf("TRYing to receive nav");
-		while(twi_master_read(TWI_MASTER, &packet_received_nav) != TWI_SUCCESS);
+		while(twi_master_read(TWI_MASTER_NAV, &packet_received_nav) != TWI_SUCCESS);
 		printf("done sending");
 	
 	}else if(slave == TWI_SLAVE_PABYGGNAD){
 		printf("TRYing to receive Pa");
-		while(twi_master_read(TWI_MASTER, &packet_received_pab) != TWI_SUCCESS);
+		while(twi_master_read(TWI_MASTER_NAV, &packet_received_pab) != TWI_SUCCESS);
 		printf("done sending");
 	}
 }
