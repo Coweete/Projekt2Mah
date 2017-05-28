@@ -1,7 +1,14 @@
+/**
+ * @author Jonatan Fridsten
+ * I denna fil finns programmeringen för påbyggnaden som tillhör vikingarna. 
+ */
 #include <Servo.h>
 #include <Wire.h>
 
-Servo myservo;
+//Servo objekt som tar han om styrningen av klon
+Servo myservo;  
+
+//Ingång och utgångs pinnar
 #define PWM_B  11
 #define Dir_b  13
 #define Brake  8
@@ -10,53 +17,62 @@ Servo myservo;
 #define stopBot  4
 #define servoPin  6
 
-int currentState = 1,nextState = 0;
+//State variabel för att hålla kol på i vilken case programmet skall vara i
+int currentState = 1;
+//Bufferten som kommer ifrån det inlästa värdet från TWI bussen
 uint8_t rx_buf[3];
-uint8_t id_nummer =  37;
 //Avståndet til objektet, första talet är avståndet i cm och andra vinkeln roboten behöver vara i. 
 uint8_t avstand_objekt[] = {40,0};
 //Avståndet roboten måsta stanna till från kanten till lådan, 1: Avståndet till lådan, 2: Vinkeln till lådan
-uint8_t avstand_lada[] = {11,6};
-//Hastigheten som roboten kan röra sig med objektet i ett lyft ? 
-uint8_t max_hastighet = 15;
-//Justering av position, om roboten behöver åka fram eller bakåt för att kunna ta upp objektet.
-int position_justering = 0;
+uint8_t avstand_lada[] = {20,0};
 //Status på om lyftet är klart eller inte
-uint8_t lyft_status = 13;
+uint8_t lyft_status = 0;
+//Testdata för att kontroller så att kommunikationen fungerar
 uint8_t hasdata = 244;
-uint8_t tauppalla = 1;
+//Boolean för om alla objekten skall tas upp eller ej
+uint8_t tauppalla = 0;
+//Bufferten som skall skickas på TWI bussen
 uint8_t send_data[3];
-uint8_t twi_state = 0,request_state = 0;
+//Det inkomande states 
+uint8_t twi_state = 0;
+//Vilket objekt som roboten befinner sig i
 uint8_t objekt;
+//Hur det går för roboten 2 = klar
 uint8_t pickupStatus;
 
+/**
+ * Setup metoden som körs först i programmet
+ */
 void setup() {
-  //defines input output
   pinMode(Dir_b, OUTPUT);
   pinMode(Brake,OUTPUT);
   pinMode(stopTop, INPUT_PULLUP);
   pinMode(stopBot, INPUT_PULLUP);
-  
+
+  //Sätter pin 6 till servo pinnen och sätter den till 0 läget
   myservo.attach(servoPin);
   myservo.write(0);
 
+  //Sätter riktningen och startar bromsen
   digitalWrite(Dir_b,HIGH);
   digitalWrite(Brake,HIGH);
+  //Sätter hastigheten på motorn
   analogWrite(PWM_B,255);
 
   Wire.begin(2);                  //Startar upp TWI bibliotektet och sätter adressen till 2.
   Wire.onRequest(requestEvent);   //Sätter ihop ett avbrott för när mastern vill att slaven skall skicka information.
   Wire.onReceive(receiveEvent);   //Sätter ihop ett avbrott för när slaven skall ta imot information.
-  Serial.begin(9600);             
+  Serial.begin(9600);             //Startar den seriella kommunikationen  
   Serial.println("Arduino start");
 }
-
+/**
+ * Huvudloopen för programmet
+ */
 void loop() {
-  //Serial.println(objekt);
   switch(currentState){
-    case 0x20:
+    case 0x20:                              //Sätter klon till startpositionen
     Serial.println("Return to normal pos");
-       if(digitalRead(stopTop) == LOW){
+       if(digitalRead(stopTop) == LOW){     //Kontrollerar så att top positionen är nådd
           digitalWrite(Brake,HIGH);
           myservo.write(0);
        }else{
@@ -66,7 +82,7 @@ void loop() {
     break;
     case 0x21:
     //Dropp off start
-       if(digitalRead(stopTop) == LOW){
+       if(digitalRead(stopTop) == LOW){  //Kontrollera så att klon är i topen sedan släpper den av objeketet.
           myservo.write(0);
           delay(5);
           send_data[1] = 2;
@@ -76,9 +92,8 @@ void loop() {
     break;
     case 0x22:
     //pickup start
-       Serial.println("start pickup");
-       Serial.println(digitalRead(stopTop));
-       if(digitalRead(stopTop) == LOW){
+       Serial.println("start pickup");        
+       if(digitalRead(stopTop) == LOW){     //kontrollerar så att den befinner sig i toppen och börjar köra nedåt
           digitalWrite(Dir_b,LOW);
           digitalWrite(Brake,LOW);
           pickupStatus = 5;
@@ -87,20 +102,11 @@ void loop() {
           pickupStatus = 6;
        }
     break;
-    case 0x23:
-    //check dropp off status ?
-    break;
-    case 0x24:
-    //check pickupp status
-    break;
-    case 0x25:
-    //error ?
-    break;
-    case 0x32:
-    Serial.println("Start grab");
+    case 0x32:                          //Om boten positionen är nådd klämmer klon och försöker ta upp ett objekt
+    Serial.println("Start grab");       //Börjar kör klon uppåt med
       if(digitalRead(stopBot) == LOW){
         digitalWrite(Brake,HIGH);
-        if(4 == objekt){
+        if(4 == objekt){              //Speciallfall för glaset då klon åker upp lite innan den klämmer
           digitalWrite(Dir_b,HIGH);
           digitalWrite(Brake,LOW);
           delay(1000);
@@ -116,11 +122,11 @@ void loop() {
         }
 
       }else{
-        //send_data[1] = 6;
+        send_data[1] = 6;
       }
     break;
     case 0x33:
-       Serial.println("Return to top pos");
+       Serial.println("Return to top pos"); //Körs tills det att klon har nått top positionen stannar då klon där
        if(digitalRead(stopTop) == LOW){
           digitalWrite(Brake,HIGH);
           pickupStatus = 2;
@@ -132,10 +138,13 @@ void loop() {
   }
   
 }
-
+/**
+ * En avbrotsrutin då det finns något på TWI bussen
+ * Som slaven skall ta emot
+ */
 void receiveEvent(int howMany){
   int i = 0;
-  while(Wire.available()){
+  while(Wire.available()){  //kontroller om det finns något på bussen och isf spara undan det
     twi_state = Wire.read();
     rx_buf[i] = twi_state;
     i++;
@@ -143,8 +152,8 @@ void receiveEvent(int howMany){
   Serial.println("IN rec");
   Serial.println(rx_buf[0]);
   Serial.println(rx_buf[1]);
-  switch(rx_buf[0]){
-    case 0x20: // init
+  switch(rx_buf[0]){ 
+    case 0x20: // init kommer att returnera följande till huvudkortet
       if(2 == rx_buf[1]){
           currentState = rx_buf[0];
           send_data[1] =  avstand_lada[0];
@@ -155,7 +164,6 @@ void receiveEvent(int howMany){
       }else if(4 == rx_buf[1]){
           send_data[1] = tauppalla;
           send_data[2] = hasdata;
-          // send motor to start pos
       }
     break;
     case 0x21: //Dropoff_start
@@ -194,7 +202,9 @@ void receiveEvent(int howMany){
     break;
   }
 }
-
+/**
+ * Abrottsrutin för att skicka data till Huvudkortet
+ */
 void requestEvent(){
   switch(rx_buf[0]){
     case 0x20:  // identifiering 
