@@ -146,9 +146,13 @@ void na_sendstatus(TwiCmd twi_state){
 
 }
 
+/************************************************************************/
+/* Tar han om kommunikationen mellan mastern och						*/
+/* slaven för positionssytemet											*/
+/************************************************************************/
 void pa_sendstatus(TwiCmd twi_state, uint8_t underState){
 	switch (twi_state){
-		//Hämtar information om påbyggnaden
+		//Hämtar information om påbyggnaden och sparar undan den 
 		case TWI_CMD_ARM_INIT:
 			send_data_pab[1] = TWI_CMD_ARM_REQ_BOX_INFO;
 			send_package(TWI_CMD_ARM_INIT,TWI_SLAVE_PABYGGNAD);
@@ -167,10 +171,12 @@ void pa_sendstatus(TwiCmd twi_state, uint8_t underState){
 			arminformation.hasData			= data_received_pab[2];
 		break;
 		
+		//Startar avlämningen
 		case TWI_CMD_DROPOFF_START:
 			send_package(TWI_CMD_DROPOFF_START,TWI_SLAVE_PABYGGNAD);
 		break;
 		
+		//Startar uppplockningen
 		case TWI_CMD_PICKUP_START:
 			if(underState == SOCK){
 				send_data_pab[1] = SOCK;
@@ -184,23 +190,29 @@ void pa_sendstatus(TwiCmd twi_state, uint8_t underState){
 			}
 		break;
 		
+		//Kontrollerar hur det går med upp plockningen
 		case TWI_CMD_PICKUP_STATUS:
 			send_package(TWI_CMD_PICKUP_STATUS,TWI_SLAVE_PABYGGNAD);
 			delay_ms(10);
 			receive_package(TWI_SLAVE_PABYGGNAD);
 		break;
 		
+		//Kontrollerar om hur det går med avlämningen
 		case TWI_CMD_DROPOFF_STATUS:
 			send_package(TWI_CMD_DROPOFF_STATUS,TWI_SLAVE_PABYGGNAD);
 		break;
 		
+		//Skickar ett error medelande
 		case TWI_CMD_ERROR:
 			send_package(TWI_CMD_ERROR,TWI_SLAVE_PABYGGNAD);
 		break;
 	}	
 }
 
-
+/************************************************************************/
+/* Huvudfunktionen för att skicka ett packet till angiven slav.			*/
+/* 																		*/
+/************************************************************************/
 void  send_package(uint8_t twi_state,uint8_t slave){
 	printf("in send\n");
 	char sts[20];
@@ -226,7 +238,7 @@ void  send_package(uint8_t twi_state,uint8_t slave){
 }
 
 /************************************************************************/
-/*                                                                      */
+/* Tar emot ett packet från den angivna slaven som skickas med i metoden*/
 /************************************************************************/
 void receive_package(uint8_t slave){
 	printf("Start of receive\n");
