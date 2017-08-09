@@ -13,7 +13,7 @@
     <OutputFileExtension>.elf</OutputFileExtension>
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
     <AssemblyName>RTOS_test_AA</AssemblyName>
-    <Name>RTOS_test_AA</Name>
+    <Name>RTOS_Final_Test</Name>
     <RootNamespace>RTOS_test_AA</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
     <KeepTimersRunning>true</KeepTimersRunning>
@@ -235,12 +235,12 @@
           <file path="src/ASF/thirdparty/wireless/addons/sio2host/uart/sio2host.c" framework="" version="3.27.0" source="thirdparty\wireless\addons\sio2host\uart\sio2host.c" changed="False" content-id="Atmel.ASF" />
           <file path="src/ASF/thirdparty/wireless/addons/sio2host/uart/sio2host.h" framework="" version="3.27.0" source="thirdparty\wireless\addons\sio2host\uart\sio2host.h" changed="False" content-id="Atmel.ASF" />
           <file path="src/Config/conf_sio2host.h" framework="" version="3.27.0" source="thirdparty\wireless\addons\sio2host\module_config\conf_sio2host.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/services/twi/twi_slave.h" framework="" version="3.27.0" source="common\services\twi\twi_slave.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/services/twi/sam_twi/twi_master.h" framework="" version="3.27.0" source="common\services\twi\sam_twi\twi_master.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/services/twi/twi_master.h" framework="" version="3.27.0" source="common\services\twi\twi_master.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/common/services/twi/sam_twi/twi_slave.h" framework="" version="3.27.0" source="common\services\twi\sam_twi\twi_slave.h" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam/drivers/twi/twi.c" framework="" version="3.27.0" source="sam\drivers\twi\twi.c" changed="False" content-id="Atmel.ASF" />
-          <file path="src/ASF/sam/drivers/twi/twi.h" framework="" version="3.27.0" source="sam\drivers\twi\twi.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam/drivers/twi/twi.c" framework="" version="3.10.1" source="sam\drivers\twi\twi.c" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/sam/drivers/twi/twi.h" framework="" version="3.10.1" source="sam\drivers\twi\twi.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/services/twi/twi_slave.h" framework="" version="3.10.1" source="common\services\twi\twi_slave.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/services/twi/sam_twi/twi_master.h" framework="" version="3.10.1" source="common\services\twi\sam_twi\twi_master.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/services/twi/twi_master.h" framework="" version="3.10.1" source="common\services\twi\twi_master.h" changed="False" content-id="Atmel.ASF" />
+          <file path="src/ASF/common/services/twi/sam_twi/twi_slave.h" framework="" version="3.10.1" source="common\services\twi\sam_twi\twi_slave.h" changed="False" content-id="Atmel.ASF" />
         </files>
         <documentation help="http://asf.atmel.com/docs/3.27.0/common.applications.user_application.arduino_due_x/html/index.html" />
         <offline-documentation help="" />
@@ -303,8 +303,8 @@
       <Value>../src/ASF/common/services/delay</Value>
       <Value>../src/ASF/common/utils/stdio/stdio_serial</Value>
       <Value>../src/ASF/thirdparty/wireless/addons/sio2host/uart</Value>
-      <Value>../src/ASF/common/services/twi</Value>
       <Value>../src/ASF/sam/drivers/twi</Value>
+      <Value>../src/ASF/common/services/twi</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize for size (-Os)</armgcc.compiler.optimization.level>
@@ -359,8 +359,8 @@
       <Value>../src/ASF/common/services/delay</Value>
       <Value>../src/ASF/common/utils/stdio/stdio_serial</Value>
       <Value>../src/ASF/thirdparty/wireless/addons/sio2host/uart</Value>
-      <Value>../src/ASF/common/services/twi</Value>
       <Value>../src/ASF/sam/drivers/twi</Value>
+      <Value>../src/ASF/common/services/twi</Value>
     </ListValues>
   </armgcc.preprocessingassembler.general.IncludePaths>
 </ArmGcc>
@@ -417,8 +417,8 @@
       <Value>../src/ASF/common/services/delay</Value>
       <Value>../src/ASF/common/utils/stdio/stdio_serial</Value>
       <Value>../src/ASF/thirdparty/wireless/addons/sio2host/uart</Value>
-      <Value>../src/ASF/common/services/twi</Value>
       <Value>../src/ASF/sam/drivers/twi</Value>
+      <Value>../src/ASF/common/services/twi</Value>
     </ListValues>
   </armgcc.compiler.directories.IncludePaths>
   <armgcc.compiler.optimization.level>Optimize (-O1)</armgcc.compiler.optimization.level>
@@ -475,8 +475,8 @@
       <Value>../src/ASF/common/services/delay</Value>
       <Value>../src/ASF/common/utils/stdio/stdio_serial</Value>
       <Value>../src/ASF/thirdparty/wireless/addons/sio2host/uart</Value>
-      <Value>../src/ASF/common/services/twi</Value>
       <Value>../src/ASF/sam/drivers/twi</Value>
+      <Value>../src/ASF/common/services/twi</Value>
     </ListValues>
   </armgcc.preprocessingassembler.general.IncludePaths>
   <armgcc.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</armgcc.preprocessingassembler.debugging.DebugLevel>
@@ -557,6 +557,12 @@
     <Folder Include="src\Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\Tasks\TaskNavigationCom.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Tasks\TaskNavigationCom.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\TwiFunctions\TwiComHandler.h">
       <SubType>compile</SubType>
     </Compile>
@@ -608,10 +614,10 @@
     <Compile Include="src\Functions\Rotate.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\Functions\TaskFunctions.c">
+    <Compile Include="src\Tasks\TaskNavigation.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\Functions\TaskFunctions.h">
+    <Compile Include="src\Tasks\TaskNavigation.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\Tasks\Tasks.c">
@@ -696,36 +702,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\Functions\MotorFunctions.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\Tasks\Task_Kamera.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\Tasks\Task_Kamera.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\Tasks\Task_PdMm_Com.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\Tasks\Task_Navigering_Com.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\Tasks\Task_Navigering_Com.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\Tasks\Task_Nav_Calc.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\Tasks\Task_Nav_Calc.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\Tasks\Task_PdMm_Com.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\Tasks\Task_Regulate.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="src\Tasks\Task_Regulate.h">
       <SubType>compile</SubType>
     </Compile>
     <None Include="src\config\FreeRTOSConfig.h">

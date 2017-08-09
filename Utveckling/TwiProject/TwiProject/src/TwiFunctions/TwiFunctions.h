@@ -2,7 +2,7 @@
  * TwiFunctions.h
  *
  * Created: 2017-05-05 10:24:22
- *  Author: Jounne
+ *  Author: Jonatan Fridsten
  */ 
 
 
