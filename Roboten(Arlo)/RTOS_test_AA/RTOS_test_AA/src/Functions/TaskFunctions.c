@@ -2,7 +2,7 @@
  * TaskFunctions.c
  *
  * Created: 2017-05-19 22:04:44
- *  Author: Spellabbet
+ *  Author: André Ahlbertz
  */ 
 
 #include <asf.h>
@@ -90,7 +90,7 @@ void init_taskFunctions(void){
 	ioport_set_pin_level(START_CAMERA,LOW);
 
 	
-	
+	//Printar "Pins OK" efter lyckad initiering. 
 	printf("\nPins OK");
 	
 	
@@ -100,7 +100,7 @@ void init_taskFunctions(void){
 }
 
 
-
+//Används inte, den är till interrupt. 
 void addOne(uint32_t id, uint32_t index){
 // 	printf("\nInterrupt");
 // 	if ((id == ID_PIOC) && (index == PIO_PC9)){
@@ -111,7 +111,7 @@ void addOne(uint32_t id, uint32_t index){
 	//printf("\nOk");
 	interruptCounter++;
 }
-
+//Används inte, är för interrupt
 void init_interrupt(void){
 	
 	pmc_enable_periph_clk(ID_PIOC);
@@ -131,7 +131,7 @@ void resetCounter(void){
 	interruptCounter = 0;
 }
 
-
+//Roboten kör framåt tills den är inom 70cm från objektet. 
 int driveForward(int tarDist){
 	
 	 sprintf(str,"\nTarget Distance: %d",tarDist);

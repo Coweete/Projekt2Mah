@@ -2,7 +2,7 @@
  * calculations.c
  *
  * Created: 2017-05-17 16:37:22
- *  Author: Andre & Elias
+ *  Author: Andre
  */ 
 
 #include "Functions/calculations.h"
@@ -61,7 +61,7 @@ int calculateSetPoint(uint16_t x1, uint16_t x2, uint16_t x3, uint16_t y1 ){		//R
 	return set_point;
 }
 
-int calculateDirection(uint16_t xLeft, uint16_t yLeft, uint16_t xRight, uint16_t yRight){				//Ena lampan och andra lampan
+int calculateDirection(uint16_t xLeft, uint16_t yLeft, uint16_t xRight, uint16_t yRight){				//Ena lampan och andra lampan, beräknar vilket håll roboten är svängd åt
 	int mot, nar;
 	nar = xRight - xLeft;
 	mot = yRight - yLeft;

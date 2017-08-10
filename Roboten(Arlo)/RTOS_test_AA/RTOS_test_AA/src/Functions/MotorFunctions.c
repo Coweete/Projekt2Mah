@@ -15,7 +15,7 @@
 #define RIGHT PIO_PC5_IDX
 
 
-
+//Initierar pinnarna till motorn
 void initMotor(void){
 		ioport_set_pin_dir(LEFT,IOPORT_DIR_OUTPUT);
 		ioport_set_pin_dir(RIGHT,IOPORT_DIR_OUTPUT);
@@ -23,18 +23,19 @@ void initMotor(void){
 
 
 
-
+//Skickar en puls till vänster hjul
 void pulseLeft(int p1){
 	ioport_set_pin_level(LEFT,HIGH);
 	delayMicroseconds(p1);
 	ioport_set_pin_level(LEFT,LOW);
 }
+//Skickar en puls till höger hjul
 void pulseRight(int p2){
 	ioport_set_pin_level(RIGHT,HIGH);
 	delayMicroseconds(p2);
 	ioport_set_pin_level(RIGHT,LOW);
 }
-
+//Kör med bägge hjulen. 
 void moveForward(int l,int r){
 	pulseLeft(l);
 	pulseRight(r);
